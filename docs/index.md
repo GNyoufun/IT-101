@@ -1,3 +1,6 @@
+---
+nav_order: 1
+---
 ## Overview
 ### Repository
 [Repository](https://github.com/GNyoufun/IT-101){: .btn .btn-purple .mr-2  }
