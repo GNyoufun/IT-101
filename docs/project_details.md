@@ -1,7 +1,5 @@
-General overview of project and requirements
 
-
-### Epics:
+### Epics
 ## Epic 1 - Frontend Design:
 Designs and prototypes on the functionality and UI/UX of the web application.
 ## Epic 2 - Backend Design:
