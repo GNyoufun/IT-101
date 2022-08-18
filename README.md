@@ -1,6 +1,6 @@
-## Welcome to GitHub Pages
-[Link button](http://example.com/){: .btn }
-This is a test on modify the GitHub Pages 
+## COMP30022 IT Project - IT 101
+[Repository](http://example.com/){: .btn .btn-purple }
+<button type="button" name="button" class="btn">Button element</button>
 
 You can use the [editor on GitHub](https://github.com/GNyoufun/IT-101/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
