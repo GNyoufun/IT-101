@@ -26,5 +26,4 @@ Attendees:	Patrick, Jessica, Ella, Brendan
 - Confirm with the client on Website Application over Mobile 
 - Discussion on the solid purpose of the Personal Item Register and the types of item to be store 
 - General functional requirements ideas brainstorm (Resulted from the Client meeting)
---------------------------------------------------------------------------------
 &nbsp;

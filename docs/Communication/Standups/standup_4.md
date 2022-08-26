@@ -32,6 +32,4 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 - MongoDB connection JavaScript (prototype)
 - MongoDB Insert and Deletion template function for future uses 
 - Create Schema for MongoDB
-
---------------------------------------------------------------------------------
 &nbsp;

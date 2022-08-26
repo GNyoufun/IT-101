@@ -26,6 +26,5 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 - Setup GitHun Project 
 - Invite Client into Discord channel 
 - Setup LucidChart for software design 
-- EXCALIDRAW for Prototyping 
---------------------------------------------------------------------------------
+- EXCALIDRAW for Prototyping
 &nbsp;

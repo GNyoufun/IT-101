@@ -3,11 +3,12 @@ title: StandUp NUMBER - DATE
 parent: StandUps
 grand_parent: Communication
 nav_exclude: true
+toc_exclude: true
 ---
 # StandUp NUMBER - DATE
 ## Meeting Information
 
- Objective:	First meeting, basic setup for group communication
+ Objective:	MEETING OBJECTIVE
 
 
 | <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
@@ -24,6 +25,4 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 --------------------------------------------------------------------------------
 - Note
     - Sub Note
-
---------------------------------------------------------------------------------
 &nbsp;

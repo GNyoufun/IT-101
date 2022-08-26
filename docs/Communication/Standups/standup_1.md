@@ -31,5 +31,4 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
     - Python
     - MySQL
     - JavaScriptMangoDB
---------------------------------------------------------------------------------
 &nbsp;

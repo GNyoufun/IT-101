@@ -27,6 +27,5 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 - Restructured the Database assessed from the Node.js with mongoose 
 - Refined and created more UI design 
 - Documentation page design 
-- User Stories created and updated 
---------------------------------------------------------------------------------
+- User Stories created and updated
 &nbsp;
