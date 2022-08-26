@@ -1,3 +1,6 @@
+---
+parent: About
+---
 # Requirements List
 Must have requirements:
 - Records on different games submitted to the application

@@ -1,3 +1,6 @@
+---
+parent: Client Meetings
+---
 # Client Meeting 1
 Date: 10/08/22
 

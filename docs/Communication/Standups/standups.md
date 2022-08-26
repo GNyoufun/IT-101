@@ -1,5 +1,8 @@
+---
+parent: Standups
+---
 # StandUp
- ## Meeting Information
+## Meeting Information
 
  Objective:	First meeting, basic setup for group communication
 
