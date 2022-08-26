@@ -1,5 +1,6 @@
 ---
 parent: About
+title: Project Details
 nav_order: 1
 ---
 ## Epics
