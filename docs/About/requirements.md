@@ -1,5 +1,6 @@
 ---
 parent: About
+nav_order: 2
 ---
 # Requirements List
 Must have requirements:

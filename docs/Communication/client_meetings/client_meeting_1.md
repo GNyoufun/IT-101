@@ -1,5 +1,6 @@
 ---
 parent: Client Meetings
+nav_order: 1
 ---
 # Client Meeting 1
 Date: 10/08/22

@@ -1,5 +1,6 @@
 ---
 parent: Standups
+nav_order: 1
 ---
 # StandUp
 ## Meeting Information

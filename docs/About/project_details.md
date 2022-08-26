@@ -1,5 +1,6 @@
 ---
 parent: About
+nav_order: 1
 ---
 ## Epics
 ### Epic 1 - Frontend Design:
