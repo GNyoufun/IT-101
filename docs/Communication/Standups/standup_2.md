@@ -28,5 +28,4 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 - Setup LucidChart for software design 
 - EXCALIDRAW for Prototyping 
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 &nbsp;

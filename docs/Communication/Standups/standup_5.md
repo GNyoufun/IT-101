@@ -28,7 +28,5 @@ Attendees:	Patrick, Ishaann, Jessica, Ella, Brendan
 - Refined and created more UI design 
 - Documentation page design 
 - User Stories created and updated 
-
---------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 &nbsp;
