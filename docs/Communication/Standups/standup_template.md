@@ -1,11 +1,10 @@
 ---
-title: StandUp [NUMBER] - [DATE]
+title: StandUp NUMBER - DATE
 parent: StandUps
 grand_parent: Communication
-nav_order: [NUMBER]
 nav_exclude: true
 ---
-# StandUp [NUMBER] - [DATE]
+# StandUp NUMBER - DATE
 ## Meeting Information
 
  Objective:	First meeting, basic setup for group communication
