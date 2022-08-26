@@ -1,5 +1,6 @@
 ---
 parent: Standups
+grand_parent: Communication
 nav_order: 1
 ---
 # StandUp

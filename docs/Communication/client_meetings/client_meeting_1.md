@@ -1,5 +1,6 @@
 ---
 parent: Client Meetings
+grand_parent: Communication
 nav_order: 1
 ---
 # Client Meeting 1
