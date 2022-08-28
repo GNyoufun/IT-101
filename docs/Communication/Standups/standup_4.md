@@ -10,9 +10,8 @@ nav_order: 4
  Objective:	Create User Stories and Basic UI prototyping.
 
 
-| <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
-|-------------------|---------------|-------------------|---------------|
 | __Date:__         | 18/08/22      | __Location:__     | Room 131      |
+|-------------------|---------------|-------------------|---------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |
 

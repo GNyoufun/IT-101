@@ -10,9 +10,8 @@ nav_order: 1
  Objective:	First meeting, basic setup for group communication
 
 
-| <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
-|-------------------|---------------|-------------------|---------------|
 | __Date:__         | 28/07/22      | __Location:__     | Room 131      |
+|-------------------|---------------|-------------------|---------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |
 

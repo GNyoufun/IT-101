@@ -10,9 +10,8 @@ nav_order: 3
  Objective:	Confirmation on basic settings and requirements of the Project
 
 
-| <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
-|-------------------|---------------|-------------------|---------------|
 | __Date:__         | 11/08/22      | __Location:__     | Room 131      |
+|-------------------|---------------|-------------------|---------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ella          | __Note Taker:__   | Brendan       |
 

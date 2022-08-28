@@ -10,9 +10,8 @@ nav_order: 2
  Objective:	Decide for resource for team uses 
 
 
-| <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
-|-------------------|---------------|-------------------|---------------|
 | __Date:__         | 04/08/22      | __Location:__     | Room 131      |
+|-------------------|---------------|-------------------|---------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |
 

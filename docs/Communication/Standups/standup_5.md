@@ -10,9 +10,8 @@ nav_order: 5
  Objective:	Update User Stories, Discuss on UI Design 
 
 
-| <!-- -->          | <!-- -->      | <!-- -->          | <!-- -->      |
-|-------------------|---------------|-------------------|---------------|
 | __Date:__         | 25/08/22      | __Location:__     | Room 131      |
+|-------------------|---------------|-------------------|---------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |
 
