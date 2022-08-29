@@ -1,3 +1,9 @@
+---
+parent: API
+title: REST Design
+nav_order: 1
+---
+
 ## Rest HTTP Design
 
 ### GET Requests
