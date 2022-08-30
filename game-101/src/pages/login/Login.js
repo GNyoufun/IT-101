@@ -1,10 +1,5 @@
-import React from "react";
-
 import "./Login.css";
-
-import Title from "../../components/login/Title";
-import GameLogo from "../../components/login/GameLogo";
-import LoginBar from "../../components/login/LoginBar";
+import { GameLogo, LoginBar, Title } from "../../components";
 
 const Login = () => {
   return (
