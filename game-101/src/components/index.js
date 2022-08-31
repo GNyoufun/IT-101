@@ -1,5 +1,4 @@
-import GameLogo from "./login/GameLogo";
-import LoginBar from "./login/LoginBar";
-import Title from "./login/Title";
+import SignIn from "./login/SignIn";
+import SignUp from "./login/SignUp";
 
-export { GameLogo, LoginBar, Title };
+export { SignIn, SignUp };
