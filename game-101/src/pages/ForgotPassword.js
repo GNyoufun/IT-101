@@ -8,14 +8,13 @@ import Typography from "@mui/material/Typography";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 
-import { SignIn, SignUp } from "../components";
-import { Tab, TabsList } from "../style";
+import { Submit } from "../components";
 import banner from "../logo.svg";
 import dTheme from "../theme";
 
 const theme = dTheme;
 
-export default function SignInUp() {
+export default function ForgotPassword() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -53,7 +52,7 @@ export default function SignInUp() {
               alignItems: "center",
             }}
           >
-            {/* Tabs for selecting login or sign up*/}
+            {/* Forgot Password */}
             <Box sx={{ bgcolor: "background.paper", borderRadius: "16px" }}>
               <Box
                 sx={{
@@ -65,15 +64,8 @@ export default function SignInUp() {
                 }}
               >
                 <TabsUnstyled defaultValue={0}>
-                  <TabsList>
-                    <Tab>Sign in</Tab>
-                    <Tab>Sign Up</Tab>
-                  </TabsList>
                   <TabPanelUnstyled value={0}>
-                    <SignIn />
-                  </TabPanelUnstyled>
-                  <TabPanelUnstyled value={1}>
-                    <SignUp />
+                    <Submit />
                   </TabPanelUnstyled>
                 </TabsUnstyled>
               </Box>

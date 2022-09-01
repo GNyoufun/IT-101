@@ -1,3 +1,4 @@
+import ForgotPassword from "./ForgotPassword";
 import SignInUp from "./SignInUp";
 
-export { SignInUp };
+export { ForgotPassword, SignInUp };
