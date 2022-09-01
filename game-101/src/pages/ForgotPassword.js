@@ -9,8 +9,8 @@ import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 
 import { Submit } from "../components";
-import banner from "../logo.svg";
-import dTheme from "../theme";
+import banner from "../style/logo.svg";
+import dTheme from "../style/theme";
 
 const theme = dTheme;
 
