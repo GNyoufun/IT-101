@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
@@ -28,8 +27,8 @@ export default function SignIn() {
         mb: 2,
       }}
     >
-      <Typography>Welcome,</Typography>
-      <Typography>Sign in to continue!</Typography>
+      <Typography variant="h4">Welcome,</Typography>
+      <Typography variant="h6">Sign in to continue!</Typography>
 
       <TextField
         margin="normal"
@@ -63,11 +62,6 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-        </Grid>
-        <Grid item>
-          <Link href="#" variant="body2">
-            {"Forgot Password?"}
-          </Link>
         </Grid>
       </Grid>
 

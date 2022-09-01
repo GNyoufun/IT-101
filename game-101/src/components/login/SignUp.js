@@ -25,8 +25,8 @@ export default function SignUp() {
         mb: 2,
       }}
     >
-      <Typography>Create Account,</Typography>
-      <Typography>Sign up to get started!</Typography>
+      <Typography variant="h4">Create Account,</Typography>
+      <Typography variant="h6">Sign up to get started!</Typography>
 
       <TextField
         margin="normal"
