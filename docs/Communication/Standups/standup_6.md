@@ -4,7 +4,7 @@ parent: StandUps
 grand_parent: Communication
 nav_order: 6
 ---
-# StandUp 5 - 25/08/22
+# StandUp 6 - 01/09/22
 ## Meeting Information
 
  Objective:	Execute user stories, and update Github Pages
