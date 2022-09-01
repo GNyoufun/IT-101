@@ -18,28 +18,47 @@ const theme = dTheme;
 export default function SignInUp() {
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid
+        container
+        component='main'
+        sx={{
+          height: "100vh",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <CssBaseline />
         {/* left hand side */}
         <Grid
           item
           xs={12}
+          sm={7}
           md={7}
           lg={7}
-          sx={{ textAlign: "center", mt: 6, display: "flex" }}
+          sx={{ textAlign: "center", alignItems: "center" }}
         >
+          {/* our company name */}
           <Box
             sx={{
               display: "flex",
+              my: 2,
               flexDirection: "column",
               alignItems: "center",
-              my: 2,
             }}
           >
-            {/* our company name */}
-            <Typography variant="h2">IT 101</Typography>
+            <Typography variant='h2'>Game 101</Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: { lg: "flex", md: "flex", sm: "flex", xs: "none" },
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             {/* banner image */}
-            <img src={banner} width="90%" alt="Banner" />
+            <img src={banner} width='90%' alt='Banner' />
           </Box>
         </Grid>
 
@@ -47,10 +66,11 @@ export default function SignInUp() {
         <Grid item xs={12} md={5} lg={5}>
           <Box
             sx={{
-              my: 8,
+              mt: 2,
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {/* Tabs for selecting login or sign up*/}
