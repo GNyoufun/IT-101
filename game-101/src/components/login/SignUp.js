@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -24,6 +25,9 @@ export default function SignUp() {
         mb: 2,
       }}
     >
+      <Typography>Create Account,</Typography>
+      <Typography>Sign up to get started!</Typography>
+
       <TextField
         margin="normal"
         fullWidth

@@ -7,6 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -27,6 +28,9 @@ export default function SignIn() {
         mb: 2,
       }}
     >
+      <Typography>Welcome,</Typography>
+      <Typography>Sign in to continue!</Typography>
+
       <TextField
         margin="normal"
         required

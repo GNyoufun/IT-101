@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 export default function Submit() {
   const handleSubmit = (event) => {
@@ -24,10 +25,10 @@ export default function Submit() {
         mb: 2,
       }}
     >
-      <p>Retrieve your password here:</p>
-      <p>
+      <Typography>Retrieve your password here:</Typography>
+      <Typography>
         Enter your email address in the box below and click the submit button.
-      </p>
+      </Typography>
 
       <TextField
         margin="normal"
