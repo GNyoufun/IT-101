@@ -3,8 +3,16 @@ parent: API
 title: REST Design
 nav_order: 1
 ---
+# Rest HTTP Design
 
-## Rest HTTP Design
+## User Requests
+| Resource | Post | Get |
+| -------- | ---- | --- |
+| /users   | Create a new user | Get all users (auth. required) |
+| /users/{user_id} | NA | Get a user |
+| /users/{user_id}/games | Add a game to a user | Get all games for a user |
+| /users/{user_id}/games/{game_id} | NA | Get a game for a user |
+
 
 ### GET Requests
 
