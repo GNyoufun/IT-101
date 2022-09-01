@@ -1,8 +1,8 @@
 ---
 title: General Meeting - 29/08/22
-parent: StandUps
+parent: General Meetings
 grand_parent: Communication
-nav_order: 6
+nav_order: 1
 ---
 # General Meeting - 29/08/22
 ## Meeting Information

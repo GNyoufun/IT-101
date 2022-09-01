@@ -10,7 +10,7 @@ In particular, the application focuses on keep track of games a user owns, and m
 
 ## Project Design
 
-![Dataflow diagram for the project](/docs/assets/images/IT%20Project%20Diagrams.png)
+![Dataflow diagram for the project](../../assets/images/IT%20Project%20Diagrams.png)
 
 ## Epics
 ### Epic 1 - Frontend Design:
