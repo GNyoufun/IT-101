@@ -3,6 +3,7 @@ parent: About
 title: Project Details
 nav_order: 1
 ---
+# Project Details
 ## What is this project?
 
 This project is a simple web application, designed to keep track of many records personal to a user.
