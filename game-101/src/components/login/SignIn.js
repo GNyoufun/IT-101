@@ -27,10 +27,11 @@ export default function SignIn() {
         mb: 2,
       }}
     >
-      <Box sx={{ my: 2 }}>
+      <Box sx={{ my: 2}}>
         <Typography variant='h4'>Welcome,</Typography>
         <Typography variant='h6'>Sign in to continue!</Typography>
       </Box>
+
       <TextField
         margin='normal'
         required
@@ -72,7 +73,7 @@ export default function SignIn() {
             type='submit'
             variant='contained'
             size='large'
-            sx={{ my: 4, px: 4, borderRadius: "16px" }}
+            sx={{ my: 3, px: 4, borderRadius: "16px" }}
           >
             Sign In
           </Button>

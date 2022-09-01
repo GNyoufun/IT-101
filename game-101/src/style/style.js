@@ -33,7 +33,6 @@ justify-content: center;
 
 const TabsList = styled(TabsListUnstyled)(
   ({ theme }) => `
-min-width: 280px;
 background-color: #252E43;
 border-radius: 16px;
 margin-bottom: 28px;

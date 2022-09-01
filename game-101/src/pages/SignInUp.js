@@ -36,13 +36,13 @@ export default function SignInUp() {
           sm={7}
           md={7}
           lg={7}
-          sx={{ textAlign: "center", alignItems: "center" }}
+          sx={{ my:2, textAlign: "center", alignItems: "center" }}
         >
           {/* our company name */}
           <Box
             sx={{
               display: "flex",
-              my: 2,
+              mt: 2,
               flexDirection: "column",
               alignItems: "center",
             }}
@@ -81,7 +81,7 @@ export default function SignInUp() {
                   px: 6,
                   mt: 4,
                   pb: 4,
-                  maxWidth: 440,
+                  maxWidth: 450,
                 }}
               >
                 <TabsUnstyled defaultValue={0}>
