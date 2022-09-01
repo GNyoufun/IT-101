@@ -4,6 +4,9 @@ title: Project Details
 nav_order: 1
 ---
 # Project Details
+## Quick Links
+[Repository](https://github.com/GNyoufun/IT-101){: .btn .btn-purple .mr-2  } [Project Management](https://github.com/users/GNyoufun/projects/1){: .btn .btn-blue .mr-2  } 
+
 ## What is this project?
 
 This project is a simple web application, designed to keep track of many records personal to a user.
