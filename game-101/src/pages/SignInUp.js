@@ -66,7 +66,7 @@ export default function SignInUp() {
               >
                 <TabsUnstyled defaultValue={0}>
                   <TabsList>
-                    <Tab>Sign in</Tab>
+                    <Tab>Sign In</Tab>
                     <Tab>Sign Up</Tab>
                   </TabsList>
                   <TabPanelUnstyled value={0}>

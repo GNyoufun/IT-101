@@ -30,6 +30,7 @@ export default function SignUp() {
 
       <TextField
         margin="normal"
+        required
         fullWidth
         id="username"
         name="username"
