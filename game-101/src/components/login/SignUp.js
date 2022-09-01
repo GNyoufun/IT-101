@@ -1,8 +1,9 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -15,52 +16,51 @@ export default function SignUp() {
   };
 
   return (
-    <Box 
+    <Box
       noValidate
       onSubmit={handleSubmit}
       sx={{
         bgcolor: "background.paper",
-        mb: 2
+        mb: 2,
       }}
     >
       <TextField
-        margin='normal'
+        margin="normal"
         fullWidth
-        id='username'
-        name='username'
-        label='Username'
-        
+        id="username"
+        name="username"
+        label="Username"
       />
       <TextField
-        margin='normal'
+        margin="normal"
         required
         fullWidth
-        id='email'
-        name='email'
-        label='Email Address'
+        id="email"
+        name="email"
+        label="Email Address"
       />
       <TextField
-        margin='normal'
+        margin="normal"
         required
         fullWidth
-        id='password'
-        name='password'
-        label='Password'
-        type='password'
+        id="password"
+        name="password"
+        label="Password"
+        type="password"
       />
 
       <Grid container sx={{ justifyContent: "center" }}>
         <Grid item>
-          <Button type='submit' variant='contained' size='large' sx={{ my: 4, px: 4, borderRadius: '16px'}}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            sx={{ my: 4, px: 4, borderRadius: "16px" }}
+          >
             Sign Up
           </Button>
         </Grid>
       </Grid>
-
     </Box>
   );
 }
-
-
-
-

@@ -1,8 +1,6 @@
-
 import { styled } from "@mui/system";
 import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
-
 
 const Tab = styled(TabUnstyled)`
 font-family: IBM Plex Sans, sans-serif;
@@ -34,7 +32,7 @@ justify-content: center;
 `;
 
 const TabsList = styled(TabsListUnstyled)(
-({ theme }) => `
+  ({ theme }) => `
 min-width: 280px;
 background-color: #252E43;
 border-radius: 16px;
@@ -46,4 +44,4 @@ align-content: space-between;
 `
 );
 
-export {TabsList, Tab}
+export { TabsList, Tab };
