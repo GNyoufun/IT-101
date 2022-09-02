@@ -24,7 +24,7 @@ The System will use an Object Data Model (ODM) to connect to the MongoDB via the
 
     An ODM represents the website's data as JavaScript objects, which are then mapped to the underlying database. According to developer.mozilla.org
 
-The main method of connecting the database is established  connect function provided by the mongoose, which connects the database with the specified URL provided by the MongoDB cluster.
+The main method of connecting the database is established  connect function provided by the mongoose, which connects the database with the specified URL provided by the MongoDB cluster. Where the URL is saved in the environment file that will not be accessible from the github for security.
 
 The main interaction between the database and the JavaScript is using the mongoose framework functions. For example, insertMany(), DeleteMany(), find(), updateMany(), and findOneAndReplace(). 
 And other self-defined functions that incorparated the functions provided by the framework.
