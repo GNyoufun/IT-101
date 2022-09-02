@@ -89,4 +89,4 @@ _description here_
 
 ### Epic 5 - Frontend Implementation:
 
-_description here_
+Implement the UI designs.
