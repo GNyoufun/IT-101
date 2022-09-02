@@ -25,7 +25,7 @@ export default function SignUp() {
       }}
     >
       <Box sx={{ my: 2 }}>
-        <Typography variant='h4'>Create Account,</Typography>
+        <Typography variant='h4'>Create Account</Typography>
         <Typography variant='h6'>Sign up to get started!</Typography>
       </Box>
       <TextField

@@ -28,7 +28,7 @@ export default function SignIn() {
       }}
     >
       <Box sx={{ my: 2}}>
-        <Typography variant='h4'>Welcome,</Typography>
+        <Typography variant='h4'>Welcome</Typography>
         <Typography variant='h6'>Sign in to continue!</Typography>
       </Box>
 
