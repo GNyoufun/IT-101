@@ -10,7 +10,7 @@ nav_order: 4
 
 The front end will use [React](https://reactjs.org/) due to it's maturity and avilability of resources.
 
-### Coding Style
+#### Coding Style
 
 All front end code will follow the coding standard [here](https://docs.google.com/document/d/1qpdtyZcg5OTvGONVy0asJeFdyNPYCMJbIauFufSrvug/edit?usp=sharing).
 
@@ -18,7 +18,7 @@ All front end code will follow the coding standard [here](https://docs.google.co
 
 The back end of the application will use [Node.js](https://nodejs.org/) and [Express](https://expressjs.com/). These will communicate with an associated [MongoDB](https://www.mongodb.com/) database for data storage.
 
-### Coding Style
+#### Coding Style
 
 All backend code will follow the [JavaScript Semistandard](https://github.com/standard/semistandard) coding style.
 
