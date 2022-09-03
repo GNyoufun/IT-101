@@ -6,6 +6,7 @@ nav_order: 1
 # Rest HTTP Design
 
 ## User Requests
+
 | Resource | Post | Get |
 | -------- | ---- | --- |
 | /users   | Create a new user | Get all users (auth. required) |
