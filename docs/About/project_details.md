@@ -81,12 +81,12 @@ Designs and modelling on the functionality of the web server and database.
 
 ### Epic 3 - Backend Monitor Workflow:
 
-_description here_
+Implementation of backend workflow and synergy with the frontend and database. 
 
 ### Epic 4 - Backend Functions:
 
-_description here_
+Implementation of additional backend functionality.
 
 ### Epic 5 - Frontend Implementation:
 
-Implement the UI designs.
+Implementation of the UI designs in React.

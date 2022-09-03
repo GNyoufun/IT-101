@@ -31,4 +31,8 @@ Returns a .json with all relevant game information of game_id for a particular u
 
 **POST "v1/users/{user_id}"**
 
-Creates a new user record for user_id, with attributes specified in the .json request body.
+If user_id is specified, then the corresponding user's details will be updated according to the .json request body. If user_id is not specified, then a new user record is created, with attributes and user_id specified in the .json request body.
+
+**POST "v1/users/{user_id}/games/{game_id}**
+
+If game_id is specified, then the corresponding user's game details will be updated according to the .json request body. Otherwise, a new game record is added for the user, with attributes and game_id specified in the .json request body.
