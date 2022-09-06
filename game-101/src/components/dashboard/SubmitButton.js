@@ -4,16 +4,16 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
-const AddNewRecord = styled(Button)({
+const Submit = styled(Button)({
   borderRadius: 50,
   boxShadow: "none",
   textTransform: "none",
   fontSize: 16,
-  padding: "6px 12px",
+  padding: "6px 15py",
   border: "1px solid",
-  lineHeight: 1.5,
-  backgroundColor: "#151E34",
-  borderColor: "#151E34",
+  lineHeight: 1.2,
+  backgroundColor: "#0063cc",
+  borderColor: "#0063cc",
   fontFamily: [
     "-apple-system",
     "BlinkMacSystemFont",
@@ -26,25 +26,24 @@ const AddNewRecord = styled(Button)({
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
   ].join(","),
-  /* will change the hover color here */
   "&:hover": {
-    backgroundColor: "#C3CFEC",
-    borderColor: "#C3CFEC",
+    backgroundColor: "#89BFF9",
+    borderColor: "#89BFF9",
     boxShadow: "none",
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#151E34",
-    borderColor: "#151E34",
+    backgroundColor: "#0063cc",
+    borderColor: "#0063cc",
   },
 });
 
-export default function CustomizedButtons() {
+export default function SubmitButton() {
   return (
     <Stack spacing={2} direction="row">
-      <AddNewRecord variant="contained" disableRipple>
-        + New Record
-      </AddNewRecord>
+      <Submit variant="contained" disableRipple>
+        Submit
+      </Submit>
     </Stack>
   );
 }

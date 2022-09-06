@@ -1,9 +1,17 @@
-import { AddNewRecord } from "../components";
+import {
+  AddNewRecordButton,
+  LogoutButton,
+  SubmitButton,
+  UpdateButton,
+} from "../components";
 
 export default function Dashboard() {
   return (
     <div>
-      <AddNewRecord />
+      <AddNewRecordButton />
+      <LogoutButton />
+      <SubmitButton />
+      <UpdateButton />
     </div>
   );
 }
