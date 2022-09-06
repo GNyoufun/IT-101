@@ -1,9 +1,9 @@
-import { SubmitButton } from "../components";
+import { LightDarkSwitch } from "../components";
 
 const Dashboard = () => {
   return (
     <div>
-      <SubmitButton />
+      <LightDarkSwitch />
     </div>
   );
 };
