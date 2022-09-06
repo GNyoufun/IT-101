@@ -1,17 +1,11 @@
-import {
-  AddNewRecordButton,
-  LogoutButton,
-  SubmitButton,
-  UpdateButton,
-} from "../components";
+import { SubmitButton } from "../components";
 
-export default function Dashboard() {
+const Dashboard = () => {
   return (
     <div>
-      <AddNewRecordButton />
-      <LogoutButton />
       <SubmitButton />
-      <UpdateButton />
     </div>
   );
-}
+};
+
+export default Dashboard;
