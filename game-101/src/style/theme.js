@@ -15,6 +15,20 @@ const dTheme = createTheme({
       paper: '#151E34',
     },
   },
+  // customise side bar buttons
+  components: {
+    MuiListItemButton: {
+      defaultProps: {
+        sx:{
+          "&.Mui-selected": {
+            borderLeft: 4,
+            borderColor: "#0FC3CE",
+            backgroundColor: "#2C344A",
+          }
+        }
+      },
+    },
+  }
 });
 
 export default dTheme;
