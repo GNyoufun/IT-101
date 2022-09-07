@@ -57,7 +57,6 @@ export default function LightDarkSwitch() {
     <FormGroup>
       <FormControlLabel
         control={<LightDark sx={{ m: 1 }} defaultChecked />}
-        label="Theme Switch"
       />
     </FormGroup>
   );
