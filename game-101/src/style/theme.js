@@ -24,7 +24,7 @@ const dTheme = createTheme({
             borderLeft: 4,
             borderColor: "#0FC3CE",
             backgroundColor: "#2C344A",
-          }
+          },
         }
       },
     },

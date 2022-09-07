@@ -23,7 +23,7 @@ export default function SideBarListItems() {
         maxWidth: 240,
       }}
     >
-      <Divider sx={{ my: 1 }} />
+      <Divider sx={{ mt: 2 }} />
       <List component="nav" aria-label="main mailbox folders">
         <ListItemButton
           selected={selectedIndex === 0}
