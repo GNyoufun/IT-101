@@ -18,16 +18,18 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
+    elevation: 4,
     height: "100vh",
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
-
+    color: "primary.main",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
     boxSizing: "border-box",
+    border:"none",
 
     ...(!open && {
       overflowX: "hidden",
@@ -65,7 +67,7 @@ export default function SideBar() {
           <Grid container wrap="nowrap">
             <Avatar sx={{ width: 54, height: 54, ml: "4px", mr: 1}}>UN</Avatar>
             <Box>
-              <Typography variant="h5" component="h6">
+              <Typography variant="h5" component="h6" sx={{mt:"6px", lineHeight: 1.1}}>
                 Username
               </Typography>
               <Typography variant="body" component="h6" color="text.secondary" sx={{ fontSize: 12 }}>

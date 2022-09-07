@@ -14,6 +14,11 @@ const dTheme = createTheme({
       default: '#080C24',
       paper: '#151E34',
     },
+    text: {
+      secondary: '#949BB2',
+      primary: '#d5d5e0',
+    },
+    divider: '#282C3F',
   },
   // customise side bar buttons
   components: {
