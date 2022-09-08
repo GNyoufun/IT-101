@@ -5,7 +5,7 @@ import SearchBar from "./dashboard/SearchBar";
 import SubmitButton from "./dashboard/SubmitButton";
 import UpdateButton from "./dashboard/UpdateButton";
 import SideBarListItems from "./dashboard/SideBarListItems"
-import SideBar from "./dashboard/SideBar";
+import SideBar from "./sidebar/SideBar";
 import DashboardContent from "./dashboard/DashboardContent";
 
 import SignIn from "./login/SignIn";
