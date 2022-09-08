@@ -14,7 +14,7 @@ import {
   LogoutButton,
   LightDarkSwitch,
   SideBarListItems,
-} from ".";
+} from "./";
 
 const drawerWidth = 240;
 
