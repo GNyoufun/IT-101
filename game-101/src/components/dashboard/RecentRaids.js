@@ -1,11 +1,15 @@
-import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import * as React from "react";
+
+import {
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
+import Title from "./Title";
 
 // Generate Order Data
 function createData(id, date, name, game, outcome) {
@@ -13,27 +17,9 @@ function createData(id, date, name, game, outcome) {
 }
 
 const rows = [
-  createData(
-    0,
-    '17 Mar, 2022',
-    'C',
-    'LOL',
-    'Draw',
-  ),
-  createData(
-    1,
-    '16 Mar, 2022',
-    'B',
-    'LOL',
-    'Win',
-  ),
-  createData(
-    2,
-    '16 Mar, 2022',
-    'C',
-    'Overwatch',
-    'Win',
-  ),
+  createData(0, "17 Mar, 2022", "C", "LOL", "Draw"),
+  createData(1, "16 Mar, 2022", "B", "LOL", "Win"),
+  createData(2, "16 Mar, 2022", "C", "Overwatch", "Win"),
 ];
 
 function preventDefault(event) {

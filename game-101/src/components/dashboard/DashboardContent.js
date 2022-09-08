@@ -1,22 +1,20 @@
 import * as React from "react";
 
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+import { Box, Container, Grid, Paper } from "@mui/material";
+
 import { MostWon, RecentRaids, TimeSpent, TimeSpentEach } from ".";
 
 export default function DashboardContent() {
   return (
     <Box
-      component='main'
+      component="main"
       sx={{
         flexGrow: 1,
         height: "100vh",
         overflow: "auto",
       }}
     >
-      <Container maxWidth='lg' sx={{ mt: 8, mb: 2 }}>
+      <Container maxWidth="lg" sx={{ mt: 8, mb: 2 }}>
         <Grid container spacing={4}>
           {/* Text */}
           <Grid item xs={12} sm={6} md={3} lg={3}>

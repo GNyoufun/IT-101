@@ -1,10 +1,16 @@
 import * as React from "react";
 
-import { Avatar, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Grid,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { Divider, Grid, IconButton, Toolbar } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 
 import { LogoutButton, LightDarkSwitch, SideBarListItems } from "./";
