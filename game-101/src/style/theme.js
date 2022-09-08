@@ -6,19 +6,22 @@ const dTheme = createTheme({
     mode: 'dark',
     primary: {
       main: '#3071E8',
+      contrastText: '#d5d5e0',
     },
     secondary: {
       main: '#0FC3CE',
     },
     background: {
-      default: '#080C24',
-      paper: '#151E34',
+      paper: '#151e34',
+      default: '#080c24',
     },
     text: {
       secondary: '#949BB2',
-      primary: '#d5d5e0',
+      primary: '#c2c9de',
+      disabled: 'rgba(95,92,154,0.5)',
+      hint: '#AEB6D0',
     },
-    divider: '#282C3F',
+    divider: '#282c3f',
   },
   // customise side bar buttons
   components: {
