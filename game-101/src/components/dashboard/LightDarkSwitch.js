@@ -55,7 +55,7 @@ const LightDark = styled(Switch)(({ theme }) => ({
 export default function LightDarkSwitch() {
   return (
     <FormGroup>
-      <FormControlLabel control={<LightDark sx={{ m: 1 }} defaultChecked />} />
+      <FormControlLabel control={<LightDark defaultChecked />} />
     </FormGroup>
   );
 }

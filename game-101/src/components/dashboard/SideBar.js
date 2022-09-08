@@ -104,19 +104,17 @@ export default function SideBar() {
         <Divider />
         <Grid
           container
-          alignItems="flex-start"
-          wrap="nowrap"
+          direction="row"
           justifyContent="center"
+          alignItems="center"
           sx={{ pt: 1 }}
         >
-          <Stack>
-            <Box sx={{ pl: 3 }}>
+            <Box sx={{ml:3}}>
               <LightDarkSwitch />
             </Box>
-            <Box sx={{ pl: 4 }}>
+            <Box sx={{my:[1]}}>
               <LogoutButton />
             </Box>
-          </Stack>
         </Grid>
       </Grid>
     </Drawer>

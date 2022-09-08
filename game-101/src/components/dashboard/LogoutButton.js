@@ -10,7 +10,10 @@ export default function LogoutButton() {
         borderRadius: 0,
       }}
     >
-      <LogoutIcon />
+      <LogoutIcon       sx={{
+        width: "32px",
+        height: "32px",
+      }} />
     </IconButton>
   );
 }

@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
+import SettingIcon from "@mui/icons-material/Settings";
 import TimelineIcon from "@mui/icons-material/Timeline";
 
 export default function SideBarListItems() {
@@ -66,7 +67,20 @@ export default function SideBarListItems() {
           </ListItemIcon>
           <ListItemText primary="People" />
         </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 4}
+          onClick={(event) => handleListItemClick(event, 4)}
+        >
+          <ListItemIcon>
+            <SettingIcon />
+          </ListItemIcon>
+          <ListItemText primary="Setting" />
+        </ListItemButton>
+
       </List>
+
+
       <Divider />
     </Box>
   );
