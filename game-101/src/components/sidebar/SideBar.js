@@ -4,17 +4,10 @@ import { Avatar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
+import { Divider, Grid, IconButton, Toolbar } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import Toolbar from "@mui/material/Toolbar";
 
-import {
-  LogoutButton,
-  LightDarkSwitch,
-  SideBarListItems,
-} from "./";
+import { LogoutButton, LightDarkSwitch, SideBarListItems } from "./";
 
 const drawerWidth = 240;
 
@@ -108,12 +101,12 @@ export default function SideBar() {
           alignItems="center"
           sx={{ pt: 1 }}
         >
-            <Box sx={{ml:3}}>
-              <LightDarkSwitch />
-            </Box>
-            <Box sx={{my:[1]}}>
-              <LogoutButton />
-            </Box>
+          <Box sx={{ ml: 3 }}>
+            <LightDarkSwitch />
+          </Box>
+          <Box sx={{ my: [1] }}>
+            <LogoutButton />
+          </Box>
         </Grid>
       </Grid>
     </Drawer>

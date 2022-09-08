@@ -1,10 +1,14 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+
+import {
+  Box,
+  List,
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
@@ -77,9 +81,7 @@ export default function SideBarListItems() {
           </ListItemIcon>
           <ListItemText primary="Setting" />
         </ListItemButton>
-
       </List>
-
 
       <Divider />
     </Box>
