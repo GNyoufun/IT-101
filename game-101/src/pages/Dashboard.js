@@ -1,9 +1,19 @@
-import { AddNewRecord } from "../components";
+import { Box, CssBaseline } from "@mui/material";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
-export default function Dashboard() {
+import { SideBar, DashboardContent } from "../components";
+import dTheme from "../style/theme";
+
+const Dashboard = () => {
   return (
-    <div>
-      <AddNewRecord />
-    </div>
+    <ThemeProvider theme={dTheme}>
+      <CssBaseline />
+      <Box sx={{ display: "flex" }}>
+        <SideBar />
+        <DashboardContent />
+      </Box>
+    </ThemeProvider>
   );
-}
+};
+
+export default Dashboard;

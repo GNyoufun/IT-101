@@ -1,12 +1,8 @@
 import * as React from "react";
 
 import { ThemeProvider } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
+import { Box, CssBaseline, Grid, Typography } from "@mui/material";
+import { TabPanelUnstyled, TabsUnstyled } from "@mui/base";
 
 import { SignIn, SignUp } from "../components";
 import { Tab, TabsList } from "../style/style";
@@ -20,7 +16,7 @@ export default function SignInUp() {
     <ThemeProvider theme={theme}>
       <Grid
         container
-        component='main'
+        component="main"
         sx={{
           height: "100vh",
           flexDirection: "row",
@@ -36,7 +32,7 @@ export default function SignInUp() {
           sm={7}
           md={7}
           lg={7}
-          sx={{ my:2, textAlign: "center", alignItems: "center" }}
+          sx={{ my: 2, textAlign: "center", alignItems: "center" }}
         >
           {/* our company name */}
           <Box
@@ -47,7 +43,7 @@ export default function SignInUp() {
               alignItems: "center",
             }}
           >
-            <Typography variant='h2'>Game 101</Typography>
+            <Typography variant="h2">Game 101</Typography>
           </Box>
 
           <Box
@@ -58,7 +54,7 @@ export default function SignInUp() {
             }}
           >
             {/* banner image */}
-            <img src={banner} width='90%' alt='Banner' />
+            <img src={banner} width="90%" alt="Banner" />
           </Box>
         </Grid>
 

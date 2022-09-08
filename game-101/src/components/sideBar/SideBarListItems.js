@@ -1,0 +1,89 @@
+import * as React from "react";
+
+import {
+  Box,
+  List,
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PeopleIcon from "@mui/icons-material/People";
+import SettingIcon from "@mui/icons-material/Settings";
+import TimelineIcon from "@mui/icons-material/Timeline";
+
+export default function SideBarListItems() {
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
+  return (
+    <Box
+      sx={{
+        maxWidth: 240,
+      }}
+    >
+      <Divider sx={{ mt: 2 }} />
+      <List component="nav" aria-label="main mailbox folders">
+        <ListItemButton
+          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, 0)}
+        >
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItemButton>
+
+        <Divider sx={{ my: 1 }} />
+
+        <ListItemButton
+          selected={selectedIndex === 1}
+          onClick={(event) => handleListItemClick(event, 1)}
+        >
+          <ListItemIcon>
+            <AddCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add New Record" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 2}
+          onClick={(event) => handleListItemClick(event, 2)}
+        >
+          <ListItemIcon>
+            <TimelineIcon />
+          </ListItemIcon>
+          <ListItemText primary="Game History" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 3}
+          onClick={(event) => handleListItemClick(event, 3)}
+        >
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="People" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 4}
+          onClick={(event) => handleListItemClick(event, 4)}
+        >
+          <ListItemIcon>
+            <SettingIcon />
+          </ListItemIcon>
+          <ListItemText primary="Setting" />
+        </ListItemButton>
+      </List>
+
+      <Divider />
+    </Box>
+  );
+}
