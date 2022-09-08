@@ -8,14 +8,13 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import MuiDrawer from "@mui/material/Drawer";
-import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 
 import {
   LogoutButton,
   LightDarkSwitch,
   SideBarListItems,
-} from "../../components";
+} from ".";
 
 const drawerWidth = 240;
 
