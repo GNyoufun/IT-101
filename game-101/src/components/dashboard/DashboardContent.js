@@ -4,25 +4,22 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import RecentRaids from "./RecentRaids";
-import TimeSpent from "./TimeSpent";
-import MostWon from "./MostWon";
-import TimeSpentEach from "./TimeSpentEach";
+import { MostWon, RecentRaids, TimeSpent, TimeSpentEach } from ".";
 
 export default function DashboardContent() {
   return (
     <Box
-      component="main"
+      component='main'
       sx={{
         flexGrow: 1,
         height: "100vh",
         overflow: "auto",
       }}
     >
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 2 }}>
+      <Container maxWidth='lg' sx={{ mt: 8, mb: 2 }}>
         <Grid container spacing={4}>
           {/* Text */}
-          <Grid item xs={12} sm={6}  md={3} lg={3}>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
             <Paper
               sx={{
                 p: 2,
@@ -31,10 +28,10 @@ export default function DashboardContent() {
                 height: 240,
               }}
             >
-              <MostWon/>
+              <MostWon />
             </Paper>
           </Grid>
-          
+
           {/* Chart */}
           <Grid item xs={12} sm={6} md={4} lg={4}>
             <Paper
@@ -45,7 +42,7 @@ export default function DashboardContent() {
                 height: 240,
               }}
             >
-              <TimeSpent/>
+              <TimeSpent />
             </Paper>
           </Grid>
 
@@ -59,13 +56,13 @@ export default function DashboardContent() {
                 height: 240,
               }}
             >
-              <TimeSpentEach/>
+              <TimeSpentEach />
             </Paper>
           </Grid>
 
           {/* Recent Raids */}
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: "flex", flexDirection: "column"}}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
               <RecentRaids />
             </Paper>
           </Grid>
