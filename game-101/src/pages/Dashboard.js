@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import { SideBar} from "../components";
+import { SideBar, DashboardContent} from "../components";
 import dTheme from "../style/theme";
 
 
@@ -11,6 +11,7 @@ const Dashboard = () => {
        <CssBaseline />
       <Box sx={{ display: 'flex'}}>
         <SideBar />
+        <DashboardContent/>
      </Box>
     </ThemeProvider>
   );
