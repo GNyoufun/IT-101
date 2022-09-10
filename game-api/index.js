@@ -16,11 +16,11 @@ app.get('/users/:user_id', (req, res, next) => {
     res.send('Return user_id');
 });
 
-app.get('users/:user_id/games', (req, res, next) => {
+app.get('/users/:user_id/games', (req, res, next) => {
     res.send('Return all games for user_id');
 });
 
-app.get('users/:user_id/games/:game_id', (req, res, next) => {
+app.get('/users/:user_id/games/:game_id', (req, res, next) => {
     res.send('Return game_id for user_id');
 });
 
@@ -34,11 +34,11 @@ app.post('/users/:user_id', (req, res, next) => {
     res.send('Update user_id');
 });
 
-app.post('users/:user_id/games', (req, res, next) => {
+app.post('/users/:user_id/games', (req, res, next) => {
     res.send('Add game for user_id');
 });
 
-app.post('users/:user_id/games/:game_id', (req, res, next) => {
+app.post('/users/:user_id/games/:game_id', (req, res, next) => {
     res.send('Update game_id for user_id');
 });
 
