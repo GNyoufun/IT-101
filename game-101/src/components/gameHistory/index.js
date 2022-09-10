@@ -1,3 +1,6 @@
+import AddNewRecordButton from "./AddNewRecordButton";
 import GameCard from "./GameCard";
+import GameList from "./GameList";
+import SearchBar from "./SearchBar";
 
-export { GameCard };
+export { AddNewRecordButton, GameCard, GameList, SearchBar };
