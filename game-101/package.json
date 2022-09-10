@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
     "file-loader": "^6.2.0"
   }
 }
