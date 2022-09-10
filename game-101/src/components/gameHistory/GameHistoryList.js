@@ -1,9 +1,9 @@
 import { Container, Stack } from "@mui/material";
 
-import { AddNewRecordButton, GameList, SearchBar } from "./";
+import { AddNewRecordButton, GameList, SearchBar } from ".";
 import GAMES from "../../_mock/games";
 
-export default function GameHistoryContent() {
+export default function GameHistoryList() {
   return (
     <Container>
       <Stack
