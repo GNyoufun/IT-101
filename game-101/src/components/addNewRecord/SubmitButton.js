@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { styled } from "@mui/material/styles";
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 
 const Submit = styled(Button)({
   borderRadius: 50,
@@ -39,10 +39,8 @@ const Submit = styled(Button)({
 
 export default function SubmitButton() {
   return (
-    <Stack spacing={2} direction="row">
-      <Submit variant="contained" disableRipple>
-        Submit
-      </Submit>
-    </Stack>
+    <Submit variant="contained" disableRipple>
+      Submit
+    </Submit>
   );
 }

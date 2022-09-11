@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { styled } from "@mui/material/styles";
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 
 const AddNewRecord = styled(Button)({
   borderRadius: 50,
@@ -40,10 +40,8 @@ const AddNewRecord = styled(Button)({
 
 export default function AddNewRecordButton() {
   return (
-    <Stack spacing={2} direction="row">
-      <AddNewRecord variant="contained" disableRipple>
-        + New Record
-      </AddNewRecord>
-    </Stack>
+    <AddNewRecord variant="contained" disableRipple>
+      + New Record
+    </AddNewRecord>
   );
 }
