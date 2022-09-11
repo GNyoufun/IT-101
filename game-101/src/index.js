@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import reportWebVitals from "./reportWebVitals";
-import { GameHistoryClick } from "./pages";
+import { Setting } from "./pages";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GameHistoryClick />
+    <Setting />
   </React.StrictMode>
 );
 
