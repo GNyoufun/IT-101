@@ -32,11 +32,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: string
+          $ref: '#/components/requestBodies/UserArray'
         '400':
           description: Invalid username/password supplied
         '401':
@@ -224,11 +220,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
+          $ref: '#/components/requestBodies/GameArray'
         '400':
           description: Invalid username/password supplied
         '401':
@@ -267,14 +259,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Game'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Game'
         '400':
           description: Invalid attributes, or game already exists
         '404':
@@ -317,7 +309,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Game'
         '400':
           description: Invalid username/password supplied
         '401':
@@ -362,14 +354,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Game'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Game'
         '400':
           description: Incorrect attributes specified
         '404':
@@ -421,41 +413,40 @@ components:
     User:
       type: object
       properties:
-        id:
+        user_id:
           type: integer
           format: int64
           example: 10
         username:
           type: string
           example: theUser
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: James
-        email:
-          type: string
-          example: john@email.com
         password:
           type: string
-          example: '12345'
-        phone:
-          type: string
-          example: '12345'
-        userStatus:
+          example: Password.10
+    Game:
+      type: object
+      properties:
+        game_id:
           type: integer
-          description: User Status
-          format: int32
-          example: 1
-      xml:
-        name: user
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: Minecraft
   requestBodies:
     UserArray:
-      description: List of user object
+      description: List of user objects
       content:
         application/json:
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
+    GameArray:
+      description: List of game objects
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Game'
