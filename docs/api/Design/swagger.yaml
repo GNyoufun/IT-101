@@ -4,9 +4,11 @@ info:
   description: |-
     This is the REST HTTP design used to communicate between the frontend and backend
     of the web application.
+    
+    [Go Back](https://gnyoufun.github.io/IT-101/api)
   version: 1.1.0
 servers:
-  - url: ''
+  - url: http://localhost:3000
 paths:
   /users:
     get:
@@ -47,6 +49,19 @@ paths:
       summary: Create a new user
       description: Creates a new user record with attributes specified in the request body
       operationId: createUser
+      parameters:
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Created user object
         content:
@@ -113,6 +128,18 @@ paths:
         - name: user_id
           in: path
           description: The specified user to update
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
           required: true
           schema:
             type: string
@@ -223,6 +250,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Created game object
         content:
@@ -240,10 +279,143 @@ paths:
           description: Invalid attributes, or game already exists
         '404':
           description: User_id not found
-  # /users/{user_id}/games/{game_id}:
-  #   get:
-  #     tags:
-  #       - Users
+  /users/{user_id}/games/{game_id}:
+    get:
+      tags:
+        - Games
+      summary: Get a game for a user
+      description: Returns all relevant game information
+      operationId: getUserGame
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: game_id
+          in: path
+          description: The specified game
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username/password supplied
+        '401':
+          description: No username/password supplied
+        '403':
+          description: Invalid privileges for supplied username/password
+        '404':
+          description: User_id or game_id not found
+    put:
+      tags:
+        - Games
+      summary: Update a game's details for a user
+      description: Update game details according to the attributes specified in the request body
+      operationId: updateUserGame
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: game_id
+          in: path
+          description: The specified game to update
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Game object with updated details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Incorrect attributes specified
+        '404':
+          description: User_id or game_id not found
+    delete:
+      tags:
+        - Games
+      summary: Delete a user's specified game
+      description: ''
+      operationId: deleteUserGame
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: game_id
+          in: path
+          description: The specified game to delete
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: header
+          description: The user name for authentication
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          description: The password for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid username/password supplied
+        '401':
+          description: No username/password supplied
+        '403':
+          description: Invalid privileges for supplied username/password
+        '404':
+          description: User_id or game_id not found
 components:
   schemas:
     User:
@@ -278,18 +450,6 @@ components:
           example: 1
       xml:
         name: user
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
   requestBodies:
     UserArray:
       description: List of user object
@@ -299,16 +459,3 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/User'
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
