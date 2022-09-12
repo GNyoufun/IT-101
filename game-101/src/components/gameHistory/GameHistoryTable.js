@@ -152,14 +152,15 @@ export default function GameHistoryTable() {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        mb={5}
+        px={4}
+        py={4}
       >
         <SearchBar />
         <AddNewRecordButton />
       </Stack>
 
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 480 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">Gaming Record</TableCell>
