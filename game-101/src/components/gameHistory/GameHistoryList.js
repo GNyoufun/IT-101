@@ -10,8 +10,8 @@ export default function GameHistoryList() {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        py={4}
         px={4}
+        py={4}
       >
         <SearchBar />
         <AddNewRecordButton />
