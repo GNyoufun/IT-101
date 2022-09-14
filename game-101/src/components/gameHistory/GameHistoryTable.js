@@ -12,7 +12,7 @@ import {
   Paper,
 } from "@mui/material";
 
-import { AddNewRecordButton, SearchBar } from "./";
+import { AddNewRecordButton, BackButton, SearchBar } from "./";
 
 function createData(
   GamingRecord,
@@ -155,6 +155,7 @@ export default function GameHistoryTable() {
         px={4}
         py={4}
       >
+        <BackButton />
         <SearchBar />
         <AddNewRecordButton />
       </Stack>
