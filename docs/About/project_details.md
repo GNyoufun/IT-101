@@ -90,3 +90,7 @@ Implementation of additional backend functionality.
 ### Epic 5 - Frontend Implementation:
 
 Implementation of the UI designs in React.
+
+### Epic 6 - Frontend and Backend Integration:
+
+Link the frontend and backend together so both servers can work together.
