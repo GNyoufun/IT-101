@@ -23,21 +23,27 @@ const GameTitleSchema = new Schema({
 
 /**
  * Basic Player ID schema, stores:
- * @inner GameID : Player's in game ID
+ * @inner InGameID : Player's in game ID
  * @inner Level : Player's in game leve
  */
 const gameIDSchema = new Schema({
-    GameID: String,
+    InGameID: String,
     Level: Number
 });
 
 /**
  * Basic WebApp User schema, stores:
- * @inner UserId : stores the user ID, e.g. email address
+ * @inner UserId : stores the user ID for references from the server
+ * @inner UserName: stores the user name
+ * @inner UserPassword: stores the hashed user password
+ * @inner token: stores the token for authentication connect 
  * @inner Games : a list of games that the user owns and stored 
  */
  const userSchema = new Schema({
-    UserId: String, 
+    UserId: Number,
+    UserName: String,
+    UserPassword: String,
+    token: String, 
     Games: [GameTitleSchema]
 })
 
@@ -50,7 +56,9 @@ const gameIDSchema = new Schema({
  * @inner Team : An array of gameIDSchema which contains the team member of the 
  *                doucmented Raid
  * @inner Durations : Time span for the raid in minutes,
- * @inner Result : the outcome of the Raid, with default value Draw
+ * @inner Result : The outcome of the Raid, with default value Draw
+ * @inner Diffculty: Rate on the diffculty of the raid 
+ * @inner Rating: Rate the raid for enjoyment 
  * @inner comments : general comments for the Raid 
  */
 const reviewSchema = new Schema({
@@ -65,6 +73,7 @@ const reviewSchema = new Schema({
         enum: ["Win", "Draw", "Lost"],
         default: 'Draw' },
     Difficulty: Number, // 1 - 10 
+    Rating: Number,
     comments: { type: String, default: 'No Comment' }
 });
 
