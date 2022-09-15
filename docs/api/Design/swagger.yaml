@@ -233,7 +233,7 @@ paths:
       tags:
         - Games
       summary: Add a game for a user
-      description: Add a new game record for a user, with attributes and game_id specified in the request body
+      description: Add a new game record for a user, with attributes and game specified in the request body
       operationId: createUserGame
       parameters:
         - name: user_id
@@ -271,7 +271,7 @@ paths:
           description: Invalid attributes, or game already exists
         '404':
           description: User_id not found
-  /users/{user_id}/games/{game_id}:
+  /users/{user_id}/games/{game}:
     get:
       tags:
         - Games
@@ -285,7 +285,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: game_id
+        - name: game
           in: path
           description: The specified game
           required: true
@@ -317,7 +317,7 @@ paths:
         '403':
           description: Invalid privileges for supplied username/password
         '404':
-          description: User_id or game_id not found
+          description: User_id or game not found
     put:
       tags:
         - Games
@@ -331,7 +331,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: game_id
+        - name: game
           in: path
           description: The specified game to update
           required: true
@@ -365,7 +365,7 @@ paths:
         '400':
           description: Incorrect attributes specified
         '404':
-          description: User_id or game_id not found
+          description: User_id or game not found
     delete:
       tags:
         - Games
@@ -379,7 +379,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: game_id
+        - name: game
           in: path
           description: The specified game to delete
           required: true
@@ -407,7 +407,7 @@ paths:
         '403':
           description: Invalid privileges for supplied username/password
         '404':
-          description: User_id or game_id not found
+          description: User_id or game not found
 components:
   schemas:
     User:
@@ -426,37 +426,15 @@ components:
     Game:
       type: object
       properties:
-        game_id:
-          type: integer
-          format: int64
-          example: 10
-        name:
+        game_title:
           type: string
           example: Minecraft
         type:
           type: string
           example: Open World
-    UserGameId:
-      type: object
-      properties:
-        game_id:
-          type: integer
-          format: int64
-          example: 10
-        in_game_id:
-          type: string
-          example: Player123
-        level:
-          type: integer
-          format: int64
-          example: 5
     RaidReview:
       type: object
       properties:
-        game_id:
-          type: integer
-          format: int64
-          example: 10
         game_title:
           type: string
           example: FFXIV
