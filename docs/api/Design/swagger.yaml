@@ -448,7 +448,15 @@ components:
         team:
           type: array
           items:
-            $ref: '#/components/schemas/UserGameId'
+            type: object
+            properties:
+              in_game_id:
+                type: string
+                example: Player123
+              level:
+                type: integer
+                format: int64
+                example: 5
         durations:
           type: integer
           format: int64
