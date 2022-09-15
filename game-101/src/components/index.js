@@ -1,3 +1,5 @@
+import AddRecordFrom from "./addNewRecord/AddRecordForm";
+
 import DashboardContent from "./dashboard/DashboardContent";
 
 import GameHistoryList from "./gameHistory/GameHistoryList";
@@ -11,6 +13,7 @@ import { ChangeDetails } from "./setting/ChangeDetails";
 import SideBar from "./sideBar/SideBar";
 
 export {
+  AddRecordFrom,
   DashboardContent,
   GameHistoryList,
   GameHistoryTable,
