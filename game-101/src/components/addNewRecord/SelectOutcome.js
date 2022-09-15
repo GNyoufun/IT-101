@@ -1,24 +1,31 @@
 import * as React from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import { FormControl, Grid, Select } from "@mui/material";
 
 export default function SelectOutcome() {
+  const [result, setResult] = React.useState("");
+
+  const handleChange = (event) => {
+    setResult(event.target.value);
+  };
+
   return (
-    <FormControl>
-      <FormLabel id="Win/Lose">Outcome</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="Win/Lose"
-        name="position"
-        defaultValue="Win"
-      >
-        <FormControlLabel value="Win" control={<Radio />} label="Win" />
-        <FormControlLabel value="Draw" control={<Radio />} label="Draw" />
-        <FormControlLabel value="Lose" control={<Radio />} label="Lose" />
-      </RadioGroup>
-    </FormControl>
+    <Grid item xs={12} sm={4.5} md={2}>
+      <FormControl fullWidth>
+        <InputLabel id='demo-simple-select-label'>Result</InputLabel>
+        <Select
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          value={result}
+          label='Result'
+          onChange={handleChange}
+        >
+          <MenuItem value={1}>Win</MenuItem>
+          <MenuItem value={2}>Draw</MenuItem>
+          <MenuItem value={3}>Lose</MenuItem>
+        </Select>
+      </FormControl>
+    </Grid>
   );
 }

@@ -1,47 +1,64 @@
 import * as React from "react";
 
 import { Box, Container, Grid, Paper } from "@mui/material";
-import {Comment, SubmitButton, SelectDateTime, SelectGameName, SelectOutcome, SelectTeammates} from "./";
+import {
+  Comment,
+  SubmitButton,
+  SelectDateTime,
+  SelectGameName,
+  SelectOutcome,
+  SelectTeammates,
+  SelectTimeLength,
+  SelectRating,
+  SelectDifficulty,
+} from "./";
 
 export default function AddRecordFrom() {
   return (
     <Box
-      component="main"
+      component='main'
       sx={{
-        flexGrow: 1,
+        flexGrow: 2,
         height: "100vh",
         overflow: "auto",
       }}
     >
-      <Container maxWidth="sm" sx={{ mt: 8, mb: 2 }}>
+      <Container maxWidth='md' sx={{ mt: 8, mb: 4 }}>
         <Paper
-              sx={{
-                p: 4,
-              }}
-            >
-        <Grid container spacing={4}>
-          {/* Text */}
-          <Grid item xs={12} rowSpacing={2}>
+          sx={{
+            p: 4,
+          }}
+        >
+          <Grid container spacing={3} alignItems='center'>
+            {/* Text */}
+            <Grid item xs={12} md={6}>
               <SelectGameName />
-          </Grid>
+            </Grid>
 
-          <Grid item xs={12} rowSpacing={2}>
+            <Grid item xs={12} md={6}>
               <SelectDateTime />
-          </Grid>
+            </Grid>
 
-       
-        <Grid item xs={12} sx={{mx:1}}>
+            <Grid item xs={12} sm={7.5} md={4}>
+              <SelectTimeLength />
+            </Grid>
             <SelectOutcome />
-          </Grid>
+            
+            <SelectDifficulty />
+            <SelectRating />
 
-          <Grid item xs={12}>
-            <SelectTeammates />
-          </Grid>
+            <Grid item xs={12} >
+              <SelectTeammates />
+            </Grid>
 
-          <Grid item xs={12}>
-            <Comment />
+            <Grid item xs={12} >
+              <Comment />
+            </Grid>
+
+            <Grid container xs={12} sx={{ mt: 4, justifyContent: "center" }}>
+              <SubmitButton />
+            </Grid>
           </Grid>
-        </Grid>
         </Paper>
       </Container>
     </Box>

@@ -20,7 +20,6 @@ export default function Comment() {
           label="Comment"
           placeholder="Add your comment here"
           multiline
-          minRows={2}
           value={value}
           onChange={handleChange}
         />

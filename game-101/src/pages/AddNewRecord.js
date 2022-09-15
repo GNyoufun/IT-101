@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Stack } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { SideBar } from "../components";
