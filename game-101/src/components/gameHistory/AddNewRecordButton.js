@@ -25,10 +25,9 @@ const AddNewRecord = styled(Button)({
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
   ].join(","),
-  /* will change the hover color here */
   "&:hover": {
-    backgroundColor: "#C3CFEC",
-    borderColor: "#C3CFEC",
+    backgroundColor: "#343C5A",
+    borderColor: "#343C5A",
     boxShadow: "none",
   },
   "&:active": {
