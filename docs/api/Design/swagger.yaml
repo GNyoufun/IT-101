@@ -433,6 +433,60 @@ components:
         name:
           type: string
           example: Minecraft
+        type:
+          type: string
+          example: Open World
+    UserGameId:
+      type: object
+      properties:
+        game_id:
+          type: integer
+          format: int64
+          example: 10
+        in_game_id:
+          type: string
+          example: Player123
+        level:
+          type: integer
+          format: int64
+          example: 5
+    RaidReview:
+      type: object
+      properties:
+        game_id:
+          type: integer
+          format: int64
+          example: 10
+        game_title:
+          type: string
+          example: FFXIV
+        user_id:
+          type: integer
+          format: int64
+          example: 10
+        date:
+          type: string
+          example: 21/09/2022
+        team:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserGameId'
+        durations:
+          type: integer
+          format: int64
+          example: 20
+        result:
+          type: string
+          enum: ["Win", "Draw", "Lost"]
+        difficulty:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          example: 5
+        comments:
+          type: string
+          example: No Comment
   requestBodies:
     UserArray:
       description: List of user objects
