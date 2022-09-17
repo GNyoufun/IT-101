@@ -12,6 +12,10 @@ app.post('/users', (req, res, next) => {
     res.send('Create user');
 });
 
+app.get('/users/login', (req, res, next) => {
+    res.send('Login user');
+});
+
 app.get('/users/:user_id', (req, res, next) => {
     res.send('Return user_id');
 });
@@ -23,6 +27,10 @@ app.put('/users/:user_id', (req, res, next) => {
 app.delete('/users/:user_id', (req, res, next) => {
     res.send('Deleting user_id');
 })
+
+app.get('/users/:user_id/logout', (req, res, next) => {
+    res.send('Logout user_id');
+});
 
 // Game requests
 
