@@ -18,15 +18,9 @@ paths:
       description: Returns a list of all user_ids
       operationId: getUsers
       parameters:
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -34,11 +28,11 @@ paths:
         '200':
           $ref: '#/components/requestBodies/UserArray'
         '400':
-          description: Invalid username/password supplied
+          description: Invalid token supplied
         '401':
-          description: No username/password supplied
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
     post:
       tags:
         - Users
@@ -46,15 +40,9 @@ paths:
       description: Creates a new user record with attributes specified in the request body
       operationId: createUser
       parameters:
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -73,20 +61,14 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Invalid attributes, or user already exists
-  /users/{user_id}:
+  /users/login:
     get:
       tags:
         - Users
-      summary: Get a specified user
-      description: Returns all relevant user information
-      operationId: getUser
+      summary: Logs in a specified user
+      description: Log in a user with their username and password, returns an auth token and user_id for future requests
+      operationId: loginUser
       parameters:
-        - name: user_id
-          in: path
-          description: The specified user
-          required: true
-          schema:
-            type: string
         - name: username
           in: header
           description: The user name for authentication
@@ -105,13 +87,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Token'
         '400':
           description: Invalid username/password supplied
         '401':
           description: No username/password supplied
+  /users/{user_id}:
+    get:
+      tags:
+        - Users
+      summary: Get a specified user
+      description: Returns all relevant user information
+      operationId: getUser
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid token supplied
+        '401':
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
         '404':
           description: User_id not found
     put:
@@ -127,15 +140,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -169,15 +176,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -185,11 +186,32 @@ paths:
         '200':
           description: Successful operation
         '400':
-          description: Invalid username/password supplied
+          description: Invalid token supplied
         '401':
-          description: No username/password supplied
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
+        '404':
+          description: User_id not found
+  /users/{user_id}/logout:
+    get:
+      tags:
+        - Users
+      summary: Logs out a specified user
+      description: Log out a user (according to user_id) and invalidate their token
+      operationId: logoutUser
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user to logout
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: User_id is not logged in
         '404':
           description: User_id not found
   /users/{user_id}/games:
@@ -206,15 +228,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -222,11 +238,11 @@ paths:
         '200':
           $ref: '#/components/requestBodies/GameArray'
         '400':
-          description: Invalid username/password supplied
+          description: Invalid token supplied
         '401':
-          description: No username/password supplied
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
         '404':
           description: User_id not found
     post:
@@ -242,15 +258,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -291,15 +301,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -311,11 +315,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Game'
         '400':
-          description: Invalid username/password supplied
+          description: Invalid token supplied
         '401':
-          description: No username/password supplied
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
         '404':
           description: User_id or game not found
     put:
@@ -337,15 +341,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -385,15 +383,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: username
+        - name: token
           in: header
-          description: The user name for authentication
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: header
-          description: The password for authentication
+          description: Authentication token
           required: true
           schema:
             type: string
@@ -401,22 +393,28 @@ paths:
         '200':
           description: Successful operation
         '400':
-          description: Invalid username/password supplied
+          description: Invalid token supplied
         '401':
-          description: No username/password supplied
+          description: No token supplied
         '403':
-          description: Invalid privileges for supplied username/password
+          description: Invalid privileges for supplied token
         '404':
           description: User_id or game not found
 components:
   schemas:
-    User:
+    Token:
       type: object
       properties:
+        token:
+          type: string
+          example: asdf1234jkl5678
         user_id:
           type: integer
           format: int64
           example: 10
+    User:
+      type: object
+      properties:
         username:
           type: string
           example: theUser
