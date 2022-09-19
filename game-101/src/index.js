@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import reportWebVitals from "./reportWebVitals";
-import { GameHistoryRecord } from "./pages";
+import { Setting } from "./pages";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GameHistoryRecord />
+    <Setting />
   </React.StrictMode>
 );
 
