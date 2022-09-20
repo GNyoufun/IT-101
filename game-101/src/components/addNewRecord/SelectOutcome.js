@@ -3,29 +3,27 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl, Grid, Select } from "@mui/material";
 
-export default function SelectOutcome() {
-  const [result, setResult] = React.useState("");
-
-  const handleChange = (event) => {
-    setResult(event.target.value);
+export default function SelectOutcome(props){
+  const handleChange = (e) => {
+    props.setInputs({result: e.target.value});
   };
 
   return (
-    <Grid item xs={12} sm={4.5} md={2}>
+    <Grid item xs={12} sm={4.5} md={2.5}>
       <FormControl fullWidth>
-        <InputLabel id='demo-simple-select-label'>Result</InputLabel>
+        <InputLabel id='result'>Result</InputLabel>
         <Select
-          labelId='demo-simple-select-label'
-          id='demo-simple-select'
-          value={result}
+          labelId='result'
+          id='result'
           label='Result'
+          value={props.result}
           onChange={handleChange}
         >
-          <MenuItem value={1}>Win</MenuItem>
-          <MenuItem value={2}>Draw</MenuItem>
-          <MenuItem value={3}>Lose</MenuItem>
+          <MenuItem value={"Win"}>Win</MenuItem>
+          <MenuItem value={"Draw"}>Draw</MenuItem>
+          <MenuItem value={"Lose"}>Lose</MenuItem>
         </Select>
       </FormControl>
     </Grid>
   );
-}
+};

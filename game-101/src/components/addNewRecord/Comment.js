@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function Comment() {
-  const [value, setValue] = React.useState("Controlled");
+  const [comment, setComment] = React.useState("");
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setComment(event.target.value);
   };
+  
 
   return (
     <Box
@@ -20,7 +21,7 @@ export default function Comment() {
           label="Comment"
           placeholder="Add your comment here"
           multiline
-          value={value}
+          value={comment}
           onChange={handleChange}
         />
     </Box>

@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Grid, TextField, FormControl, Typography } from "@mui/material";
+import {Grid, TextField, FormControl, Typography } from "@mui/material";
 
 export default function SelectTimeLength() {
+
   const [hour, setHour] = React.useState(0);
   const [min, setMin] = React.useState(30);
 
@@ -27,6 +28,7 @@ export default function SelectTimeLength() {
     } else if (min > 59) {
       setHour(~~(min / 60));
       setMin(min % 60);
+      console.log(min);
     }
   };
 
@@ -37,12 +39,13 @@ export default function SelectTimeLength() {
       </Grid>
 
       <Grid item xs={5.5} sm={3.5}>
-        <FormControl fullWidth>
+        <FormControl fullWidth >
           <TextField
             id='Hour'
             label='Hour'
             type='number'
             value={hour}
+            onSubmit={handleHourChange}
             onChange={handleHourChange}
             onBlur={handleBlurHour}
             InputLabelProps={{
@@ -68,6 +71,7 @@ export default function SelectTimeLength() {
             label='Min'
             type='number'
             value={min}
+            onSubmit={handleMinChange}
             onChange={handleMinChange}
             onBlur={handleBlurMin}
             InputLabelProps={{

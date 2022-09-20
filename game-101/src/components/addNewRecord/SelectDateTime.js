@@ -6,10 +6,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import SelectTimeLength from "./SelectTimeLength";
 
 export default function SelectDateTime() {
-  const [value, setValue] = React.useState(dayjs("2022-08-18T21:11:54"));
+  const [datetime, setValue] = React.useState(dayjs("2022-08-18T21:11:54"));
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -28,7 +27,7 @@ export default function SelectDateTime() {
             <DesktopDatePicker
               label='Date'
               inputFormat='MM/DD/YYYY'
-              value={value}
+              value={datetime}
               onChange={handleChange}
               renderInput={(params) => <TextField {...params} />}
             />
@@ -39,7 +38,7 @@ export default function SelectDateTime() {
           <FormControl fullWidth>
             <TimePicker
               label='Start Time'
-              value={value}
+              value={datetime}
               onChange={handleChange}
               renderInput={(params) => <TextField {...params} />}
             />

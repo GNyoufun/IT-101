@@ -39,7 +39,7 @@ const Submit = styled(Button)({
 
 export default function SubmitButton() {
   return (
-    <Submit variant="contained" disableRipple>
+    <Submit variant="contained" type="submit">
       Submit
     </Submit>
   );

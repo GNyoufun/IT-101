@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { Box, Container, Grid, Paper } from "@mui/material";
 import {
   Comment,
@@ -14,14 +13,24 @@ import {
 } from "./";
 
 export default function AddRecordFrom() {
+  const [inputs, setInputs] = React.useState({result:""});
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log({result: inputs.result});
+  };
+
   return (
     <Box
-      component='main'
+      component='form'
       sx={{
         flexGrow: 2,
         height: "100vh",
         overflow: "auto",
       }}
+      onSubmit={handleSubmit}
+      noValidate
+      autoComplete="off"
     >
       <Container maxWidth='md' sx={{ mt: 8, mb: 4 }}>
         <Paper
@@ -31,7 +40,7 @@ export default function AddRecordFrom() {
         >
           <Grid container spacing={3} alignItems='center'>
             {/* Text */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} >
               <SelectGameName />
             </Grid>
 
@@ -39,19 +48,19 @@ export default function AddRecordFrom() {
               <SelectDateTime />
             </Grid>
 
-            <Grid item xs={12} sm={7.5} md={4}>
+            <Grid item xs={12} sm={7.5} md={3.5}>
               <SelectTimeLength />
             </Grid>
-            <SelectOutcome />
+            <SelectOutcome result={inputs.result} setInputs={setInputs}/>
             
             <SelectDifficulty />
             <SelectRating />
 
-            <Grid item xs={12} >
+            <Grid item xs={12} md={6}>
               <SelectTeammates />
             </Grid>
 
-            <Grid item xs={12} >
+            <Grid item xs={12} md={6}>
               <Comment />
             </Grid>
 
