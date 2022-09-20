@@ -1,16 +1,22 @@
 {
     "name": "mongodb-test",
-    "version": "1",
+    "version": "1.0.0",
     "main": "mongodb_trial.js",
     "dependencies": {
+        "concurrently": "^7.4.0",
         "dotenv": "^16.0.1",
         "mongodb": "^4.8.1",
         "mongoose": "^6.5.2",
+        "npm-run-all": "^4.1.5",
         "semistandard": "^16.0.1"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js && node mongodb_trial.js ",
-        "func": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js"
+        "intro": "echo Start building MongoDB connection and functions",
+        "db": "node mongoose.js",
+        "schema": "node mongooseSchema.js ",        
+        "func": "node mongooseFunc.js",
+        "trial": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js && node mongodb_trial.js ",
+        "start": "npm-run-all --silent intro db schema func trial >> app.log 2>&1",
+        "test": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js && node mongodb_trial.js "
     }
 }

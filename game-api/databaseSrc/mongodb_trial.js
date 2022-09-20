@@ -1,9 +1,19 @@
 const {
-  retrieveReview,
-  insertReivew,
-  updateReivew,
-  FindReplaceReivew,
-  deleteReivew
+    retrieveReview,
+    insertReivew,
+    updateReivew,
+    FindReplaceReivew,
+    deleteReivew,
+
+    TeamWinRate,
+    gameWinRate,
+    averageTime,
+    averageDifficulty,
+    averageRating,
+
+    extractGames,
+    extractTeam
+
 } = require('./mongooseFunc.js');
 
 const{
@@ -23,31 +33,31 @@ const IDS = [{ GameID: 'GAMER1100', Level: 11 },
 
 const raid = [
             {   Title: "FFXIV", 
-                userId: "User101", 
+                UserId: 1, 
                 Team: IDS,
                 Durations: 20, 
                 Result: "Win"
             },
             {   Title: "FFXIV", 
-                userId: "User101", 
+                UserId: 1, 
                 Team: IDS,
                 Durations: 20, 
                 Result: "Win"
             },
             {   Title: "FFXIV", 
-                userId: "User101", 
+                UserId: 1, 
                 Team: IDS,
                 Durations: 20, 
                 Result: "Win"
             },
             {   Title: "FFXIV", 
-                userId: "User101", 
+                UserId: 1, 
                 Team: IDLost,
                 Durations: 20, 
                 Result: "Lost"
             },
             {   Title: "FFXIV", 
-                userId: "User101", 
+                UserId: 1, 
                 Team: IDLost,
                 Durations: 20, 
                 Result: "Lost"
@@ -56,17 +66,24 @@ const raid = [
 
 
 
+// deleteReivew(review);
+// insertReivew(review, raid);
 
 
-// insertReivew(raid);
-// deleteReivew();
+
+let game = new Promise(function (resolve, reject) {
+    resolve(extractGames(1));
+});
+
+game.then(function (result){
+    console.log(result)
+})
+
+let team = new Promise(function (resolve, reject) {
+    resolve(extractTeam("FFXIV", 1));
+});
 
 
-// Example input
-// retrieveReview({ Title: "FFXIV"}, function (err, reviews) {
-//     const players = [];
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(reviews);
-// });
+team.then(function (result){
+    console.log(result)
+})

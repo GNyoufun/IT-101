@@ -5,10 +5,8 @@ const { Schema } = mongoose;
 // connect to MongoDB
 connectDB();
 mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB\n');
 });
-
-
 
 /**
  * Game Schema that stores the Title of the game and the type of the game 

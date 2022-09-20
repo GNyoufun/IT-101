@@ -108,11 +108,23 @@ async function extractGames(id){
     return game;
 }
 
-async function extractTeam(){
-    const games = await review.find({Title: GameTitle}).lean();
-
-
+async function extractTeam(GameTitle, id){
+    const games = await review.find({Title: GameTitle, UserId: id}).lean();
+    let teammate = [];
     
+    for (let i = 0; i < games.length; i++) {
+        let team = games[i].Team
+        teammate.push(...team);
+    }
+
+    const uniqueTeammate = teammate.filter((value, index) => {
+        const _value = JSON.stringify(value);
+        return index === teammate.findIndex(obj => {
+          return JSON.stringify(obj) === _value;
+        });
+      });
+    
+    return uniqueTeammate;
 }
 
 function logging(str, department, time){
@@ -277,7 +289,8 @@ module.exports = {
     averageDifficulty,
     averageRating,
 
-    extractGames
+    extractGames,
+    extractTeam
 
 };
 
