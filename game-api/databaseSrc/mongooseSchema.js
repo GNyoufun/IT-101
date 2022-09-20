@@ -33,25 +33,25 @@ const gameIDSchema = new Schema({
 
 /**
  * Basic WebApp User schema, stores:
- * @inner UserId : stores the user ID for references from the server
+ * @inner _id : stores the user ID for references from the server
  * @inner UserName: stores the user name
  * @inner UserPassword: stores the hashed user password
  * @inner token: stores the token for authentication connect 
  * @inner Games : a list of games that the user owns and stored 
  */
  const userSchema = new Schema({
-    UserId: Number,
+    _id: Number,
     UserName: String,
     UserPassword: String,
-    token: String, 
+    Token: String, 
     Games: [GameTitleSchema]
 })
 
 
 /**
  * Basic Raid Reivew schema, stores:
+ * @inner _id : User ID 
  * @inner Title : Player's in game ID
- * @inner userId : User ID 
  * @inner Date : Player's in game level
  * @inner Team : An array of gameIDSchema which contains the team member of the 
  *                doucmented Raid
@@ -62,8 +62,8 @@ const gameIDSchema = new Schema({
  * @inner comments : general comments for the Raid 
  */
 const reviewSchema = new Schema({
+    UserId: Number, 
     Title: String, 
-    userId: String, 
     Date: { type: Date, default: Date.now },
     // Team: [{ type: Schema.Types.ObjectId, ref: gameIDSchema }],
     Team: [gameIDSchema],
@@ -73,7 +73,7 @@ const reviewSchema = new Schema({
         enum: ["Win", "Draw", "Lost"],
         default: 'Draw' },
     Difficulty: Number, // 1 - 10 
-    Rating: Number,
+    Rating: Number, // 1 - 10 
     comments: { type: String, default: 'No Comment' }
 });
 

@@ -1,29 +1,36 @@
 const Schema = require('./mongooseSchema.js');
-// const gameID = Schema.gameID;
-const review = Schema.review;
+const{
+    review,
+    userid
+} = require('./mongooseSchema.js');
+const precent = 100;
 
 /**
  * Provide the search query parameters to retrieve documents
- * @param  {[list]} findItem a list of quaries
+ * @param collect the collection model name 
+ * @param  {[list]} finddocs a list of quaries
  * @example{ header : matches }
- * @callback reviews that retrieves the results
  */
-function retrieveReview(findItem) {
+async function retrieveReview(collect, finddocs) {
+    let docs;
     try {
-        const win = await review.find(findItem).lean();
+         docs = await collect.find(finddocs).lean();
     }
     catch (err) {
         console.error(err);
     }
+    return docs;
 }
+
 
 /**
  * Provide a list of schemas as parameters to insert into collections
+ * @param collect the collection model name 
  * @param  {[list]} reviews a list of schemas
  * @example{ header : matches }
  */
-function insertReivew(reviews) {
-    review.collection.insertMany(reviews, function (err) {
+function insertReivew(collect, reviews) {
+    collect.collection.insertMany(reviews, function (err) {
         if (err) {
             return console.error(err);
         } else {
@@ -32,15 +39,17 @@ function insertReivew(reviews) {
     });
 }
 
+
 /**
  * Provide the search query parameters, and the changable as changes to apply
- * @param  {[list]} findItem a list of search queries
+ * @param collect the collection model name 
+ * @param  {[list]} finddocs a list of search queries
  * @example{ header : matches } 
  * @param  {[list]} changes a list of changable value for the given field
  * @example{ header : changes }
  */
-function updateReivew(findItem, changes) {
-    review.collection.updateMany({ findItem }, { changes }, function (err) {
+function updateReivew(collect, finddocs, changes) {
+    collect.collection.updateMany({ finddocs }, { changes }, function (err) {
         if (err) {
             return console.error(err);
         } else {
@@ -49,19 +58,21 @@ function updateReivew(findItem, changes) {
     });
 }
 
+
 /**
  * Provide the search query parameters, and the changable as changes to apply
- * @param  {[list]} findItem a list of search queries
+ * @param collect the collection model name 
+ * @param  {[list]} finddocs a list of search queries
  * @example{ header : matches } 
  * @param  {[list]} changes a list of changable value for the given field
  * @example{ header : changes }
  * @param  {[Boolean]} returnDoc determine which versions of the document 
- *                        to return, replaced document when true
- *                        older versions of document when false
- *                        It is defaulted to false
+ *                               to return, replaced document when true
+ *                               older versions of document when false
+ *                               It is defaulted to false
  */
-function FindReplaceReivew(findItem, changes, returnedDoc = false) {
-    review.collection.findOneAndReplace({ findItem }, { changes },
+function FindReplaceReivew(collect, finddocs, changes, returnedDoc = false) {
+    collect.collection.findOneAndReplace({ finddocs }, { changes },
         { returnNewDocument: returnedDoc }, function (err, doc) {
             if (err) {
                 return console.error(err);
@@ -78,16 +89,34 @@ function FindReplaceReivew(findItem, changes, returnedDoc = false) {
 
 /**
  * Provide the search query parameters, and remove from the collection
+ * @param collect the collection model name 
  * @param  {[list]} reviews a list of queries
  */
-function deleteReivew(reviews) {
-    review.collection.deleteMany(reviews, function (err) {
+function deleteReivew(collect, docs) {
+    collect.collection.deleteMany(docs, function (err) {
         if (err) {
             return console.error(err);
         } else {
             console.log('Removed selected documents in the collection ');
         }
     });
+}
+
+async function extractGames(id){
+    const users = await userid.findById(id).lean();
+    const game = users.Games;
+    return game;
+}
+
+async function extractTeam(){
+    const games = await review.find({Title: GameTitle}).lean();
+
+
+    
+}
+
+function logging(str, department, time){
+    let logs = time + " - "
 }
 
 
@@ -103,8 +132,8 @@ async function TeamWinRate(GameTitle, Time = new Date()){
 
     for(let i = 0; i < players.length; i++){
         let win_result = players[i].win;
-        let lost_result = players[i].lost;
-        players[i].winRate = win_result / (win_result + lost_result);
+        let total = players[i].total;
+        players[i].winRate = (win_result / total) * precent;
     }
 
     return players 
@@ -118,7 +147,6 @@ async function gameWinRate(GameTitle, Time = new Date()){
 
     let rate = win.length / (win.length + lost.length);
 
-    // console.log(rate);
     return rate 
 }
 
@@ -142,30 +170,49 @@ async function averageTime(GameTitle, result = "both"){
     return total_time / num_review;
 };
 
-function averageDifficulty(GameTitle, Time = new Date()){
+async function averageDifficulty(GameTitle, Time = new Date()){
     const win = await review.find({Title: GameTitle, Result: 'Win', 
                                         Date: { $lt:ISODate(Time) }}).lean();
     const lost = await review.find({Title: GameTitle, Result: 'Lost', 
                                         Date: { $lt:ISODate(Time) }}).lean();
     const difficult = [];
 
-    calcDiff(difficult, win, "win");
-    calcDiff(difficult, lost, "lost");
+    calcAverage(difficult, win, "win", Difficulty);
+    calcAverage(difficult, lost, "lost", Difficulty);
 
     for(let i = 0; i < difficult.length; i++){
-        let win_result = difficult[i].win;
-        let lost_result = difficult[i].lost;
-        difficult[i].winRate = win_result / (win_result + lost_result);
+        let num_win_diff = difficult[i].win;
+        let num_lost_diff = difficult[i].lost;
+        let total = difficult[i].total;
+        difficult[i].winRate = (num_win_diff / total) * precent;
+        difficult[i].lostRate = (num_lost_diff / total) * precent;
     }
 };
 
-function calcResult(players, documents, result){
-    const win_preset = 0; 
+async function averageRating(GameTitle, Time = new Date()){
+    const documents = await review.find({Title: GameTitle, Result: 'Win', 
+                                        Date: { $lt:ISODate(Time) }}).lean();
+    const lost = await review.find({Title: GameTitle, Result: 'Lost', 
+                                        Date: { $lt:ISODate(Time) }}).lean();
 
-    if (result == "win"){
-        const win_preset = 1; 
+    const rate = [];
+
+    calcAverage(rate, win, "win", Rating);
+    calcAverage(rate, lost, "lost", Rating);
+
+    for(let i = 0; i < rate.length; i++){
+        let num_win_diff = rate[i].win;
+        let num_lost_diff = rate[i].lost;
+        let total = rate[i].total;
+        rate[i].winRate = (num_win_diff / total) * precent;
+        rate[i].lostRate = (num_lost_diff / total) * precent;
     }
-    const lost_preset = 1 - win_preset;
+
+};
+
+function calcResult(players, documents, result){
+    const win_preset = preset(result)[0]; 
+    const lost_preset = preset(result)[1];
 
     for (let i = 0; i < documents.length; i++) {
         let team = documents[i].Team;
@@ -176,34 +223,44 @@ function calcResult(players, documents, result){
             if ((playerID = 
                     players.findIndex((obj => obj.GameID === gameid))) != -1){
                 players[playerID][result]++;
+                players[playerID][total]++;
             }else{
-                players.push({GameID: gameid, win: win_preset, 
+                players.push({GameID: gameid, total: 1, win: win_preset, 
                                 lost: lost_preset});
             }
         }
     }
 }
 
-function calcDiff(difficult, documents, result){
-    const win_preset = 0; 
-
-    if (result == "win"){
-        const win_preset = 1; 
-    }
-    const lost_preset = 1 - win_preset;
+function calcAverage(collection, documents, result, items){
+    const win_preset = preset(result)[0]; 
+    const lost_preset = preset(result)[1];
 
     for (let i = 0; i < documents.length; i++) {
-        let diff = documents[i].Difficulty;
+        let diff = documents[i].items;
         let diffID;
 
         if ((diffID = 
-                difficult.findIndex((obj => obj.Difficulty === diff))) != -1){
-            difficult[playerID][result]++;
+            collection.findIndex((obj => obj.Difficulty === diff))) != -1){
+                collection[diffID][result]++;
+                collection[diffID][total]++;
         }else{
-            difficult.push({Difficulty: diff, win: win_preset, 
+            collection.push({Difficulty: diff, total: 1, win: win_preset, 
                             lost: lost_preset});
         }
     }
+}
+
+function preset(result) {
+    const win_preset = 0; 
+
+    if (result == "win"){
+        win_preset = 1; 
+    }
+    
+    const lost_preset = 1 - win_preset;
+
+    return [win_preset, lost_preset]
 }
 
 
@@ -217,8 +274,12 @@ module.exports = {
     TeamWinRate,
     gameWinRate,
     averageTime,
-    averageDifficulty
+    averageDifficulty,
+    averageRating,
+
+    extractGames
 
 };
 
 require('./mongodb_trial.js');
+
