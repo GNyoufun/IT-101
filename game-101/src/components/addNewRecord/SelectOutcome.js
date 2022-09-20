@@ -1,22 +1,20 @@
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import { FormControl, Grid, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function SelectOutcome(props){
   const handleChange = (e) => {
-    props.setInputs({result: e.target.value});
+    props.setInputs({...props.inputs, result: e.target.value});
   };
 
   return (
-    <Grid item xs={12} sm={4.5} md={2.5}>
+
       <FormControl fullWidth>
         <InputLabel id='result'>Result</InputLabel>
         <Select
           labelId='result'
           id='result'
           label='Result'
-          value={props.result}
+          value={props.inputs.result}
           onChange={handleChange}
         >
           <MenuItem value={"Win"}>Win</MenuItem>
@@ -24,6 +22,6 @@ export default function SelectOutcome(props){
           <MenuItem value={"Lose"}>Lose</MenuItem>
         </Select>
       </FormControl>
-    </Grid>
+
   );
 };

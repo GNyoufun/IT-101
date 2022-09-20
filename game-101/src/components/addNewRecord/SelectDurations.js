@@ -1,24 +1,40 @@
 import * as React from "react";
 import {Grid, TextField, FormControl, Typography } from "@mui/material";
 
-export default function SelectTimeLength() {
-
+export default function SelectDurations(props) {
   const [hour, setHour] = React.useState(0);
   const [min, setMin] = React.useState(30);
 
-  const handleHourChange = (event) => {
-    setHour(event.target.value === "" ? "" : Number(event.target.value));
+  const handleHourChange = (e) => {
+    const newHour = e.target.value === "" ? "" : Number(e.target.value)
+    setHour(newHour);
+    if (newHour < 0) {
+      props.setInputs({...props.inputs, durations: 0});
+    } else if (newHour > 9) {
+      props.setInputs({...props.inputs, durations: 9*60});
+    } else {
+      props.setInputs({...props.inputs, durations: newHour*60+min});
+    }
   };
 
-  const handleMinChange = (event) => {
-    setMin(event.target.value === "" ? "" : Number(event.target.value));
+  const handleMinChange = (e) => {
+    const newMin = e.target.value === "" ? "" : Number(e.target.value)
+    props.setInputs({...props.inputs, durations: newMin});
+    setMin(newMin);
+    if (newMin < 0) {
+      props.setInputs({...props.inputs, durations: 0});
+    } else if (newMin > 59){
+      props.setInputs({...props.inputs, durations: newMin});
+    } else{
+      props.setInputs({...props.inputs, durations: newMin+hour*60});
+    }
   };
 
   const handleBlurHour = () => {
     if (hour < 0) {
       setHour(0);
-    } else if (hour > 9) {
-      setHour(9);
+    } else if (hour > 12) {
+      setHour(12);
     }
   };
 
@@ -28,24 +44,22 @@ export default function SelectTimeLength() {
     } else if (min > 59) {
       setHour(~~(min / 60));
       setMin(min % 60);
-      console.log(min);
     }
   };
 
   return (
     <Grid container alignItems="center" justifyContent="space-between">
-      <Grid item xs={12} sm={3.5} sx={{mb:[1]}}>
-        <Typography component='legend' sx={{wordBreak:'break-word'}}>Time Length</Typography>
+      <Grid item xs={3} sm={3} sx={{mb:[1]}}>
+        <Typography component='legend' sx={{wordBreak:'break-word'}}>Time length</Typography>
       </Grid>
 
-      <Grid item xs={5.5} sm={3.5}>
+      <Grid item xs={3.5} sm={3.5}>
         <FormControl fullWidth >
           <TextField
             id='Hour'
             label='Hour'
             type='number'
             value={hour}
-            onSubmit={handleHourChange}
             onChange={handleHourChange}
             onBlur={handleBlurHour}
             InputLabelProps={{
@@ -53,7 +67,7 @@ export default function SelectTimeLength() {
             }}
             InputProps={{
               inputProps: {
-                max: 9,
+                max: 12,
                 min: 0,
               },
             }}
@@ -64,14 +78,13 @@ export default function SelectTimeLength() {
         :
       </Grid>
 
-      <Grid item xs={5.5} sm={4}>
+      <Grid item xs={4} sm={4}>
         <FormControl fullWidth>
           <TextField
             id='Min'
             label='Min'
             type='number'
             value={min}
-            onSubmit={handleMinChange}
             onChange={handleMinChange}
             onBlur={handleBlurMin}
             InputLabelProps={{

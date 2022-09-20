@@ -4,18 +4,18 @@ import SelectGameName from "./SelectGameName";
 import SelectOutcome from "./SelectOutcome";
 import SelectRating from "./SelectRating";
 import SelectTeammates from "./SelectTeammates";
-import SelectDateTime from "./SelectDateTime";
-import SelectTimeLength from "./SelectTimeLength";
+import SelectDate from "./SelectDate";
+import SelectDurations from "./SelectDurations";
 import SelectDifficulty from "./SelectDifficulty";
 
 export {
   Comment,
   SubmitButton,
-  SelectDateTime,
+  SelectDate,
   SelectDifficulty,
   SelectGameName,
   SelectOutcome,
   SelectRating,
   SelectTeammates,
-  SelectTimeLength,
+  SelectDurations,
 };
