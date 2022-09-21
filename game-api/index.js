@@ -31,9 +31,19 @@ app.get('/users', async (req, res, next) => {
 // create a new user
 app.post('/users', async (req, res, next) => {
     console.log('Starting POST request /users');
-    // TODO: check for duplicate users and free id
+    // check if a user with the same username and password already exist
+    const query = {
+        UserName: req.body.username,
+        UserPassword: req.body.password
+    };
+    if((await retrieveReview(userid, query)).length > 0) {
+        res.sendStatus(400);
+        console.log('Failed POST request /users');
+        return;
+    }
+
+    // create new user
     const user = {
-        _id: 132,
         UserName: req.body.username,
         UserPassword: req.body.password,
         Token: "",
@@ -51,24 +61,24 @@ app.get('/users/login', async (req, res, next) => {
         // no username/password specified
         res.sendStatus(401);
         console.log('Failed GET request /users/login, 401');
+        return;
+    }
+
+    const query = {
+        UserName: req.headers.username,
+        UserPassword: req.headers.password
+    };
+    const result = await retrieveReview(userid, query, { Token: 1 });
+    if(result.length === 0) {
+        // no such user found
+        res.sendStatus(400);
+        console.log('Failed GET request /users/login, 400');
     }
     else {
-        const query = {
-            UserName: req.headers.username,
-            UserPassword: req.headers.password
-        };
-        const result = await retrieveReview(userid, query, { Token: 1 });
-        if(result.length === 0) {
-            // no such user found
-            res.sendStatus(400);
-            console.log('Failed GET request /users/login, 400');
-        }
-        else {
-            // success
-            res.status(200);
-            res.json(result);
-            console.log('Successful GET request /users/login');
-        }
+        // success
+        res.status(200);
+        res.json(result);
+        console.log('Successful GET request /users/login');
     }
 });
 
