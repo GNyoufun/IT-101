@@ -25,25 +25,21 @@ export default function SideBarListItems() {
 
   const itemsList = [
     {
-      index: 1,
-      text: "Add Record",
+      text: "Add New",
       icon: <AddCircleIcon />,
       to: "/add-record",
     },
     {
-      index: 2,
       text: "Game History",
       icon: <TimelineIcon />,
       to: "/history",
     },
     {
-      index: 3,
       text: "People",
       icon: <PeopleIcon />,
       to: "/people",
     },
     {
-      index: 4,
       text: "Setting",
       icon: <SettingIcon />,
       to: "/setting",
@@ -84,7 +80,7 @@ export default function SideBarListItems() {
             </ListItemButton>
           );
         })}
-        ;
+        
       </List>
 
       <Divider />
