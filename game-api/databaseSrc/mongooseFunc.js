@@ -14,7 +14,7 @@ const precent = 100;
 async function retrieveReview(collect, finddocs, options) {
     let docs;
     try {
-         docs = await collect.find(finddocs, options).lean();
+        docs = await collect.find(finddocs, options).lean();
     }
     catch (err) {
         console.error(err);

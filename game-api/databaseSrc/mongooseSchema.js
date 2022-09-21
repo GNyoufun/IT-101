@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const connectDB = require('./mongoose.js');
+const ObjectId = require('mongodb').ObjectId;
 const { Schema } = mongoose;
 
 // connect to MongoDB
@@ -40,7 +41,7 @@ const gameIDSchema = new Schema({
  * @inner Games : a list of games that the user owns and stored 
  */
  const userSchema = new Schema({
-    _id: Number,
+    _id: ObjectId,
     UserName: String,
     UserPassword: String,
     Token: String, 

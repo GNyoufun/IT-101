@@ -174,8 +174,29 @@ app.get('/users/:user_id/logout', async (req, res, next) => {
 
 // Game requests
 
-app.get('/users/:user_id/games', (req, res, next) => {
-    res.send('Return all games for user_id');
+app.get('/users/:user_id/games', async (req, res, next) => {
+    console.log('Starting GET request /users/%s/games', req.params.user_id);
+    try {
+        const id = ObjectId(req.params.user_id);
+        const result = await retrieveReview(userid, { _id: id }, { _id: 0, Games: 1 });
+        if(result.length === 0) {
+            // not found user id
+            res.sendStatus(404);
+            console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
+        }
+        else {
+            // success
+            res.status(200);
+            res.json(result);
+            console.log('Successful GET request /users/%s/games', req.params.user_id);
+        }
+    }
+    catch (err) {
+        // invalid (not found) user id
+        res.sendStatus(404);
+        console.error(err);
+        console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
+    }
 });
 
 app.post('/users/:user_id/games', (req, res, next) => {
