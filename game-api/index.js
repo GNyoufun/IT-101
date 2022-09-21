@@ -1,18 +1,19 @@
-require('dotenv').config({ path: './databaseSrc/.env'});
+require('dotenv').config({ path: './databaseSrc/.env' });
 const express = require('express');
 const bodyParser = require('body-parser');
 const ObjectId = require('mongodb').ObjectId;
 const {
-    retrieveReview,
-    insertReivew,
-    updateReivew,
-    FindReplaceReivew,
-    deleteReivew
+  retrieveReview,
+  insertReivew,
+  updateReivew,
+  FindReplaceReivew,
+  deleteReivew
 } = require('./databaseSrc/mongooseFunc.js');
 const {
-    review,
-    userid
+  review,
+  userid
 } = require('./databaseSrc/mongooseSchema.js');
+const e = require('express');
 
 // App setup
 const app = express();
@@ -27,10 +28,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * @responseBody list of users, user fields are {_id, username}
  */
 app.get('/users', async (req, res, next) => {
-    console.log('Starting GET request /users');
-    res.status(200);
-    res.json(await retrieveReview(userid, {}, { UserName: 1 }));
-    console.log('Successful GET request /users');
+  console.log('Starting GET request /users');
+  res.status(200);
+  res.json(await retrieveReview(userid, {}, { UserName: 1 }));
+  console.log('Successful GET request /users');
 });
 
 /**
@@ -41,28 +42,34 @@ app.get('/users', async (req, res, next) => {
  * @body password
  */
 app.post('/users', async (req, res, next) => {
-    console.log('Starting POST request /users');
-    // check if a user with the same username and password already exist
-    const query = {
-        UserName: req.body.username,
-        UserPassword: req.body.password
-    };
-    if((await retrieveReview(userid, query)).length > 0) {
-        res.sendStatus(400);
-        console.log('Failed POST request /users');
-        return;
-    }
+  console.log('Starting POST request /users');
+  // check if a user with the same username and password already exist
+  const query = {
+    UserName: req.body.username,
+    UserPassword: req.body.password
+  };
+  const invalid = Boolean(
+    req.body.username === undefined ||
+        req.body.password === undefined ||
+        (await retrieveReview(userid, query)).length > 0
+  );
+  if (invalid) {
+    // bad request
+    res.sendStatus(400);
+    console.log('Failed POST request /users');
+    return;
+  }
 
-    // create new user
-    const user = {
-        UserName: req.body.username,
-        UserPassword: req.body.password,
-        Token: "",
-        Games: []
-    };
-    await insertReivew(userid, [user]);
-    res.sendStatus(200);
-    console.log('Successful POST request /users');
+  // create new user
+  const user = {
+    UserName: req.body.username,
+    UserPassword: req.body.password,
+    Token: '',
+    Games: []
+  };
+  await insertReivew(userid, [user]);
+  res.sendStatus(200);
+  console.log('Successful POST request /users');
 });
 
 /**
@@ -72,66 +79,63 @@ app.post('/users', async (req, res, next) => {
  * @responseBody list of tokens (should only be one), token fields are {_id, token}
  */
 app.get('/users/login', async (req, res, next) => {
-    console.log('Starting GET request /users/login');
-    if(req.headers.username === undefined || req.headers.password === undefined) {
-        // no username/password specified
-        res.sendStatus(401);
-        console.log('Failed GET request /users/login, 401');
-        return;
-    }
+  console.log('Starting GET request /users/login');
+  if (req.headers.username === undefined || req.headers.password === undefined) {
+    // no username/password specified
+    res.sendStatus(401);
+    console.log('Failed GET request /users/login, 401');
+    return;
+  }
 
-    const query = {
-        UserName: req.headers.username,
-        UserPassword: req.headers.password
-    };
-    const result = await retrieveReview(userid, query, { Token: 1 });
-    if(result.length === 0) {
-        // no such user found
-        res.sendStatus(400);
-        console.log('Failed GET request /users/login, 400');
-    }
-    else {
-        // success
-        res.status(200);
-        res.json(result);
-        console.log('Successful GET request /users/login');
-    }
+  const query = {
+    UserName: req.headers.username,
+    UserPassword: req.headers.password
+  };
+  const result = await retrieveReview(userid, query, { Token: 1 });
+  if (result.length === 0) {
+    // no such user found
+    res.sendStatus(400);
+    console.log('Failed GET request /users/login, 400');
+  } else {
+    // success
+    res.status(200);
+    res.json(result);
+    console.log('Successful GET request /users/login');
+  }
 });
 
-/** 
+/**
  * get a specific user
  * @path user_id, should be 24 character hexadecimal string
  * @header token (not implemented)
  * @responseBody list of users (should only be one), user fields are {_id, username}
  */
 app.get('/users/:user_id', async (req, res, next) => {
-    console.log('Starting GET request /users/%s', req.params.user_id);
-    try {
-        const id = ObjectId(req.params.user_id);
-        const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
-        if(result.length === 0) {
-            // not found user id
-            res.sendStatus(404);
-            console.log('Failed GET request /users/$s, 404', req.params.user_id);
-        }
-        else {
-            // success
-            res.status(200);
-            res.json(result);
-            console.log('Successful GET request /users/%s', req.params.user_id);
-        }
+  console.log('Starting GET request /users/%s', req.params.user_id);
+  try {
+    const id = ObjectId(req.params.user_id);
+    const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
+    if (result.length === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed GET request /users/$s, 404', req.params.user_id);
+    } else {
+      // success
+      res.status(200);
+      res.json(result);
+      console.log('Successful GET request /users/%s', req.params.user_id);
     }
-    catch (err) {
-        // invalid (not found) user id
-        res.sendStatus(404);
-        console.error(err);
-        console.log('Failed GET request /users/$s, 404', req.params.user_id);
-    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed GET request /users/$s, 404', req.params.user_id);
+  }
 });
 
 // update a specific user
 app.put('/users/:user_id', async (req, res, next) => {
-    res.send('Update user_id');
+  res.send('Update user_id');
 });
 
 /**
@@ -140,86 +144,139 @@ app.put('/users/:user_id', async (req, res, next) => {
  * @header token (not implemented)
  */
 app.delete('/users/:user_id', async (req, res, next) => {
-    console.log('Starting DELETE request /users/%s', req.params.user_id);
-    // check if the provided user_id is valid
-    try {
-        const id = ObjectId(req.params.user_id);
-        const result = await deleteReivew(userid, { _id: id });
-        if(result === 0) {
-            // not found user id
-            res.sendStatus(404);
-            console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
-        }
-        else {
-            // success
-            if(result > 1) {
-                console.warn('Deleted more than one user');
-            }
-            res.sendStatus(200);
-            console.log('Successful DELETE request /users/%s', req.params.user_id);
-        }
-    } 
-    catch (err) {
-        // invalid (not found) user id
-        res.sendStatus(404);
-        console.error(err);
-        console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
+  console.log('Starting DELETE request /users/%s', req.params.user_id);
+  // check if the provided user_id is valid
+  try {
+    const id = ObjectId(req.params.user_id);
+    const result = await deleteReivew(userid, { _id: id });
+    if (result === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
+    } else {
+      // success
+      if (result > 1) {
+        console.warn('Deleted more than one user. %d users deleted', result);
+      }
+      res.sendStatus(200);
+      console.log('Successful DELETE request /users/%s', req.params.user_id);
     }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
+  }
 });
 
 // logout a specified user
 app.get('/users/:user_id/logout', async (req, res, next) => {
-    res.send('Logout user_id');
+  res.send('Logout user_id');
 });
 
 // Game requests
 
+/**
+ * get all the games of a user
+ * @path user_id, should be 24 character hexadecimal string
+ * @header token (not implemented)
+ * @responseBody list of users (should only be one), with user having list of games, game fields are { GameTitle, GameType }
+ */
 app.get('/users/:user_id/games', async (req, res, next) => {
-    console.log('Starting GET request /users/%s/games', req.params.user_id);
-    try {
-        const id = ObjectId(req.params.user_id);
-        const result = await retrieveReview(userid, { _id: id }, { _id: 0, Games: 1 });
-        if(result.length === 0) {
-            // not found user id
-            res.sendStatus(404);
-            console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
-        }
-        else {
-            // success
-            res.status(200);
-            res.json(result);
-            console.log('Successful GET request /users/%s/games', req.params.user_id);
-        }
+  console.log('Starting GET request /users/%s/games', req.params.user_id);
+  try {
+    const id = ObjectId(req.params.user_id);
+    const result = await retrieveReview(userid, { _id: id }, { _id: 0, Games: 1 });
+    if (result.length === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
+    } else {
+      // success
+      res.status(200);
+      res.json(result);
+      console.log('Successful GET request /users/%s/games', req.params.user_id);
     }
-    catch (err) {
-        // invalid (not found) user id
-        res.sendStatus(404);
-        console.error(err);
-        console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
-    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed GET request /users/$s/games, 404', req.params.user_id);
+  }
 });
 
-app.post('/users/:user_id/games', (req, res, next) => {
-    res.send('Add game for user_id');
+/**
+ * add a game for a user
+ * @path user_id, should be 24 character hexadecimal string
+ * @header token (not implemented)
+ * @body gametitle
+ * @body gametype
+ */
+app.post('/users/:user_id/games', async (req, res, next) => {
+  console.log('Starting POST request /users/%s/games', req.params.user_id);
+  try {
+    // check for invalid attributes or pre-existing game
+    const id = ObjectId(req.params.user_id);
+    const query = {
+      _id: id,
+      'Games.GameTitle': req.body.gametitle,
+      'Games.GameType': req.body.gametype
+    };
+    const invalid = Boolean(
+      req.body.gametitle === undefined ||
+            req.body.gametype === undefined ||
+            (await retrieveReview(userid, query)).length > 0
+    );
+    if (invalid) {
+      // bad request
+      res.sendStatus(400);
+      console.log('Failed POST request /users/$s/games, 400', req.params.user_id);
+      return;
+    }
+
+    // add the new game
+    const game = {
+      GameTitle: req.body.gametitle,
+      GameType: req.body.gametype
+    };
+    const result = await updateReivew(userid, { _id: id }, { $push: { Games: game } });
+    if (result.matchedCount === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed POST request /users/$s/games, 404', req.params.user_id);
+    } else {
+      // success
+      if (result.matchedCount > result.modifiedCount) {
+        console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
+      }
+      res.sendStatus(200);
+      console.log('Successful POST request /users/%s/games', req.params.user_id);
+    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed POST request /users/$s/games, 404', req.params.user_id);
+  }
 });
 
 app.get('/users/:user_id/games/:game', (req, res, next) => {
-    res.send('Return game for user_id');
+  res.send('Return game for user_id');
 });
 
 app.put('/users/:user_id/games/:game', (req, res, next) => {
-    res.send('Update game for user_id');
+  res.send('Update game for user_id');
 });
 
 app.delete('/users/:user_id/games/:game', (req, res, next) => {
-    res.send('Delete game for user_id');
+  res.send('Delete game for user_id');
 });
 
 // TCP connection
 
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), () => {
-    console.log('Express web app available at localhost: ${port}');
+  console.log('Express web app available at localhost: ${port}');
 });
 
 module.exports = app;

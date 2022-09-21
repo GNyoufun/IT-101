@@ -1,9 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-
 /**
- * Establish connection to the MongoDB Database cluster 
+ * Establish connection to the MongoDB Database cluster
  */
 const connectDB = async () => {
   try {
