@@ -18,19 +18,32 @@ export default function AddRecordFrom() {
     game_title: "",
     date: dayjs(),
     durations: 30,
-    result: "",
+    result: "Draw",
     difficulty: 5,
     enjoyment: 6,
     team: [],
     comment: "",
   };
   const [inputs, setInputs] = React.useState(defaultInput);
-  //.format('DD/MM/YYYY')
+
   const handleSubmit = (event) => {
-    event.preventDefault();
+    convertInputs();
     console.log(inputs);
+    event.preventDefault();
   };
-  
+
+  const convertInputs = () => {
+    // convert date format
+    inputs['date'] = inputs['date'].format('DD/MM/YYYY');
+    // convert teammate format
+    for (let i=0; i<inputs['team'].length; i+=1) {
+      for (let j=0; j<inputs['team'][i].length; j+=1){
+        var temp = inputs['team'][i].replace('lv.','').split(": ");
+        inputs['team'][i] = {in_game_id:temp[1], level:temp[0]};
+      }
+    };
+  };
+
   return (
     <Box
       component='form'
