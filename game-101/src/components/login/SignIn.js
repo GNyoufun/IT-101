@@ -14,27 +14,15 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-
-    fetch("http://localhost:4000", {
-      method: "POST",
-      body: JSON.stringify({
-        username: data.get("email"),
-        password: data.get("password"),
-      }),
+    fetch("http://localhost:4000/users/login", {
+      method: "GET",
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
+        "username": data.get("email"),
+        "password": data.get("password")
       },
     })
-      .then((res) => res.json())
-      .then((post) => {
-        React.setPosts((posts) => [post, ...posts]);
-        React.setTitle("");
-        React.setBody("");
-      })
+      .then((res) => res.text())
+      .then(data=>{ console.log(data); })
       .catch((err) => {
         console.log(err.message);
       });
