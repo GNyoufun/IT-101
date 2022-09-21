@@ -1,4 +1,8 @@
 const express = require('express');
+const mongooseSchema = require('./databaseSrc/mongooseSchema.js');
+const connectDB = require('./databaseSrc/mongoose.js');
+
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -7,6 +11,13 @@ const bodyParser = require('body-parser');
 app.get('/', (req, res) => {
     res.send('Home page');
 });
+
+
+
+
+// Use Auth for all requests for users*
+app.use('/users/:user_id', require('./auth.js').authenticate);
+
 
 app.get('/users', (req, res, next) => {
     res.send('Return all users');
