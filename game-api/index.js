@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // User Requests
 
+// get all users
 app.get('/users', async (req, res, next) => {
     console.log('Starting GET request /users');
     res.status(200);
@@ -27,13 +28,14 @@ app.get('/users', async (req, res, next) => {
     console.log('Successful GET request /users');
 });
 
+// create a new user
 app.post('/users', async (req, res, next) => {
     console.log('Starting POST request /users');
     // TODO: check for duplicate users and free id
     const user = {
         _id: 132,
         UserName: req.body.username,
-        UserPassword: req.body.userpassword,
+        UserPassword: req.body.password,
         Token: "",
         Games: []
     };
@@ -42,8 +44,32 @@ app.post('/users', async (req, res, next) => {
     console.log('Successful POST request /users');
 });
 
-app.get('/users/login', (req, res, next) => {
-    res.send('Login user');
+// login a user via their username and password
+app.get('/users/login', async (req, res, next) => {
+    console.log('Starting GET request /users/login');
+    if(req.headers.username === undefined || req.headers.password === undefined) {
+        // no username/password specified
+        res.sendStatus(401);
+        console.log('Failed GET request /users/login, 401');
+    }
+    else {
+        const query = {
+            UserName: req.headers.username,
+            UserPassword: req.headers.password
+        };
+        const result = await retrieveReview(userid, query, { Token: 1 });
+        if(result.length === 0) {
+            // no such user found
+            res.sendStatus(400);
+            console.log('Failed GET request /users/login, 400');
+        }
+        else {
+            // success
+            res.status(200);
+            res.json(result);
+            console.log('Successful GET request /users/login');
+        }
+    }
 });
 
 app.get('/users/:user_id', (req, res, next) => {
