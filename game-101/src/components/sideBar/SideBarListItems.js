@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useLocation } from "react-router-dom";
 
 import {
   Box,
@@ -16,10 +17,10 @@ import SettingIcon from "@mui/icons-material/Settings";
 import TimelineIcon from "@mui/icons-material/Timeline";
 
 export default function SideBarListItems() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedRoute, setSelectedRoute] = React.useState(useLocation().pathname);
 
-  const handleListItemClick = (e, index) => {
-    setSelectedIndex(index);
+  const handleListItemClick = (e, to) => {
+    setSelectedRoute(to);
   };
 
   const itemsList = [
@@ -58,8 +59,9 @@ export default function SideBarListItems() {
       <Divider sx={{ mt: 2 }} />
       <List component='nav' aria-label='main'>
         <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(e) => handleListItemClick(e, 0)}
+          to = {"/"}
+          selected={selectedRoute==="/"}
+          onClick={(e) => handleListItemClick(e, "/")}
         >
           <ListItemIcon>
             <DashboardIcon />
@@ -73,8 +75,9 @@ export default function SideBarListItems() {
           const { text, icon } = item;
           return (
             <ListItemButton
-              selected={selectedIndex === item.index}
-              onClick={(e) => handleListItemClick(e, item.index)}
+              to = {item.to}
+              selected={selectedRoute===item.to}
+              onClick={(e) => handleListItemClick(e, item.to)}
             >
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={text} />
