@@ -21,7 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // User Requests
 
-// get all users
+/**
+ * get all users
+ * @header token (not implemented)
+ * @responseBody list of users, user fields are {_id, username}
+ */
 app.get('/users', async (req, res, next) => {
     console.log('Starting GET request /users');
     res.status(200);
@@ -29,7 +33,13 @@ app.get('/users', async (req, res, next) => {
     console.log('Successful GET request /users');
 });
 
-// create a new user
+/**
+ * create a new user
+ * accepts json or urlencoded bodies
+ * @header token (not implemented)
+ * @body username
+ * @body password
+ */
 app.post('/users', async (req, res, next) => {
     console.log('Starting POST request /users');
     // check if a user with the same username and password already exist
@@ -55,7 +65,12 @@ app.post('/users', async (req, res, next) => {
     console.log('Successful POST request /users');
 });
 
-// login a user via their username and password
+/**
+ * login a user via their username and password
+ * @header username
+ * @header password
+ * @responseBody list of tokens (should only be one), token fields are {_id, token}
+ */
 app.get('/users/login', async (req, res, next) => {
     console.log('Starting GET request /users/login');
     if(req.headers.username === undefined || req.headers.password === undefined) {
@@ -83,26 +98,47 @@ app.get('/users/login', async (req, res, next) => {
     }
 });
 
+/** 
+ * get a specific user
+ * @path user_id, should be 24 character hexadecimal string
+ * @header token (not implemented)
+ * @responseBody list of users (should only be one), user fields are {_id, username}
+ */
 app.get('/users/:user_id', async (req, res, next) => {
     console.log('Starting GET request /users/%s', req.params.user_id);
-    const result = await retrieveReview(userid, { UserName: req.params.user_id }, { UserName: 1 });
-    if(result.length === 0) {
-        // not found user id
-        res.sendStatus(404);
-        console.log('Failed GET request /users/$s, 404', req.params.user_id);
+    try {
+        const id = ObjectId(req.params.user_id);
+        const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
+        if(result.length === 0) {
+            // not found user id
+            res.sendStatus(404);
+            console.log('Failed GET request /users/$s, 404', req.params.user_id);
+        }
+        else {
+            // success
+            res.status(200);
+            res.json(result);
+            console.log('Successful GET request /users/%s', req.params.user_id);
+        }
     }
-    else {
-        // success
-        res.status(200);
-        res.json(result);
-        console.log('Successful GET request /users/%s', req.params.user_id);
+    catch (err) {
+        // invalid (not found) user id
+        res.sendStatus(404);
+        console.error(err);
+        console.log('Failed GET request /users/$s, 404', req.params.user_id);
     }
 });
 
+// update a specific user
 app.put('/users/:user_id', async (req, res, next) => {
     res.send('Update user_id');
 });
 
+/**
+ * delete a specified user
+ * @path user_id, should be 24 character hexadecimal string
+ * @header token (not implemented)
+ */
 app.delete('/users/:user_id', async (req, res, next) => {
     console.log('Starting DELETE request /users/%s', req.params.user_id);
     // check if the provided user_id is valid
@@ -128,10 +164,10 @@ app.delete('/users/:user_id', async (req, res, next) => {
         res.sendStatus(404);
         console.error(err);
         console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
-        return;
     }
 });
 
+// logout a specified user
 app.get('/users/:user_id/logout', async (req, res, next) => {
     res.send('Logout user_id');
 });
