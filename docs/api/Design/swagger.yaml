@@ -405,22 +405,23 @@ components:
     Token:
       type: object
       properties:
-        token:
-          type: string
-          example: asdf1234jkl5678
         user_id:
           type: integer
           format: int64
           example: 10
+        token:
+          type: string
+          example: asdf1234jkl5678
     User:
       type: object
       properties:
+        user_id:
+          type: integer
+          format: int64
+          example: 10
         username:
           type: string
           example: theUser
-        password:
-          type: string
-          example: Password.10
     Game:
       type: object
       properties:

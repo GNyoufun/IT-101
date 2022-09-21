@@ -11,10 +11,10 @@ const precent = 100;
  * @param  {[list]} finddocs a list of quaries
  * @example{ header : matches }
  */
-async function retrieveReview(collect, finddocs) {
+async function retrieveReview(collect, finddocs, options) {
     let docs;
     try {
-         docs = await collect.find(finddocs).lean();
+         docs = await collect.find(finddocs, options).lean();
     }
     catch (err) {
         console.error(err);

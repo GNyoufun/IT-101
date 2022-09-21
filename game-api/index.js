@@ -1,15 +1,45 @@
+require('dotenv').config({ path: './databaseSrc/.env'});
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
+const {
+    retrieveReview,
+    insertReivew,
+    updateReivew,
+    FindReplaceReivew,
+    deleteReivew
+} = require('./databaseSrc/mongooseFunc.js');
+const {
+    review,
+    userid
+} = require('./databaseSrc/mongooseSchema.js');
+
+// App setup
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // User Requests
 
-app.get('/users', (req, res, next) => {
-    res.send('Return all users');
+app.get('/users', async (req, res, next) => {
+    console.log('Starting GET request /users');
+    res.status(200);
+    res.json(await retrieveReview(userid, {}, { UserName: 1 }));
+    console.log('Successful GET request /users');
 });
 
-app.post('/users', (req, res, next) => {
-    res.send('Create user');
+app.post('/users', async (req, res, next) => {
+    console.log('Starting POST request /users');
+    // TODO: check for duplicate users and free id
+    const user = {
+        _id: 132,
+        UserName: req.body.username,
+        UserPassword: req.body.userpassword,
+        Token: "",
+        Games: []
+    };
+    await insertReivew(userid, [user]);
+    res.sendStatus(200);
+    console.log('Successful POST request /users');
 });
 
 app.get('/users/login', (req, res, next) => {
