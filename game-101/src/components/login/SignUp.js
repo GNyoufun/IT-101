@@ -9,14 +9,16 @@ export default function SignUp() {
     fetch("http://localhost:4000/users", {
       method: "POST",
       headers: {
-        "token": "tokenplaceholder",
+        token: "tokenplaceholder",
       },
       body: JSON.stringify({
         username: data.get("username"),
       }),
     })
       .then((res) => res.text())
-      .then(data=>{ console.log(data); })
+      .then((data) => {
+        console.log(data);
+      })
       .catch((err) => {
         console.log(err.message);
       });
@@ -26,7 +28,7 @@ export default function SignUp() {
     <Box
       noValidate
       onSubmit={handleSubmit}
-      component='form'
+      component="form"
       sx={{
         bgcolor: "background.paper",
       }}

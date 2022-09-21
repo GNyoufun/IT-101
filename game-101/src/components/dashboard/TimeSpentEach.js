@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useTheme } from "@mui/material/styles";
 import {
   LineChart,
   Line,
@@ -9,6 +8,8 @@ import {
   Label,
   ResponsiveContainer,
 } from "recharts";
+
+import { useTheme } from "@mui/material/styles";
 
 import Title from "./Title";
 

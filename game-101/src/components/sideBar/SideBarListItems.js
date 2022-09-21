@@ -1,6 +1,12 @@
 import * as React from "react";
+
 import { useLocation } from "react-router-dom";
 
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PeopleIcon from "@mui/icons-material/People";
+import SettingIcon from "@mui/icons-material/Settings";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import {
   Box,
   List,
@@ -10,14 +16,10 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import SettingIcon from "@mui/icons-material/Settings";
-import TimelineIcon from "@mui/icons-material/Timeline";
-
 export default function SideBarListItems() {
-  const [selectedRoute, setSelectedRoute] = React.useState(useLocation().pathname);
+  const [selectedRoute, setSelectedRoute] = React.useState(
+    useLocation().pathname
+  );
 
   const handleListItemClick = (e, to) => {
     setSelectedRoute(to);
@@ -44,6 +46,11 @@ export default function SideBarListItems() {
       icon: <SettingIcon />,
       to: "/setting",
     },
+    {
+      text: "Add Game",
+      icon: <AddCircleIcon />,
+      to: "/add-game",
+    },
   ];
 
   return (
@@ -53,10 +60,10 @@ export default function SideBarListItems() {
       }}
     >
       <Divider sx={{ mt: 2 }} />
-      <List component='nav' aria-label='main'>
+      <List component="nav" aria-label="main">
         <ListItemButton
-          to = {"/"}
-          selected={selectedRoute==="/"}
+          to={"/"}
+          selected={selectedRoute === "/"}
           onClick={(e) => handleListItemClick(e, "/")}
         >
           <ListItemIcon>
@@ -64,15 +71,15 @@ export default function SideBarListItems() {
           </ListItemIcon>
           <ListItemText primary={"Dashboard"} />
         </ListItemButton>
-        
+
         <Divider sx={{ my: 1 }} />
 
         {itemsList.map((item) => {
           const { text, icon } = item;
           return (
             <ListItemButton
-              to = {item.to}
-              selected={selectedRoute===item.to}
+              to={item.to}
+              selected={selectedRoute === item.to}
               onClick={(e) => handleListItemClick(e, item.to)}
             >
               <ListItemIcon>{icon}</ListItemIcon>
@@ -80,7 +87,6 @@ export default function SideBarListItems() {
             </ListItemButton>
           );
         })}
-        
       </List>
 
       <Divider />

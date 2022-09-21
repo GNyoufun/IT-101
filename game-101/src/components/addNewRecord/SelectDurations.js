@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Grid, TextField, FormControl, Typography } from "@mui/material";
 
 export default function SelectDurations(props) {
@@ -48,9 +49,9 @@ export default function SelectDurations(props) {
   };
 
   return (
-    <Grid container alignItems='center' justifyContent='space-between'>
+    <Grid container alignItems="center" justifyContent="space-between">
       <Grid item xs={3} sm={3} sx={{ mb: [1] }}>
-        <Typography component='legend' sx={{ wordBreak: "break-word" }}>
+        <Typography component="legend" sx={{ wordBreak: "break-word" }}>
           Time length
         </Typography>
       </Grid>
@@ -58,9 +59,9 @@ export default function SelectDurations(props) {
       <Grid item xs={3.5} sm={3.5}>
         <FormControl fullWidth>
           <TextField
-            id='Hour'
-            label='Hour'
-            type='number'
+            id="Hour"
+            label="Hour"
+            type="number"
             value={hour}
             onChange={handleHourChange}
             onBlur={handleBlurHour}
@@ -83,9 +84,9 @@ export default function SelectDurations(props) {
       <Grid item xs={4} sm={4}>
         <FormControl fullWidth>
           <TextField
-            id='Min'
-            label='Min'
-            type='number'
+            id="Min"
+            label="Min"
+            type="number"
             value={min}
             onChange={handleMinChange}
             onBlur={handleBlurMin}
