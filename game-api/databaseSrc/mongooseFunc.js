@@ -92,14 +92,16 @@ function FindReplaceReivew(collect, finddocs, changes, returnedDoc = false) {
  * @param collect the collection model name 
  * @param  {[list]} reviews a list of queries
  */
-function deleteReivew(collect, docs) {
-    collect.collection.deleteMany(docs, function (err) {
-        if (err) {
-            return console.error(err);
-        } else {
-            console.log('Removed selected documents in the collection ');
-        }
-    });
+async function deleteReivew(collect, docs) {
+    let deleted;
+    try {
+        deleted = await collect.collection.deleteMany(docs);
+        console.log('Removed selected documents in the collection ');
+    }
+    catch (err) {
+        console.error(err);
+    }
+    return deleted.deletedCount;
 }
 
 async function extractGames(id){

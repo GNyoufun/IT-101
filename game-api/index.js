@@ -1,6 +1,7 @@
 require('dotenv').config({ path: './databaseSrc/.env'});
 const express = require('express');
 const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectId;
 const {
     retrieveReview,
     insertReivew,
@@ -82,19 +83,56 @@ app.get('/users/login', async (req, res, next) => {
     }
 });
 
-app.get('/users/:user_id', (req, res, next) => {
-    res.send('Return user_id');
+app.get('/users/:user_id', async (req, res, next) => {
+    console.log('Starting GET request /users/%s', req.params.user_id);
+    const result = await retrieveReview(userid, { UserName: req.params.user_id }, { UserName: 1 });
+    if(result.length === 0) {
+        // not found user id
+        res.sendStatus(404);
+        console.log('Failed GET request /users/$s, 404', req.params.user_id);
+    }
+    else {
+        // success
+        res.status(200);
+        res.json(result);
+        console.log('Successful GET request /users/%s', req.params.user_id);
+    }
 });
 
-app.put('/users/:user_id', (req, res, next) => {
+app.put('/users/:user_id', async (req, res, next) => {
     res.send('Update user_id');
 });
 
-app.delete('/users/:user_id', (req, res, next) => {
-    res.send('Deleting user_id');
-})
+app.delete('/users/:user_id', async (req, res, next) => {
+    console.log('Starting DELETE request /users/%s', req.params.user_id);
+    // check if the provided user_id is valid
+    try {
+        const id = ObjectId(req.params.user_id);
+        const result = await deleteReivew(userid, { _id: id });
+        if(result === 0) {
+            // not found user id
+            res.sendStatus(404);
+            console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
+        }
+        else {
+            // success
+            if(result > 1) {
+                console.warn('Deleted more than one user');
+            }
+            res.sendStatus(200);
+            console.log('Successful DELETE request /users/%s', req.params.user_id);
+        }
+    } 
+    catch (err) {
+        // invalid (not found) user id
+        res.sendStatus(404);
+        console.error(err);
+        console.log('Failed DELETE request /users/$s, 404', req.params.user_id);
+        return;
+    }
+});
 
-app.get('/users/:user_id/logout', (req, res, next) => {
+app.get('/users/:user_id/logout', async (req, res, next) => {
     res.send('Logout user_id');
 });
 
@@ -118,7 +156,7 @@ app.put('/users/:user_id/games/:game', (req, res, next) => {
 
 app.delete('/users/:user_id/games/:game', (req, res, next) => {
     res.send('Delete game for user_id');
-})
+});
 
 // TCP connection
 
