@@ -1,6 +1,6 @@
 import { Container, Stack } from "@mui/material";
 
-import { AddNewRecordButton, GameList, SearchBar } from ".";
+import { AddNewGameButton, GameList, SearchBar } from ".";
 import GAMES from "../../_mock/games";
 
 export default function GameHistoryList() {
@@ -14,7 +14,7 @@ export default function GameHistoryList() {
         py={4}
       >
         <SearchBar />
-        <AddNewRecordButton />
+        <AddNewGameButton />
       </Stack>
 
       <Container>
