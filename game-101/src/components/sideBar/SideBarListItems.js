@@ -18,9 +18,36 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 export default function SideBarListItems() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleListItemClick = (event, index) => {
+  const handleListItemClick = (e, index) => {
     setSelectedIndex(index);
   };
+
+  const itemsList = [
+    {
+      index: 1,
+      text: "Add Record",
+      icon: <AddCircleIcon />,
+      to: "/add-record",
+    },
+    {
+      index: 2,
+      text: "Game History",
+      icon: <TimelineIcon />,
+      to: "/history",
+    },
+    {
+      index: 3,
+      text: "People",
+      icon: <PeopleIcon />,
+      to: "/people",
+    },
+    {
+      index: 4,
+      text: "Setting",
+      icon: <SettingIcon />,
+      to: "/setting",
+    },
+  ];
 
   return (
     <Box
@@ -29,58 +56,32 @@ export default function SideBarListItems() {
       }}
     >
       <Divider sx={{ mt: 2 }} />
-      <List component="nav" aria-label="main mailbox folders">
+      <List component='nav' aria-label='main'>
         <ListItemButton
           selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
+          onClick={(e) => handleListItemClick(e, 0)}
         >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary={"Dashboard"} />
         </ListItemButton>
-
+        
         <Divider sx={{ my: 1 }} />
 
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <AddCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Add New Record" />
-        </ListItemButton>
-
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-        >
-          <ListItemIcon>
-            <TimelineIcon />
-          </ListItemIcon>
-          <ListItemText primary="Game History" />
-        </ListItemButton>
-
-        <ListItemButton
-          selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
-        >
-          <ListItemIcon>
-            <PeopleIcon />
-          </ListItemIcon>
-          <ListItemText primary="People" />
-        </ListItemButton>
-
-        <ListItemButton
-          selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
-        >
-          <ListItemIcon>
-            <SettingIcon />
-          </ListItemIcon>
-          <ListItemText primary="Setting" />
-        </ListItemButton>
+        {itemsList.map((item) => {
+          const { text, icon } = item;
+          return (
+            <ListItemButton
+              selected={selectedIndex === item.index}
+              onClick={(e) => handleListItemClick(e, item.index)}
+            >
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          );
+        })}
+        ;
       </List>
 
       <Divider />
