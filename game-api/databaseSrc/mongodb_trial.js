@@ -12,7 +12,9 @@ const {
     averageRating,
 
     extractGames,
-    extractTeam
+    extractTeam,
+
+    insertUser,
 
 } = require('./mongooseFunc.js');
 
@@ -63,8 +65,71 @@ const raid = [
                 Result: "Lost"
             }];
 
+// User ID Inserts
+const user = [ {_id: 0,
+    UserName: "User101",
+    UserPassword: "Password101",
+    Token: "Token101",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 1,
+    UserName: "User102",
+    UserPassword: "Password102",
+    Token: "Token102",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 2,
+    UserName: "User103",
+    UserPassword: "Password103",
+    Token: "Token103",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 3,
+    UserName: "User104",
+    UserPassword: "Password104",
+    Token: "Token104",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 4,
+    UserName: "User105",
+    UserPassword: "Password105",
+    Token: "Token105",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 5,
+    UserName: "User106",
+    UserPassword: "Password106",
+    Token: "Token106",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 6,
+    UserName: "User107",
+    UserPassword: "Password107",
+    Token: "Token107",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 7,
+    UserName: "User108",
+    UserPassword: "Password108",
+    Token: "Token108",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    },
+    {_id: 8,
+    UserName: "User109",
+    UserPassword: "Password109",
+    Token: "Token109",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    }];
+
+const badUser = [{
+    UserName: "BadUser",
+    UserPassword: "BadPassword",
+    Token: "BadToken",
+    Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
+    }];
 
 
+// insertUser(user)
 
 // deleteReivew(review);
 // insertReivew(review, raid);

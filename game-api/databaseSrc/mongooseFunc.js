@@ -39,6 +39,20 @@ function insertReivew(collect, reviews) {
     });
 }
 
+/**
+ * Provide a list of users to insert into the database
+ * @param {[list]} users a list of users
+ */
+function insertUser(users) {
+    user.collection.insertMany(users, function (err) {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log('Multiple documents inserted to Collection');
+        }
+    });
+}
+
 
 /**
  * Provide the search query parameters, and the changable as changes to apply
@@ -290,7 +304,9 @@ module.exports = {
     averageRating,
 
     extractGames,
-    extractTeam
+    extractTeam,
+
+    insertUser
 
 };
 
