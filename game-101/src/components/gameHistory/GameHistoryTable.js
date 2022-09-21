@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
 } from "@mui/material";
 
 import { AddNewRecordButton, BackButton, SearchBar } from "./";
@@ -54,13 +53,22 @@ const rows = [
     "Really nice teammates"
   ),
   createData(
-    2,
+    3,
     "2022/09/11",
     30,
     5,
     "12138, 12345",
     "Win",
     "Really nice teammates"
+  ),
+  createData(
+    1,
+    "2022/09/11",
+    30,
+    5,
+    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
+    "Win",
+    "Really nice teammates, Really nice teammates, Really nice teammates, Really nice teammates, Really nice teammates"
   ),
   createData(
     2,
@@ -72,13 +80,22 @@ const rows = [
     "Really nice teammates"
   ),
   createData(
-    2,
+    3,
     "2022/09/11",
     30,
     5,
     "12138, 12345",
     "Win",
     "Really nice teammates"
+  ),
+  createData(
+    1,
+    "2022/09/11",
+    30,
+    5,
+    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
+    "Win",
+    "Really nice teammates, Really nice teammates, Really nice teammates, Really nice teammates, Really nice teammates"
   ),
   createData(
     2,
@@ -90,52 +107,7 @@ const rows = [
     "Really nice teammates"
   ),
   createData(
-    2,
-    "2022/09/11",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    2,
-    "2022/09/11",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    2,
-    "2022/09/11",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    2,
-    "2022/09/11",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    2,
-    "2022/09/11",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    2,
+    3,
     "2022/09/11",
     30,
     5,
@@ -160,8 +132,8 @@ export default function GameHistoryTable() {
         <AddNewRecordButton />
       </Stack>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 480 }} aria-label="simple table">
+      <TableContainer sx={{ height: 570 }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell align="center">Gaming Record</TableCell>
@@ -173,6 +145,7 @@ export default function GameHistoryTable() {
               <TableCell align="center">Comments</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {rows.map((row) => (
               <TableRow
@@ -182,7 +155,6 @@ export default function GameHistoryTable() {
                 <TableCell align="center" component="th" scope="row">
                   {row.GamingRecord}
                 </TableCell>
-
                 <TableCell align="center">{row.Date}</TableCell>
                 <TableCell align="center">{row.Duration}</TableCell>
                 <TableCell align="center">{row.Difficulity}</TableCell>

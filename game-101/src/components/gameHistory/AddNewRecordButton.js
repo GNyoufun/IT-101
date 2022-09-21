@@ -26,8 +26,8 @@ const AddNewRecord = styled(Button)({
     '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
-    backgroundColor: "#343C5A",
-    borderColor: "#343C5A",
+    backgroundColor: "#2C344A",
+    borderColor: "#2C344A",
     boxShadow: "none",
   },
   "&:active": {
