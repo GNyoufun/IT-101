@@ -8,6 +8,14 @@ export default function SelectTeammates(props) {
   const handleChange = (e, newValues) => {
     props.setInputs({...props.inputs, team: newValues});
   }
+  
+  const teammates = [
+    { in_game_id: 'Brendan'},
+    { in_game_id: 'Ella'},
+    { in_game_id: 'Ishaann'},
+    { in_game_id: 'Jessica' },
+    { in_game_id: 'Patrick'},
+  ];
 
   return (
       <Autocomplete
@@ -34,10 +42,4 @@ export default function SelectTeammates(props) {
 }
 
 
-const teammates = [
-  { in_game_id: 'Brendan'},
-  { in_game_id: 'Ella'},
-  { in_game_id: 'Ishaann'},
-  { in_game_id: 'Jessica' },
-  { in_game_id: 'Patrick'},
-];
+
