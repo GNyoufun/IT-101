@@ -26,8 +26,8 @@ const Submit = styled(Button)({
     '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
-    backgroundColor: "#89BFF9",
-    borderColor: "#89BFF9",
+    backgroundColor: "#3B83CE",
+    borderColor: "#3B83CE",
     boxShadow: "none",
   },
   "&:active": {
@@ -39,7 +39,7 @@ const Submit = styled(Button)({
 
 export default function SubmitButton() {
   return (
-    <Submit variant="contained" disableRipple>
+    <Submit variant="contained" type="submit">
       Submit
     </Submit>
   );

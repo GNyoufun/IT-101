@@ -3,7 +3,7 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 
-const AddNewRecord = styled(Button)({
+const AddNewGame = styled(Button)({
   borderRadius: 50,
   boxShadow: "none",
   textTransform: "none",
@@ -37,10 +37,10 @@ const AddNewRecord = styled(Button)({
   },
 });
 
-export default function AddNewRecordButton() {
+export default function AddNewGameButton() {
   return (
-    <AddNewRecord variant="contained" disableRipple>
-      + New Record
-    </AddNewRecord>
+    <AddNewGame variant="contained" disableRipple>
+      + New Game
+    </AddNewGame>
   );
 }
