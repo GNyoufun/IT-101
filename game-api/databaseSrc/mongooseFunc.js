@@ -138,6 +138,8 @@ async function extractGames (id) {
   const users = await userid.findById(id).lean();
   const game = users.Games;
   return game;
+}
+
 async function extractGames(id){
     const users = await userid.findById(id).lean();
     if (users == null){
@@ -147,7 +149,7 @@ async function extractGames(id){
     return game;
 }
 
-async function extractTeam(GameTitle, id){
+async function extractTeam(GameTitle, id) {
     const games = await review.find({Title: GameTitle, UserId: id}).lean();
     let teammate = [];
     
@@ -366,7 +368,6 @@ module.exports = {
 
   insertUser,
   updateUserToken,
-
 };
 
 require('./mongodb_trial.js');
