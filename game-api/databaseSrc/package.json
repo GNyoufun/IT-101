@@ -15,8 +15,8 @@
         "db": "node mongoose.js",
         "schema": "node mongooseSchema.js ",        
         "func": "node mongooseFunc.js",
-        "trial": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js && node mongodb_trial.js ",
-        "start": "npm-run-all --silent intro db schema func trial >> app.log 2>&1",
-        "test": "node mongoose.js && node mongooseSchema.js && node mongooseFunc.js && node mongodb_trial.js "
+        "trial": "node mongodb_trial.js ",
+        "start": "npm-run-all intro db schema func trial",
+        "start1": "npm-run-all --silent intro db schema func trial >> app.log 2>&1"
     }
 }

@@ -1,9 +1,9 @@
 const {
-    retrieveReview,
-    insertReivew,
-    updateReivew,
-    FindReplaceReivew,
-    deleteReivew,
+    retrieveCollection,
+    insertCollection,
+    updateCollection,
+    FindReplaceCollection,
+    deleteCollection,
 
     TeamWinRate,
     gameWinRate,
@@ -14,7 +14,7 @@ const {
     extractGames,
     extractTeam,
 
-    insertUser,
+    insertUser
 
 } = require('./mongooseFunc.js');
 
@@ -31,6 +31,9 @@ const IDLost = [{ GameID: 'GAMER1100', Level: 11 },
 const IDS = [{ GameID: 'GAMER1100', Level: 11 },
              { GameID: 'StromBreaker', Level: 18 },
              { GameID: 'StoryQ', Level: 17},
+             { GameID: 'StoryQ', Level: 17},
+             { GameID: 'testGameID', Level: 43},
+             { GameID: 'testGameID', Level: 20},
              { GameID: "Player102934", Level: 40}];
 
 const raid = [
@@ -128,21 +131,27 @@ const badUser = [{
     Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
     }];
 
-
+let testraid = [{   Title: "FFXIV", 
+                    UserId: 1, 
+                    Team: IDS,
+                    Durations: 70, 
+                    Result: "Win"
+                }];
 // insertUser(user)
 
 // deleteReivew(review);
 // insertReivew(review, raid);
+// insertCollection(review, testraid);
 
 
 
-let game = new Promise(function (resolve, reject) {
-    resolve(extractGames(1));
-});
+// let game = new Promise(function (resolve, reject) {
+//     resolve(extractGames(1));
+// });
 
-game.then(function (result){
-    console.log(result)
-})
+// game.then(function (result){
+//     console.log(result)
+// })
 
 let team = new Promise(function (resolve, reject) {
     resolve(extractTeam("FFXIV", 1));
