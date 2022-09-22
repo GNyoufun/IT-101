@@ -1,7 +1,7 @@
 ---
-parent: About
-title: Requirements
-nav_order: 2
+parent: Requirements 
+title: Requirements - Version 1 
+nav_order: 1
 ---
 # Requirements List
 ## Must have requirements:
