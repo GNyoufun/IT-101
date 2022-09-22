@@ -1,7 +1,7 @@
 const Schema = require('./mongooseSchema.js');
-const{
-    review,
-    userid
+const {
+  review,
+  userid
 } = require('./mongooseSchema.js');
 const precent = 100;
 
@@ -11,18 +11,16 @@ const precent = 100;
  * @param  {object} finddocs a list of quaries
  * @example { header : matches }
  */
-async function retrieveCollection(collect, id, finddocs) {
-    let docs;
+async function retrieveCollection (collect, id, finddocs, options) {
+  let docs;
     finddocs.UserId = id;
-    try {
-         docs = await collect.find(finddocs).lean();
-    }
-    catch (err) {
-        console.error(err);
-    }
-    return docs;
+  try {
+    docs = await collect.find(finddocs, options).lean();
+  } catch (err) {
+    console.error(err);
+  }
+  return docs;
 }
-
 
 /**
  * Provide a list of schemas as parameters to insert into collections
@@ -62,13 +60,32 @@ function insertUser(users) {
  * @param  {object} changes a list of changable value for the given field
  * @example { header : changes }
  */
-function updateCollection(collect, id, finddocs, changes) {
-    finddocs.UserId = id;
-    collect.collection.updateMany(finddocs, changes, function (err) {
+async function updateReivew (collect, finddocs, changes) {
+  let updated;
+  try {
+    updated = await collect.collection.updateMany(finddocs, changes);
+    console.log('Updated selected documents in the collection');
+  } catch (err) {
+    console.error(err);
+  }
+  return updated;
+}
+
+/**
+ * Updates the token for a given user
+ * @param {*} query the query to find the user
+ * @param {*} token the new token for the user
+ */
+function updateUserToken(query, token){
+    userid.findOneAndUpdate(query, {Token: token}, function(err, doc){
         if (err) {
             return console.error(err);
         } else {
-            console.log('Updated selected documents in the collection ');
+            try {
+                console.log(doc);
+            }catch (err) {
+                console.error(err);
+            }
         }
     });
 }
@@ -102,21 +119,21 @@ function FindReplaceCollection(collect, id, finddocs, changes, returnedDoc = fal
         });
 }
 
-
 /**
  * Provide the search query parameters, and remove from the collection
  * @param  {model}  collect the collection model name 
  * @param  {object} reviews a list of queries
  */
-function deleteCollection(collect, id, finddocs) {
+async function deleteCollection (collect, id, finddocs) {
     finddocs.UserId = id;
-    collect.collection.deleteMany(docs, function (err) {
-        if (err) {
-            return console.error(err);
-        } else {
-            console.log('Removed selected documents in the collection ');
-        }
-    });
+  let deleted;
+  try {
+    deleted = await collect.collection.deleteMany(docs);
+    console.log('Removed selected documents in the collection ');
+  } catch (err) {
+    console.error(err);
+  }
+  return deleted.deletedCount;
 }
 
 
@@ -127,6 +144,9 @@ function deleteCollection(collect, id, finddocs) {
  */
 async function extractGames(id){
     const users = await userid.findById(id).lean();
+    if (users == null){
+        return null;
+    }
     const game = users.Games;
     return game;
 }
@@ -138,7 +158,7 @@ async function extractGames(id){
  * @param {Int}    id The User ID registered in the server
  * @returns The list of Teammate in the specified Game that belong to the user
  */
-async function extractTeam(GameTitle, id){
+async function extractTeam(GameTitle, id) {
     const games = await review.find({Title: GameTitle, UserId: id}).lean();
     let teammate = [];
     
@@ -164,10 +184,9 @@ async function extractTeam(GameTitle, id){
  * @param {*} department 
  * @param {*} time 
  */
-function logging(str, department, time){
-    let logs = time + " - " + department + " - " + str + "\n";
+function logging (str, department, time) {
+  const logs = time + ' - '; + department + " - " + str + "\n";
 }
-
 
 /**
  * Calculate the win rate of the user with different teammate in specified game
@@ -177,21 +196,27 @@ function logging(str, department, time){
  * @returns Return an array of objects of item specified in gameIDSchema and 
  *              the number of wins, losts and the win rate with that teammate 
  */
-async function TeamWinRate(GameTitle, id, Time = new Date()){
-    const win = await review.find({Title: GameTitle, UserId: id, Result: 'Win', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const lost = await review.find({Title: GameTitle, UserId: id, Result: 'Lost', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const players = [];
+async function TeamWinRate (GameTitle, id, Time = new Date()) {
+  const win = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Win',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const lost = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Lost',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const players = [];
 
     calcResult(players, win, "win");
     calcResult(players, lost, "lost");
 
-    for(let i = 0; i < players.length; i++){
-        let win_result = players[i].win;
-        let total = players[i].total;
-        players[i].winRate = (win_result / total) * precent;
-    }
+  for (let i = 0; i < players.length; i++) {
+    const winResult = players[i].win;
+    const total = players[i].total;
+    players[i].winRate = (winResult / total) * precent;
+  }
 
     return players 
 }
@@ -204,11 +229,17 @@ async function TeamWinRate(GameTitle, id, Time = new Date()){
  * @param {DateTime} [Time = Date()] The DateTime that the documents is recorded
  * @returns The win rate of the specified game
  */
-async function gameWinRate(GameTitle, id, Time = new Date()){
-    const win = await review.find({Title: GameTitle, UserId: id, Result: 'Win', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const lost = await review.find({Title: GameTitle, UserId: id, Result: 'Lost', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
+async function gameWinRate (GameTitle, id, Time = new Date()) {
+  const win = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Win',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const lost = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Lost',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
 
     let rate = (win.length / (win.length + lost.length)) * precent;
 
@@ -227,12 +258,17 @@ async function averageTime(GameTitle, id, result = "both"){
     let total_time = 0;
     let num_review = 0;
 
-    const document = await review.find({Title: GameTitle, UserId: id, Result: result, 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    if (result == "both"){
-        const document = await review.find({Title: GameTitle, UserId: id, 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    }
+  const document = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: result,
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  if (result === 'both') {
+    const document = await review.find({
+      Title: GameTitle,UserId: id, 
+      Date: { $lt: ISODate(Time) }
+    }).lean();
+  }
 
     for (let i = 0; i < document.length; i++){
         total_time += document[i].Durations;
@@ -252,12 +288,18 @@ async function averageTime(GameTitle, id, result = "both"){
  * @return The array of object with each difficulty and the its win / lost rate
  *              and the number of win / lost and total value 
  */
-async function averageDifficulty(GameTitle, id, Time = new Date()){
-    const win = await review.find({Title: GameTitle, UserId: id, Result: 'Win', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const lost = await review.find({Title: GameTitle, UserId: id, Result: 'Lost', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const difficult = [];
+async function averageDifficulty (GameTitle, id, Time = new Date()) {
+  const win = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Win',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const lost = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Lost',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const difficult = [];
     let totalDiff = 0;
 
     calcAverageDiff(difficult, win, "win");
@@ -286,11 +328,17 @@ async function averageDifficulty(GameTitle, id, Time = new Date()){
  * @param {DateTime} [Time = Date()] The DateTime that the documents is recorded
  * @returns the array of objects with rating and its win / lost rate values
  */
-async function averageRating(GameTitle, id, Time = new Date()){
-    const documents = await review.find({Title: GameTitle, UserId: id, Result: 'Win', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
-    const lost = await review.find({Title: GameTitle, UserId: id, Result: 'Lost', 
-                                        Date: { $lt:ISODate(Time) }}).lean();
+async function averageRating (GameTitle, id, Time = new Date()) {
+  const documents = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Win',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
+  const lost = await review.find({
+    Title: GameTitle,
+    UserId: id, Result: 'Lost',
+    Date: { $lt: ISODate(Time) }
+  }).lean();
 
     const rate = [];
     let totalRating = 0;
@@ -360,17 +408,9 @@ function midian(arr){
     return (arr[half - 1] + arr[half]) / 2.0;
 }
 
-
-/**
- * Helper function for TeamWinRate to extract team from the object array and 
- * calculate the number of win and lost
- * @param {list}        players A list that record the teammate
- * @param {[object]}    documents the object array that contains the review 
- * @param {string}      result The result of the raid 
- */
-function calcResult(players, documents, result){
-    const win_preset = preset(result)[0]; 
-    const lost_preset = preset(result)[1];
+function calcResult (players, documents, result) {
+  const winPreset = preset(result)[0];
+  const lostPreset = preset(result)[1];
 
     for (let i = 0; i < documents.length; i++) {
         let team = documents[i].Team;
@@ -378,13 +418,17 @@ function calcResult(players, documents, result){
             let gameid = team[j].GameID;
             let playerID;
 
-            if ((playerID = 
-                    players.findIndex((obj => obj.GameID === gameid))) != -1){
+            if ((playerID =
+                            players.findIndex(obj => obj.GameID === gameid)) !== -1) {
                 players[playerID][result]++;
                 players[playerID][total]++;
-            }else{
-                players.push({GameID: gameid, total: 1, win: win_preset, 
-                                lost: lost_preset});
+            } else {
+                players.push({
+                GameID: gameid,
+                total: 1,
+                win: winPreset,
+                lost: lostPreset
+                });
             }
         }
     }
@@ -406,13 +450,17 @@ function calcAverageDiff(collection, documents, result){
         let diff = documents[i].Difficulty;
         let diffID;
 
-        if ((diffID = 
-            collection.findIndex((obj => obj.Difficulty === diff))) != -1){
-                collection[diffID][result]++;
-                collection[diffID][total]++;
-        }else{
-            collection.push({Difficulty: diff, total: 1, win: win_preset, 
-                            lost: lost_preset});
+        if ((diffID =
+                collection.findIndex(obj => obj.Difficulty === diff)) !== -1) {
+        collection[diffID][result]++;
+        collection[diffID][total]++;
+        } else {
+        collection.push({
+            Difficulty: diff,
+            total: 1,
+            win: winPreset,
+            lost: lostPreset
+        });
         }
     }
 }
@@ -460,29 +508,27 @@ function preset(result) {
     
     const lost_preset = 1 - win_preset;
 
-    return [win_preset, lost_preset]
+  return [winPreset, lostPreset];
 }
 
 
 module.exports = {
-    retrieveCollection,
-    insertCollection,
-    updateCollection,
-    FindReplaceCollection,
-    deleteCollection,
+  retrieveCollection,
+  insertCollection,
+  updateCollection,
+  FindReplaceCollection,
+  deleteCollection,
 
-    TeamWinRate,
-    gameWinRate,
-    averageTime,
-    averageDifficulty,
-    averageRating,
+  TeamWinRate,
+  gameWinRate,
+  averageTime,
+  averageDifficulty,
+  averageRating,
+  extractGames,
+  extractTeam,
 
-    extractGames,
-    extractTeam,
-
-    insertUser
-
+  insertUser,
+  updateUserToken,
 };
 
-require('./mongodb_trial.js');
-
+// require('./mongodb_trial.js');

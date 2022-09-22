@@ -1,6 +1,24 @@
-import AddNewRecord from "./dashboard/AddNewRecord";
+import AddRecordFrom from "./addNewRecord/AddRecordForm";
+
+import DashboardContent from "./dashboard/DashboardContent";
+
+import GameHistoryList from "./gameHistory/GameHistoryList";
+import GameHistoryTable from "./gameHistory/GameHistoryTable";
 
 import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 
-export { AddNewRecord, SignIn, SignUp };
+import { ChangeDetails } from "./setting/ChangeDetails";
+
+import SideBar from "./sideBar/SideBar";
+
+export {
+  AddRecordFrom,
+  DashboardContent,
+  GameHistoryList,
+  GameHistoryTable,
+  SignIn,
+  SignUp,
+  ChangeDetails,
+  SideBar,
+};
