@@ -14,16 +14,27 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    fetch("http://localhost:4000/users/login", {
+      method: "GET",
+      headers: {
+        username: data.get("username"),
+        password: data.get("password"),
+      },
+    })
+      .then((res) => res.text())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
     <Box
       noValidate
       onSubmit={handleSubmit}
+      component="form"
       sx={{
         bgcolor: "background.paper",
         mb: 2,
@@ -38,10 +49,10 @@ export default function SignIn() {
         margin="normal"
         required
         fullWidth
-        id="email"
-        label="Email Address"
-        name="email"
-        autoComplete="email"
+        id="username"
+        label="Username"
+        name="username"
+        autoComplete="username"
         autoFocus
       />
       <TextField

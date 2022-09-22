@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import Link from "@mui/material/Link";
 import { Chart, PieSeries } from "@devexpress/dx-react-chart-material-ui";
+import Link from "@mui/material/Link";
 
 import Title from "./Title";
 

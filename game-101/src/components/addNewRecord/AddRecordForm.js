@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import dayjs from "dayjs";
+
 import { Box, Container, Grid, Paper } from "@mui/material";
 import {
   Comment,
@@ -13,27 +15,40 @@ import {
   SelectDifficulty,
 } from "./";
 
-export default function AddRecordFrom() {
+export default function AddRecordForm() {
   const defaultInput = {
     game_title: "",
     date: dayjs(),
     durations: 30,
-    result: "",
+    result: "Draw",
     difficulty: 5,
     enjoyment: 6,
     team: [],
     comment: "",
   };
   const [inputs, setInputs] = React.useState(defaultInput);
-  //.format('DD/MM/YYYY')
+
   const handleSubmit = (event) => {
-    event.preventDefault();
+    convertInputs();
     console.log(inputs);
+    event.preventDefault();
   };
-  
+
+  const convertInputs = () => {
+    // convert date format
+    inputs["date"] = inputs["date"].format("DD/MM/YYYY");
+    // convert teammate format
+    for (let i = 0; i < inputs["team"].length; i += 1) {
+      for (let j = 0; j < inputs["team"][i].length; j += 1) {
+        var temp = inputs["team"][i].replace("lv.", "").split(": ");
+        inputs["team"][i] = { in_game_id: temp[1], level: temp[0] };
+      }
+    }
+  };
+
   return (
     <Box
-      component='form'
+      component="form"
       sx={{
         flexGrow: 2,
         height: "100vh",
@@ -44,15 +59,15 @@ export default function AddRecordFrom() {
         e.key === "Enter" && e.preventDefault();
       }}
       noValidate
-      autoComplete='off'
+      autoComplete="off"
     >
-      <Container maxWidth='sm' sx={{ mt: 8, mb: 4 }}>
+      <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
         <Paper
           sx={{
             p: 4,
           }}
         >
-          <Grid container spacing={3} alignItems='center'>
+          <Grid container spacing={3} alignItems="center">
             {/* Text */}
             <Grid item xs={12}>
               <SelectGameName inputs={inputs} setInputs={setInputs} />
@@ -70,12 +85,11 @@ export default function AddRecordFrom() {
               <SelectTeammates inputs={inputs} setInputs={setInputs} />
             </Grid>
 
-            
             <Grid item xs={7} sm={3}>
               <SelectOutcome inputs={inputs} setInputs={setInputs} />
             </Grid>
 
-            <SelectRating inputs={inputs} setInputs={setInputs} /> 
+            <SelectRating inputs={inputs} setInputs={setInputs} />
 
             <SelectDifficulty inputs={inputs} setInputs={setInputs} />
 

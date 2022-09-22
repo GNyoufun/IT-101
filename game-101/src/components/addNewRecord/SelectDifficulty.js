@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Grid, Typography, Box } from "@mui/material";
-import Slider from "@mui/material/Slider";
+
+import { Box, Grid, Slider, Typography } from "@mui/material";
 
 export default function SelectDifficulty(props) {
   const handleChange = (e, newValue) => {
@@ -24,13 +24,13 @@ export default function SelectDifficulty(props) {
 
   return (
     <Grid item xs={12} sm={8.5}>
-      <Typography component='legend'>Difficulty</Typography>
+      <Typography component="legend">Difficulty</Typography>
       <Box sx={{ ml: 2 }}>
         <Slider
-          aria-label='Difficulty'
+          aria-label="Difficulty"
           defaultValue={5}
           step={1}
-          valueLabelDisplay='auto'
+          valueLabelDisplay="auto"
           onChange={handleChange}
           marks={marks}
           min={1}

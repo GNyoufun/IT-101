@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { styled } from "@mui/material/styles";
 import { FormGroup, FormControlLabel, Switch } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const LightDark = styled(Switch)(({ theme }) => ({
   width: 62,

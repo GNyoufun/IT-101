@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MuiDrawer from "@mui/material/Drawer";
 import {
   Avatar,
   Box,
@@ -10,8 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import MuiDrawer from "@mui/material/Drawer";
 
 import { LogoutButton, LightDarkSwitch, SideBarListItems } from "./";
 

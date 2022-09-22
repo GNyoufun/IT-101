@@ -6,16 +6,29 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    fetch("http://localhost:4000/users", {
+      method: "POST",
+      headers: {
+        token: "tokenplaceholder",
+      },
+      body: JSON.stringify({
+        username: data.get("username"),
+      }),
+    })
+      .then((res) => res.text())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
     <Box
       noValidate
       onSubmit={handleSubmit}
+      component="form"
       sx={{
         bgcolor: "background.paper",
       }}

@@ -1,6 +1,6 @@
-import { styled } from "@mui/system";
 import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
+import { TabUnstyled, tabUnstyledClasses } from "@mui/base/TabUnstyled";
+import { styled } from "@mui/system";
 
 const Tab = styled(TabUnstyled)`
 font-family: IBM Plex Sans, sans-serif;
