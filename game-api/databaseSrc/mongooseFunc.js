@@ -60,7 +60,7 @@ function insertUser(users) {
  * @param  {object} changes a list of changable value for the given field
  * @example { header : changes }
  */
-async function updateReivew (collect, finddocs, changes) {
+async function updateCollection (collect, finddocs, changes) {
   let updated;
   try {
     updated = await collect.collection.updateMany(finddocs, changes);
@@ -128,7 +128,7 @@ async function deleteCollection (collect, id, finddocs) {
     finddocs.UserId = id;
   let deleted;
   try {
-    deleted = await collect.collection.deleteMany(docs);
+    deleted = await collect.collection.deleteMany(finddocs);
     console.log('Removed selected documents in the collection ');
   } catch (err) {
     console.error(err);
