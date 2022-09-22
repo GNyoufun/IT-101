@@ -138,6 +138,7 @@ async function extractGames (id) {
   const users = await userid.findById(id).lean();
   const game = users.Games;
   return game;
+}
 async function extractGames(id){
     const users = await userid.findById(id).lean();
     if (users == null){
@@ -369,4 +370,4 @@ module.exports = {
 
 };
 
-require('./mongodb_trial.js');
+// require('./mongodb_trial.js');

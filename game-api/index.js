@@ -101,7 +101,7 @@ app.get('/users/login', async (req, res, next) => {
     const query = {
         UserName: req.headers.username,
     };
-    const result = await retrieveReview(userid, query, { Token: 1 });
+    const result = await retrieveReview(userid, query, { Token: 1, UserPassword: 1 });
     if(result.length === 0) {
         // no such user found
         res.sendStatus(400);
