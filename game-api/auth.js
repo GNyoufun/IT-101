@@ -11,7 +11,7 @@ mongoose.connection.once('open', () => {
 });
 
 /**
- * 
+ * Authenticates a given request as a given user
  * @param {*} req the request to verify
  * @param {*} res the response to send
  * @param {*} next the next function to call
@@ -33,7 +33,7 @@ module.exports.authenticate = (req, res, next) => {
         }
 
         // Parse the user as a mongoose object
-        authUser = parseInt(authUser);
+        //authUser = parseInt(authUser);
 
         console.log("Authenticating user: " + authUser);
         

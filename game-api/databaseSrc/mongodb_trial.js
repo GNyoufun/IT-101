@@ -128,9 +128,6 @@ const badUser = [{
     Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
     }];
 
-
-// insertUser(user)
-
 // deleteReivew(review);
 // insertReivew(review, raid);
 

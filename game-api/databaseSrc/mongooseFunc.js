@@ -72,6 +72,25 @@ function updateReivew(collect, finddocs, changes) {
     });
 }
 
+/**
+ * Updates the token for a given user
+ * @param {*} query the query to find the user
+ * @param {*} token the new token for the user
+ */
+function updateUserToken(query, token){
+    userid.findOneAndUpdate(query, {Token: token}, function(err, doc){
+        if (err) {
+            return console.error(err);
+        } else {
+            try {
+                console.log(doc);
+            }catch (err) {
+                console.error(err);
+            }
+        }
+    });
+}
+
 
 /**
  * Provide the search query parameters, and the changable as changes to apply
@@ -118,6 +137,9 @@ function deleteReivew(collect, docs) {
 
 async function extractGames(id){
     const users = await userid.findById(id).lean();
+    if (users == null){
+        return null;
+    }
     const game = users.Games;
     return game;
 }
@@ -306,7 +328,8 @@ module.exports = {
     extractGames,
     extractTeam,
 
-    insertUser
+    insertUser,
+    updateUserToken,
 
 };
 
