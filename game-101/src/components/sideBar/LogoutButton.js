@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { IconButton } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { IconButton } from "@mui/material";
 
 export default function LogoutButton() {
   return (
@@ -10,10 +10,12 @@ export default function LogoutButton() {
         borderRadius: 0,
       }}
     >
-      <LogoutIcon       sx={{
-        width: "32px",
-        height: "32px",
-      }} />
+      <LogoutIcon
+        sx={{
+          width: "32px",
+          height: "32px",
+        }}
+      />
     </IconButton>
   );
 }
