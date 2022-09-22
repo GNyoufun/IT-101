@@ -27,11 +27,6 @@ export default function SideBarListItems() {
 
   const itemsList = [
     {
-      text: "Add New",
-      icon: <AddCircleIcon />,
-      to: "/add-record",
-    },
-    {
       text: "Game History",
       icon: <TimelineIcon />,
       to: "/history",
@@ -47,9 +42,19 @@ export default function SideBarListItems() {
       to: "/setting",
     },
     {
+      text: "Add Record",
+      icon: <AddCircleIcon />,
+      to: "/add-record",
+    },
+    {
       text: "Add Game",
       icon: <AddCircleIcon />,
       to: "/add-game",
+    },
+    {
+      text: "Add New",
+      icon: <AddCircleIcon />,
+      to: "/add-new",
     },
   ];
 
