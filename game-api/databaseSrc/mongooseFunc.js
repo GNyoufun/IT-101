@@ -134,11 +134,6 @@ async function deleteReivew (collect, docs) {
   return deleted.deletedCount;
 }
 
-async function extractGames (id) {
-  const users = await userid.findById(id).lean();
-  const game = users.Games;
-  return game;
-}
 async function extractGames(id){
     const users = await userid.findById(id).lean();
     if (users == null){
