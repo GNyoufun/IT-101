@@ -524,6 +524,9 @@ module.exports = {
   averageTime,
   averageDifficulty,
   averageRating,
+  midDifficulty,
+  midRating,
+
   extractGames,
   extractTeam,
 
