@@ -1,19 +1,22 @@
-require('dotenv').config({ path: './databaseSrc/.env' });
+require('dotenv').config({ path: './databaseSrc/.env'});
 const express = require('express');
 const bodyParser = require('body-parser');
 const ObjectId = require('mongodb').ObjectId;
 const {
-  retrieveReview,
-  insertReivew,
-  updateReivew,
-  FindReplaceReivew,
-  deleteReivew
+    retrieveReview,
+    insertReivew,
+    updateReivew,
+    FindReplaceReivew,
+    deleteReivew,
+    updateUserToken
 } = require('./databaseSrc/mongooseFunc.js');
 const {
-  review,
-  userid
+    review,
+    userid
 } = require('./databaseSrc/mongooseSchema.js');
-const e = require('express');
+
+// Import the module used for hashing passwords and generating tokens
+const crypto = require('./crypto.js');
 
 // App setup
 const app = express();
@@ -22,16 +25,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // User Requests
 
+// Use Auth for all requests for users*
+app.use('/users/:user_id(\\d+)*', require('./auth.js').authenticate);
+
 /**
  * get all users
  * @header token (not implemented)
  * @responseBody list of users, user fields are {_id, username}
  */
 app.get('/users', async (req, res, next) => {
-  console.log('Starting GET request /users');
-  res.status(200);
-  res.json(await retrieveReview(userid, {}, { UserName: 1 }));
-  console.log('Successful GET request /users');
+    // TODO: Make Secure
+    console.log('Starting GET request /users');
+    res.status(200);
+    res.json(await retrieveReview(userid, {}, { UserName: 1 }));
+    console.log('Successful GET request /users');
 });
 
 /**
@@ -42,34 +49,37 @@ app.get('/users', async (req, res, next) => {
  * @body password
  */
 app.post('/users', async (req, res, next) => {
-  console.log('Starting POST request /users');
-  // check if a user with the same username and password already exist
-  const query = {
-    UserName: req.body.username,
-    UserPassword: req.body.password
-  };
-  const invalid = Boolean(
-    req.body.username === undefined ||
-        req.body.password === undefined ||
-        (await retrieveReview(userid, query)).length > 0
-  );
-  if (invalid) {
-    // bad request
-    res.sendStatus(400);
-    console.log('Failed POST request /users');
-    return;
-  }
+    console.log('Starting POST request /users');
 
-  // create new user
-  const user = {
-    UserName: req.body.username,
-    UserPassword: req.body.password,
-    Token: '',
-    Games: []
-  };
-  await insertReivew(userid, [user]);
-  res.sendStatus(200);
-  console.log('Successful POST request /users');
+    // Check that the username and password were provided
+    if (req.body.username === undefined || req.body.password === undefined)
+    {
+        res.sendStatus(400);
+        console.log('Failed POST request /users. Not all data is present');
+        return;
+    }
+
+    // check if a user with the same username already exists
+    const query = {
+        UserName: req.body.username
+    };
+    if((await retrieveReview(userid, query)).length > 0) {
+        res.sendStatus(400);
+        console.log('Failed POST request /users');
+        return;
+    }
+
+    // create new user and hash the password
+    const user = {
+        UserName: req.body.username,
+        UserPassword: await crypto.hashPassword(req.body.password),
+        Token: "",
+        Games: []
+    };
+
+    await insertReivew(userid, [user]);
+    res.sendStatus(200);
+    console.log('Successful POST request /users');
 });
 
 /**
@@ -79,58 +89,83 @@ app.post('/users', async (req, res, next) => {
  * @responseBody list of tokens (should only be one), token fields are {_id, token}
  */
 app.get('/users/login', async (req, res, next) => {
-  console.log('Starting GET request /users/login');
-  if (req.headers.username === undefined || req.headers.password === undefined) {
-    // no username/password specified
-    res.sendStatus(401);
-    console.log('Failed GET request /users/login, 401');
-    return;
-  }
+    console.log('Starting GET request /users/login');
+    if(req.headers.username === undefined || req.headers.password === undefined) {
+        // no username/password specified
+        res.sendStatus(401);
+        console.log('Failed GET request /users/login, 401. No username or password specified');
+        return;
+    }
 
-  const query = {
-    UserName: req.headers.username,
-    UserPassword: req.headers.password
-  };
-  const result = await retrieveReview(userid, query, { Token: 1 });
-  if (result.length === 0) {
-    // no such user found
-    res.sendStatus(400);
-    console.log('Failed GET request /users/login, 400');
-  } else {
-    // success
-    res.status(200);
-    res.json(result);
-    console.log('Successful GET request /users/login');
-  }
+    // create a query with the user and a hash of the password
+    const query = {
+        UserName: req.headers.username,
+    };
+    const result = await retrieveReview(userid, query, { Token: 1 });
+    if(result.length === 0) {
+        // no such user found
+        res.sendStatus(400);
+        console.log('Failed GET request /users/login, 400');
+    }
+    else {
+        // Check that the password matches
+        if(await crypto.checkPassword(req.headers.password, result[0].UserPassword)) {
+            
+            // Remove the password from the response
+            delete result[0].UserPassword;
+
+            // Generate a new token
+            const token = await crypto.generateToken(req.headers.username, req.headers.password);
+
+            // Update the token in the database
+            const update = {
+                Token: token
+            };
+            updateUserToken(result, token.toString());
+
+            // Add the token to the response
+            result[0].Token = token;
+
+            res.json(result);
+            res.status(200);
+            console.log('Successful GET request /users/login');
+        }
+        else {
+            res.sendStatus(401);
+            console.log('Failed GET request /users/login, 401. Password does not match');
+        }
+    }
 });
 
-/**
+/** 
  * get a specific user
  * @path user_id, should be 24 character hexadecimal string
  * @header token (not implemented)
  * @responseBody list of users (should only be one), user fields are {_id, username}
  */
 app.get('/users/:user_id', async (req, res, next) => {
-  console.log('Starting GET request /users/%s', req.params.user_id);
-  try {
-    const id = ObjectId(req.params.user_id);
-    const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
-    if (result.length === 0) {
-      // not found user id
-      res.sendStatus(404);
-      console.log('Failed GET request /users/$s, 404', req.params.user_id);
-    } else {
-      // success
-      res.status(200);
-      res.json(result);
-      console.log('Successful GET request /users/%s', req.params.user_id);
+    console.log('Starting GET request /users/%s', req.params.user_id);
+    try {
+        const id = ObjectId(req.params.user_id);
+        const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
+        if(result.length === 0) {
+            // not found user id
+            res.sendStatus(404);
+            console.log('Failed GET request /users/$s, 404', req.params.user_id);
+        }
+        else {
+            // success
+            res.status(200);
+            res.json(result);
+            console.log('Successful GET request /users/%s', req.params.user_id);
+        }
     }
-  } catch (err) {
-    // invalid (not found) user id
-    res.sendStatus(404);
-    console.error(err);
-    console.log('Failed GET request /users/$s, 404', req.params.user_id);
-  }
+    catch (err) {
+        // invalid (not found) user id
+        res.sendStatus(404);
+        console.error(err);
+        console.log('Failed GET request /users/$s, 404', req.params.user_id);
+    }
 });
 
 // update a specific user

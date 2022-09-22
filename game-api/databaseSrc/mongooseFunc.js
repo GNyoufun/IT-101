@@ -38,6 +38,21 @@ function insertReivew (collect, reviews) {
 }
 
 /**
+ * Provide a list of users to insert into the database
+ * @param {[list]} users a list of users
+ */
+function insertUser(users) {
+    user.collection.insertMany(users, function (err) {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log('Multiple documents inserted to Collection');
+        }
+    });
+}
+
+
+/**
  * Provide the search query parameters, and the changable as changes to apply
  * @param collect the collection model name
  * @param  {[list]} finddocs a list of search queries
@@ -55,6 +70,26 @@ async function updateReivew (collect, finddocs, changes) {
   }
   return updated;
 }
+
+/**
+ * Updates the token for a given user
+ * @param {*} query the query to find the user
+ * @param {*} token the new token for the user
+ */
+function updateUserToken(query, token){
+    userid.findOneAndUpdate(query, {Token: token}, function(err, doc){
+        if (err) {
+            return console.error(err);
+        } else {
+            try {
+                console.log(doc);
+            }catch (err) {
+                console.error(err);
+            }
+        }
+    });
+}
+
 
 /**
  * Provide the search query parameters, and the changable as changes to apply
@@ -103,10 +138,32 @@ async function extractGames (id) {
   const users = await userid.findById(id).lean();
   const game = users.Games;
   return game;
+async function extractGames(id){
+    const users = await userid.findById(id).lean();
+    if (users == null){
+        return null;
+    }
+    const game = users.Games;
+    return game;
 }
 
-async function extractTeam () {
-  const games = await review.find({ Title: GameTitle }).lean();
+async function extractTeam(GameTitle, id){
+    const games = await review.find({Title: GameTitle, UserId: id}).lean();
+    let teammate = [];
+    
+    for (let i = 0; i < games.length; i++) {
+        let team = games[i].Team
+        teammate.push(...team);
+    }
+
+    const uniqueTeammate = teammate.filter((value, index) => {
+        const _value = JSON.stringify(value);
+        return index === teammate.findIndex(obj => {
+          return JSON.stringify(obj) === _value;
+        });
+      });
+    
+    return uniqueTeammate;
 }
 
 function logging (str, department, time) {
@@ -304,8 +361,11 @@ module.exports = {
   averageTime,
   averageDifficulty,
   averageRating,
+  extractGames,
+  extractTeam,
 
-  extractGames
+  insertUser,
+  updateUserToken,
 
 };
 

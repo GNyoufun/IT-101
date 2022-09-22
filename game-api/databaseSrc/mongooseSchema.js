@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 // connect to MongoDB
 connectDB();
 mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB\n');
 });
 
 /**
