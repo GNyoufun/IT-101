@@ -5,6 +5,8 @@ grand_parent: About
 nav_order: 2
 ---
 # Requirements List
+- New added requirement are highlighted blue
+- Remove requirement are highlighted red 
 ## Must have requirements:
 - Records on different games submitted to the application
 - Accessible via username and password
