@@ -1,3 +1,5 @@
+import AddNew from "./addNew/addNew";
+
 import AddGameForm from "./addNewGame/AddGameForm";
 
 import AddRecordForm from "./addNewRecord/AddRecordForm";
@@ -15,6 +17,7 @@ import { ChangeDetails } from "./setting/ChangeDetails";
 import SideBar from "./sideBar/SideBar";
 
 export {
+  AddNew,
   AddGameForm,
   AddRecordForm,
   DashboardContent,

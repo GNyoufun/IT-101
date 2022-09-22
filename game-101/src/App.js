@@ -5,6 +5,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import {
   AddGameForm,
+  AddNew,
   AddRecordForm,
   ChangeDetails,
   DashboardContent,
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/setting" element={<ChangeDetails />} />
           <Route path="/add-record" element={<AddRecordForm />} />
           <Route path="/add-game" element={<AddGameForm />} />
+          <Route path="/add-new" element={<AddNew />} />
         </Routes>
       </Box>
     </ThemeProvider>
