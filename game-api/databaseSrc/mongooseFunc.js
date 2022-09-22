@@ -148,7 +148,7 @@ async function extractGames(id){
     return game;
 }
 
-async function extractTeam(GameTitle, id){
+async function extractTeam(GameTitle, id) {
     const games = await review.find({Title: GameTitle, UserId: id}).lean();
     let teammate = [];
     
@@ -367,7 +367,6 @@ module.exports = {
 
   insertUser,
   updateUserToken,
-
 };
 
 // require('./mongodb_trial.js');
