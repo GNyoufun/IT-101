@@ -1,6 +1,6 @@
 ---
 parent: Communication
-title: Planning
+title: Planning - Second Sprint 
 nav_order: 5
 ---
 
@@ -26,6 +26,7 @@ The main focus on this sprint iteration is:
 ---
 Some User Stories are listed as example for each Epics. 
 The full User Stories please see the Project Managment.
+
 [Project Management](https://github.com/users/GNyoufun/projects/1){: .btn .btn-blue .mr-2 }
 
 <p>&nbsp;</p>
