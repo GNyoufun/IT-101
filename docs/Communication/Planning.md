@@ -4,7 +4,7 @@ title: Planning
 nav_order: 5
 ---
 
-## Planning 
+# Planning 
 - Focus on 
     - All Implementation on 
         - FrontEnd Server 
