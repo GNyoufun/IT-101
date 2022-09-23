@@ -1,7 +1,7 @@
 ---
 parent: About
 title: Project Details
-nav_order: 2
+nav_order: 1
 ---
 
 # Project Details
