@@ -2,7 +2,7 @@
 title: StandUp 9 - 22/09/22
 parent: StandUps
 grand_parent: Communication
-nav_order: 6
+nav_order: 9
 ---
 # StandUp 6 - 01/09/22
 ## Meeting Information

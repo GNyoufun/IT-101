@@ -79,7 +79,7 @@ Designs and prototypes on the functionality and UI/UX of the web application.
 
 Designs and modelling on the functionality of the web server and database.
 
-### Epic 3 - Backend Monitor Workflow:
+### Epic 3 - Backend Backend Workflow Implementation:
 
 Implementation of backend workflow and synergy with the frontend and database. 
 

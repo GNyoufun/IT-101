@@ -24,5 +24,4 @@ An Agile retrospective meeting held at the end of the sprint iteration for the s
     - Research and re-design on API implementation and designs 
     - More detail records in StandUp meetings 
 - Shout out 
-    - Shout out to Ella and Jessica for the beautifully designed FrontEnd 
-        user interfaces and the fast implementations
+    - Shout out to Ella and Jessica, the FrontEnd memebers for the beautifully designed FrontEnd user interfaces and the fast implementations
