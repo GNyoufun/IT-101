@@ -1,5 +1,7 @@
 require('dotenv').config({ path: './databaseSrc/.env'});
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const ObjectId = require('mongodb').ObjectId;
 const {
@@ -18,15 +20,23 @@ const {
 // Import the module used for hashing passwords and generating tokens
 const crypto = require('./crypto.js');
 
+// HTTPS configuration
+var options = {
+  key: fs.readFileSync(__dirname + '/../certs/selfsigned.key'),
+  cert: fs.readFileSync(__dirname + '/../certs/selfsigned.crt')
+};
+
 // App setup
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// User Requests
-
 // Use Auth for all requests for users*
 app.use('/users/:user_id(\\d+)*', require('./auth.js').authenticate);
+
+/**
+ * User Requests
+ */
 
 /**
  * get all users
@@ -209,7 +219,9 @@ app.get('/users/:user_id/logout', async (req, res, next) => {
   res.send('Logout user_id');
 });
 
-// Game requests
+/**
+ * Game Requests
+ */
 
 /**
  * get all the games of a user
@@ -307,10 +319,13 @@ app.delete('/users/:user_id/games/:game', (req, res, next) => {
   res.send('Delete game for user_id');
 });
 
-// TCP connection
+/**
+ * TCP Connection
+ */
 
 app.set('port', process.env.PORT || 4000);
-app.listen(app.get('port'), () => {
+var server = https.createServer(options, app);
+server.listen(app.get('port'), () => {
   console.log('Express web app available at localhost: ${port}');
 });
 
