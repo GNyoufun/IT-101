@@ -5,10 +5,8 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Container,
   Divider,
   Grid,
-  Stack,
   TextField,
 } from "@mui/material";
 
@@ -29,9 +27,9 @@ export const ChangeDetails = (props) => {
   };
 
   return (
-    <form autoComplete="off" noValidate {...props}>
+    <form autoComplete='off' noValidate {...props}>
       <Box
-        component="form"
+        component='form'
         sx={{
           flexGrow: 2,
           height: "100vh",
@@ -42,119 +40,118 @@ export const ChangeDetails = (props) => {
           e.key === "Enter" && e.preventDefault();
         }}
         noValidate
-        autoComplete="off"
+        autoComplete='off'
       >
-        <Stack direction="row" justifyContent="center" alignItems="center">
-          <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={12}>
-                <Card>
-                  <CardHeader title="Email Address" />
-                  <Divider />
-                  <CardContent>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Grid item md={6} xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Email Address"
-                          name="email"
-                          onChange={handleChange}
-                          required
-                          value={values.email}
-                          variant="outlined"
-                        />
-                      </Grid>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Card>
-                  <CardHeader title="Username" />
-                  <Divider />
-                  <CardContent>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Grid item md={6} xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Username"
-                          name="username"
-                          onChange={handleChange}
-                          required
-                          value={values.username}
-                          variant="outlined"
-                        />
-                      </Grid>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Card>
-                  <CardHeader subheader="Update Password" title="Password" />
-                  <Divider />
-                  <CardContent>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Grid item md={6} xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Current Password"
-                          name="curPassword"
-                          onChange={handleChange}
-                          required
-                          variant="outlined"
-                          margin="normal"
-                        />
-                        <TextField
-                          fullWidth
-                          label="New Password"
-                          name="newPassword"
-                          onChange={handleChange}
-                          required
-                          variant="outlined"
-                          margin="normal"
-                        />
-                        <TextField
-                          fullWidth
-                          label="Confirm Password"
-                          name="confirmPassword"
-                          onChange={handleChange}
-                          required
-                          variant="outlined"
-                          margin="normal"
-                        />
-                      </Grid>
-                      <SubmitButton />
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
+        <Grid container sx={{ m: 4 }}>
+          <Grid
+            container
+            maxWidth='md'
+            xs={11}
+            md={7}
+            spacing={3}
+            alignItems='center'
+          >
+            <Grid item xs={12}>
+              <Card sx={{ p: 2 }}>
+                <CardHeader title='Email Address' />
+                <Divider />
+                <CardContent>
+                  <Grid item md={8} xs={12}>
+                    <TextField
+                      fullWidth
+                      label='Email Address'
+                      name='email'
+                      onChange={handleChange}
+                      required
+                      value={values.email}
+                      variant='outlined'
+                    />
+                  </Grid>
+                </CardContent>
+              </Card>
             </Grid>
-          </Container>
-          <Box
+
+            <Grid item xs={12}>
+              <Card sx={{ p: 2 }}>
+                <CardHeader title='Username' />
+                <Divider />
+                <CardContent>
+                  <Grid item md={8} xs={12}>
+                    <TextField
+                      fullWidth
+                      label='Username'
+                      name='username'
+                      onChange={handleChange}
+                      required
+                      value={values.username}
+                      variant='outlined'
+                    />
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Card sx={{ p: 2 }}>
+                <CardHeader subheader='Update Password' title='Password' />
+                <Divider />
+                <CardContent>
+                  <Grid
+                    container
+                    justifyContent='space-between'
+                    alignItems='flex-end'
+                  >
+                    <Grid item md={8} sm={12}>
+                      <TextField
+                        fullWidth
+                        label='Current Password'
+                        name='curPassword'
+                        onChange={handleChange}
+                        required
+                        variant='outlined'
+                        margin='normal'
+                      />
+                      <TextField
+                        fullWidth
+                        label='New Password'
+                        name='newPassword'
+                        onChange={handleChange}
+                        required
+                        variant='outlined'
+                        margin='normal'
+                      />
+                      <TextField
+                        fullWidth
+                        label='Confirm Password'
+                        name='confirmPassword'
+                        onChange={handleChange}
+                        required
+                        variant='outlined'
+                        margin='normal'
+                      />
+                    </Grid>
+                    <Grid item md={3.2} sm={12} sx={{ mt: 2, mb: 1 }}>
+                      <SubmitButton />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+
+          <Grid
+            item
+            sm={12}
+            md={5}
+            alignItems='center'
+            justifyContent='center'
             sx={{
               display: { lg: "flex", md: "flex", sm: "none", xs: "none" },
-              flexDirection: "column",
-              alignItems: "center",
             }}
           >
-            <img src={security} width="70%" alt="Banner" />
-          </Box>
-        </Stack>
+            <img src={security} width='70%' alt='Banner' />
+          </Grid>
+        </Grid>
       </Box>
     </form>
   );

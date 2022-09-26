@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 
 export default function SideBarListItems() {
+
   const [selectedRoute, setSelectedRoute] = React.useState(
     useLocation().pathname
   );
@@ -24,6 +25,24 @@ export default function SideBarListItems() {
   const handleListItemClick = (e, to) => {
     setSelectedRoute(to);
   };
+
+  const addNewList = [
+    {
+      text: "Add New",
+      icon: <AddCircleIcon />,
+      to: "/add-new",
+    },
+    {
+      text: "Add Record",
+      icon: <AddCircleIcon />,
+      to: "/add-record",
+    },
+    {
+      text: "Add Game",
+      icon: <AddCircleIcon />,
+      to: "/add-game",
+    },
+  ];
 
   const itemsList = [
     {
@@ -40,21 +59,6 @@ export default function SideBarListItems() {
       text: "Setting",
       icon: <SettingIcon />,
       to: "/setting",
-    },
-    {
-      text: "Add Record",
-      icon: <AddCircleIcon />,
-      to: "/add-record",
-    },
-    {
-      text: "Add Game",
-      icon: <AddCircleIcon />,
-      to: "/add-game",
-    },
-    {
-      text: "Add New",
-      icon: <AddCircleIcon />,
-      to: "/add-new",
     },
   ];
 
@@ -76,6 +80,24 @@ export default function SideBarListItems() {
           </ListItemIcon>
           <ListItemText primary={"Dashboard"} />
         </ListItemButton>
+
+        <Divider sx={{ my: 1 }} />
+
+
+        {addNewList.map((item) => {
+          const { text, icon } = item;
+          return (
+
+            <ListItemButton
+              to={item.to}
+              selected={selectedRoute === item.to}
+              onClick={(e) => handleListItemClick(e, item.to)}
+            >
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          );
+        })}
 
         <Divider sx={{ my: 1 }} />
 
