@@ -364,4 +364,4 @@ module.exports = {
   updateUserToken,
 };
 
-// require('./mongodb_trial.js');
+require('./mongodb_trial.js');

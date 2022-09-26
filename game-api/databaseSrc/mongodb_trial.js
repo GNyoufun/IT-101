@@ -131,21 +131,28 @@ const raid = [
 // deleteReivew(review);
 // insertReivew(review, raid);
 
+// let retrieved = new Promise(function (resolve, reject) {
+//     retrieveReview(review, {Title: "FFXIV"});
+// });
+
+// retrieved.then(function (result){
+//     console.log(result)
+// })
 
 
-let game = new Promise(function (resolve, reject) {
-    resolve(extractGames(1));
-});
+// let game = new Promise(function (resolve, reject) {
+//     resolve(extractGames(1));
+// });
 
-game.then(function (result){
-    console.log(result)
-})
+// game.then(function (result){
+//     console.log(result)
+// })
 
-let team = new Promise(function (resolve, reject) {
-    resolve(extractTeam("FFXIV", 1));
-});
+// let team = new Promise(function (resolve, reject) {
+//     resolve(extractTeam("FFXIV", 1));
+// });
 
 
-team.then(function (result){
-    console.log(result)
-})
+// team.then(function (result){
+//     console.log(result)
+// })
