@@ -51,14 +51,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/LoginUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
       responses:
         '200':
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
         '400':
           description: Invalid attributes, or user already exists
   /users/login:
@@ -270,13 +269,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Game'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Game'
       responses:
         '200':
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Game'
         '400':
           description: Invalid attributes, or game already exists
         '404':
@@ -405,42 +403,51 @@ components:
     Token:
       type: object
       properties:
-        user_id:
-          type: integer
-          format: int64
-          example: 10
-        token:
+        _id:
+          type: string
+          format: hexadecimal_24
+          example: 632bdb704a342e1d5ab2dcd3
+        Token:
           type: string
           example: asdf1234jkl5678
+    LoginUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: theUser
+        password:
+          type: string
+          example: Password.123
     User:
       type: object
       properties:
-        user_id:
-          type: integer
-          format: int64
-          example: 10
-        username:
+        _id:
+          type: string
+          format: hexadecimal_24
+          example: 632bdb704a342e1d5ab2dcd3
+        UserName:
           type: string
           example: theUser
     Game:
       type: object
       properties:
-        game_title:
+        GameTitle:
           type: string
           example: Minecraft
-        type:
+        GameType:
           type: string
           example: Open World
     RaidReview:
       type: object
       properties:
-        game_title:
+        GameTitle:
           type: string
           example: FFXIV
-        user_id:
-          type: integer
-          format: int64
-          example: 10
+        UserId:
+          type: string
+          format: hexadecimal_24
+          example: 632bdb704a342e1d5ab2dcd3
         date:
           type: string
           example: 21/09/2022
