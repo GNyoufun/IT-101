@@ -42,7 +42,15 @@ function insertReivew (collect, reviews) {
  * @param {[list]} users a list of users
  */
 function insertUser(users) {
-    user.collection.insertMany(users, function (err) {
+    // Passwords should already be hashed before given here
+    // Check that passwords and usernames are given
+    for (let i = 0; i < users.length; i++) {
+        if (!users[i].UserPassword || !users[i].UserName) {
+            console.log('Error: Password or Username not given');
+            return;
+        }
+    }
+    userid.collection.insertMany(users, function (err) {
         if (err) {
             return console.error(err);
         } else {

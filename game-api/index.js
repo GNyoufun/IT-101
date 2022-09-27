@@ -1,6 +1,8 @@
 require('dotenv').config({ path: './databaseSrc/.env'});
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const ObjectId = require('mongodb').ObjectId;
 const {
     retrieveReview,
@@ -23,10 +25,68 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Enable CORS
+app.use(cors());
+
 // User Requests
 
+/**
+ * login a user via their username and password
+ * @header username
+ * @header password
+ * @responseBody list of tokens (should only be one), token fields are {_id, token}
+ */
+ app.get('/users/login', async (req, res, next) => {
+  console.log('Starting GET request /users/login');
+  if(req.headers.username === undefined || req.headers.password === undefined) {
+      // no username/password specified
+      res.sendStatus(401);
+      console.log('Failed GET request /users/login, 401. No username or password specified');
+      return;
+  }
+
+  // create a query with the user and a hash of the password
+  const query = {
+      UserName: req.headers.username,
+  };
+  const result = await retrieveReview(userid, query, { Token: 1, UserPassword: 1 });
+  if(result.length === 0) {
+      // no such user found
+      res.sendStatus(400);
+      console.log('Failed GET request /users/login, 400');
+  }
+  else {
+      // Check that the password matches
+      if(await crypto.checkPassword(req.headers.password, result[0].UserPassword)) {
+          
+          // Remove the password from the response
+          delete result[0].UserPassword;
+
+          // Generate a new token
+          const token = await crypto.generateToken(req.headers.username, req.headers.password);
+
+          // Update the token in the database
+          const update = {
+              Token: token
+          };
+          updateUserToken(result, token.toString());
+
+          // Add the token to the response
+          result[0].Token = token;
+
+          res.json(result);
+          res.status(200);
+          console.log('Successful GET request /users/login');
+      }
+      else {
+          res.sendStatus(401);
+          console.log('Failed GET request /users/login, 401. Password does not match');
+      }
+  }
+});
+
 // Use Auth for all requests for users*
-app.use('/users/:user_id(\\d+)*', require('./auth.js').authenticate);
+app.use('/users/:user_id*', require('./auth.js').authenticate);
 
 /**
  * get all users
@@ -82,60 +142,6 @@ app.post('/users', async (req, res, next) => {
     console.log('Successful POST request /users');
 });
 
-/**
- * login a user via their username and password
- * @header username
- * @header password
- * @responseBody list of tokens (should only be one), token fields are {_id, token}
- */
-app.get('/users/login', async (req, res, next) => {
-    console.log('Starting GET request /users/login');
-    if(req.headers.username === undefined || req.headers.password === undefined) {
-        // no username/password specified
-        res.sendStatus(401);
-        console.log('Failed GET request /users/login, 401. No username or password specified');
-        return;
-    }
-
-    // create a query with the user and a hash of the password
-    const query = {
-        UserName: req.headers.username,
-    };
-    const result = await retrieveReview(userid, query, { Token: 1, UserPassword: 1 });
-    if(result.length === 0) {
-        // no such user found
-        res.sendStatus(400);
-        console.log('Failed GET request /users/login, 400');
-    }
-    else {
-        // Check that the password matches
-        if(await crypto.checkPassword(req.headers.password, result[0].UserPassword)) {
-            
-            // Remove the password from the response
-            delete result[0].UserPassword;
-
-            // Generate a new token
-            const token = await crypto.generateToken(req.headers.username, req.headers.password);
-
-            // Update the token in the database
-            const update = {
-                Token: token
-            };
-            updateUserToken(result, token.toString());
-
-            // Add the token to the response
-            result[0].Token = token;
-
-            res.json(result);
-            res.status(200);
-            console.log('Successful GET request /users/login');
-        }
-        else {
-            res.sendStatus(401);
-            console.log('Failed GET request /users/login, 401. Password does not match');
-        }
-    }
-});
 
 /** 
  * get a specific user
