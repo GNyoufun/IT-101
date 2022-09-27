@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { Link } from "react-router-dom";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MuiDrawer from "@mui/material/Drawer";
 import {
@@ -111,7 +113,9 @@ export default function SideBar() {
             <LightDarkSwitch />
           </Box>
           <Box sx={{ my: [1] }}>
-            <LogoutButton />
+            <IconButton component={Link} to="/login">
+              <LogoutButton />
+            </IconButton>
           </Box>
         </Grid>
       </Grid>
