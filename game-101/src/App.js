@@ -12,6 +12,7 @@ import {
   GameHistoryList,
   SideBar,
 } from "./components";
+import { SignInUp } from "./pages";
 import dTheme from "./style/theme";
 
 const App = () => {
@@ -30,6 +31,9 @@ const App = () => {
           <Route path="/add-new" element={<AddNew />} />
         </Routes>
       </Box>
+      <Routes>
+        <Route path="/login" element={<SignInUp />} />
+      </Routes>
     </ThemeProvider>
   );
 };

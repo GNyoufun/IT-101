@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 
 export default function SideBarListItems() {
-
   const [selectedRoute, setSelectedRoute] = React.useState(
     useLocation().pathname
   );
@@ -83,11 +82,9 @@ export default function SideBarListItems() {
 
         <Divider sx={{ my: 1 }} />
 
-
         {addNewList.map((item) => {
           const { text, icon } = item;
           return (
-
             <ListItemButton
               to={item.to}
               selected={selectedRoute === item.to}
