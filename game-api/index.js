@@ -10,7 +10,9 @@ const {
     updateReivew,
     FindReplaceReivew,
     deleteReivew,
-    updateUserToken
+    updateUserToken,
+    insertUser,
+    retrieveUserById,
 } = require('./databaseSrc/mongooseFunc.js');
 const {
     review,
@@ -125,11 +127,11 @@ app.post('/users', async (req, res, next) => {
     };
     if((await retrieveReview(userid, query)).length > 0) {
         res.sendStatus(400);
-        console.log('Failed POST request /users');
+        console.log('Failed POST request /users. User already exists');
         return;
     }
 
-    // create new user and hash the password
+    // Create new user and hash the password
     const user = {
         UserName: req.body.username,
         UserPassword: await crypto.hashPassword(req.body.password),
@@ -137,8 +139,41 @@ app.post('/users', async (req, res, next) => {
         Games: []
     };
 
-    await insertReivew(userid, [user]);
-    res.sendStatus(200);
+    // TODO: Generate a token for the user
+
+    // Insert the user into the database
+    var uid = await insertUser(user);
+    console.log(uid);
+
+    // Get the user from the database
+    const result = await retrieveUserById(uid, query);
+    console.log(result);
+
+    if (result == null || result.length === 0) {
+        res.sendStatus(500);
+        console.log('Failed POST request /users. User was not inserted into the database');
+        return;
+    }
+
+    // Return the user's data to the client without the password
+    delete result.UserPassword;
+
+    // Generate a new token
+    const token = await crypto.generateToken(req.body.username, req.body.password);
+
+    // Update the token in the database
+    const update = {
+        Token: token
+    };
+    updateUserToken(result, token.toString());
+
+    // Add the token to the response
+    result.Token = token;
+
+    // Attach a 201 and return the user object with a token
+    res.status(200);
+    res.json(result);
+    res.send();
     console.log('Successful POST request /users');
 });
 

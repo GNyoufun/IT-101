@@ -21,7 +21,10 @@ function convertResponseData(responseData) {
 
 async function retrieveGames() {
   var response = await GetAuthorizedResponse("/users/{user_id}/games", "GET");
-  return convertResponseData(response);
+  if (response.status === 200) {
+    var responseData = await response.json();
+    return convertResponseData(responseData);
+  }
 }
 
 //var GAMES = retrieveGames();
