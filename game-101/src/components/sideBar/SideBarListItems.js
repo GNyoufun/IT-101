@@ -31,16 +31,6 @@ export default function SideBarListItems() {
       icon: <AddCircleIcon />,
       to: "/add-new",
     },
-    {
-      text: "Add Record",
-      icon: <AddCircleIcon />,
-      to: "/add-record",
-    },
-    {
-      text: "Add Game",
-      icon: <AddCircleIcon />,
-      to: "/add-game",
-    },
   ];
 
   const itemsList = [
