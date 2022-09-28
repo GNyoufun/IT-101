@@ -26,8 +26,8 @@ const Submit = styled(Button)({
     '"Segoe UI Symbol"',
   ].join(","),
   "&:hover": {
-    backgroundColor: "#3B83CE",
-    borderColor: "#3B83CE",
+    backgroundColor: "#2581E2",
+    borderColor: "#2581E2",
     boxShadow: "none",
   },
   "&:active": {
