@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Container, Fab, Grid, Paper, Typography } from "@mui/material";
+import { AddNewGame, AddNewRecord } from "./";
 
 export default function AddNew() {
   return (
@@ -16,54 +15,8 @@ export default function AddNew() {
         justifyContent: "center",
       }}
     >
-      <Container maxWidth="xs">
-        <Paper
-          sx={{
-            p: 4,
-          }}
-        >
-          <Grid
-            container
-            sx={{
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-            alignItems="center"
-          >
-            <Typography variant="h5">Add New Game</Typography>
-
-            <Grid mt={3}>
-              <Fab size="small" component={Link} to="/add-game">
-                <AddIcon />
-              </Fab>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
-
-      <Container maxWidth="xs">
-        <Paper
-          sx={{
-            p: 4,
-          }}
-        >
-          <Grid
-            container
-            sx={{
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-            alignItems="center"
-          >
-            <Typography variant="h5">Add New Record</Typography>
-            <Grid mt={3}>
-              <Fab size="small" component={Link} to="/add-record">
-                <AddIcon />
-              </Fab>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
+      <AddNewGame />
+      <AddNewRecord />
     </Box>
   );
 }
