@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router";
-
-import { Box, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import {
@@ -10,26 +9,36 @@ import {
   ChangeDetails,
   DashboardContent,
   GameHistoryList,
-  SideBar,
 } from "./components";
+import { SignInUp, MainPage } from "./pages";
 import dTheme from "./style/theme";
 
 const App = () => {
   return (
     <ThemeProvider theme={dTheme}>
       <CssBaseline />
-      <Box sx={{ display: "flex" }}>
-        <SideBar />
-        <Routes>
-          <Route path="/" element={<DashboardContent />} />
-          <Route path="/history" element={<GameHistoryList />} />
-          <Route path="/people" element={<DashboardContent />} />
-          <Route path="/setting" element={<ChangeDetails />} />
-          <Route path="/add-record" element={<AddRecordForm />} />
-          <Route path="/add-game" element={<AddGameForm />} />
-          <Route path="/add-new" element={<AddNew />} />
-        </Routes>
-      </Box>
+      <Routes>
+        <Route path="/login" element={<SignInUp />} />
+        <Route path="/" element={<MainPage page={<DashboardContent />} />} />
+        <Route
+          path="/history"
+          element={<MainPage page={<GameHistoryList />} />}
+        />
+        <Route
+          path="/people"
+          element={<MainPage page={<DashboardContent />} />}
+        />
+        <Route
+          path="/setting"
+          element={<MainPage page={<ChangeDetails />} />}
+        />
+        <Route
+          path="/add-record"
+          element={<MainPage page={<AddRecordForm />} />}
+        />
+        <Route path="/add-game" element={<MainPage page={<AddGameForm />} />} />
+        <Route path="/add-new" element={<MainPage page={<AddNew />} />} />
+      </Routes>
     </ThemeProvider>
   );
 };

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import dayjs from "dayjs";
 
-import { Box, Container, Grid, Paper } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import {
   Comment,
   SubmitButton,
@@ -48,7 +48,7 @@ export default function AddRecordForm() {
 
   return (
     <Box
-      component="form"
+      component='form'
       sx={{
         flexGrow: 2,
         height: "100vh",
@@ -59,16 +59,19 @@ export default function AddRecordForm() {
         e.key === "Enter" && e.preventDefault();
       }}
       noValidate
-      autoComplete="off"
+      autoComplete='off'
     >
-      <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
+      <Container maxWidth='sm' sx={{ mt: 8, mb: 4 }}>
         <Paper
           sx={{
             p: 4,
           }}
         >
-          <Grid container spacing={3} alignItems="center">
-            {/* Text */}
+          <Box sx={{ my: 3 }}>
+            <Typography variant='h4'>Add New Raid Record</Typography>
+          </Box>
+
+          <Grid container spacing={3} alignItems='center'>
             <Grid item xs={12}>
               <SelectGameName inputs={inputs} setInputs={setInputs} />
             </Grid>

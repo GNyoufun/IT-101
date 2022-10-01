@@ -4,7 +4,7 @@ title: Coding Design
 nav_order: 4
 ---
 
-# Tools
+# Coding Design
 
 ## Front End
 
@@ -32,7 +32,10 @@ A [REST](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-
 
 ## Testing
 
-Testing will be performed manually via local unit tests.
+Testing is performed on a per-developer basis in the form of debugging and functionality testing of the application.
+For example, [Postman](https://www.postman.com/) is used to test the backend api:
+
+![Example Postman Testing](../assets/images/Example%20Postman%20Testing.png)
 
 ## Deployment
 

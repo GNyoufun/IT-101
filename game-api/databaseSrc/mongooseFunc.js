@@ -27,7 +27,7 @@ async function retrieveReview (collect, finddocs, options) {
  * @param  {[list]} reviews a list of schemas
  * @example{ header : matches }
  */
-function insertReivew (collect, reviews) {
+async function insertReivew (collect, reviews) {
   collect.collection.insertMany(reviews, function (err) {
     if (err) {
       return console.error(err);
@@ -38,18 +38,31 @@ function insertReivew (collect, reviews) {
 }
 
 /**
- * Provide a list of users to insert into the database
- * @param {[list]} users a list of users
+ * Provide a user to insert into the database
+ * @param {[list]} user a user to insert
  */
-function insertUser(users) {
-    user.collection.insertMany(users, function (err) {
-        if (err) {
-            return console.error(err);
-        } else {
-            console.log('Multiple documents inserted to Collection');
-        }
-    });
+async function insertUser(user) {
+    // Password should already be hashed before given here
+    // Check that password and username are given
+    if (!user.UserPassword || !user.UserName) {
+      console.log('Error: Password or Username not given');
+      return;
+    }
+    let result = await userid.collection.insertOne(user);
+    console.log('Inserted user ' + result.insertedId +' into collection');
+    return result.insertedId;
 }
+
+/**
+ * Returns the result of finding a single user by id
+ * @param {ObjectId} id 
+ * @returns the user with the given id
+ */
+async function retrieveUserById(id){
+    const user = await userid.findById(id).lean();
+    return user;
+}
+
 
 
 /**
@@ -362,6 +375,7 @@ module.exports = {
 
   insertUser,
   updateUserToken,
+  retrieveUserById,
 };
 
 require('./mongodb_trial.js');

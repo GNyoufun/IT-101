@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db": "cd databaseSrc && npm start",
+    "backend": "concurrently \"npm run db\" \"node index.js\" ",
+    "all": "concurrently \"npm run db\" \"node index.js\" \"cd ../game-101 && npm start\" "
   },
   "keywords": [],
   "author": "",
@@ -13,11 +16,15 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.1",
     "semistandard": "^16.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0"
   }
 }
