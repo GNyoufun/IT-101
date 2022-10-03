@@ -45,7 +45,7 @@ async function insertUser(user) {
     // Password should already be hashed before given here
     // Check that password and username are given
     if (!user.UserPassword || !user.UserName) {
-      console.log('Error: Password or Username not given');
+      console.warn('Error: Password or Username not given');
       return;
     }
     let result = await userid.collection.insertOne(user);

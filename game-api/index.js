@@ -30,7 +30,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Enable CORS
 app.use(cors());
 
-// User Requests
+/**
+ * User Requests
+ */
 
 /**
  * login a user via their username and password
@@ -139,8 +141,6 @@ app.post('/users', async (req, res, next) => {
         Games: []
     };
 
-    // TODO: Generate a token for the user
-
     // Insert the user into the database
     var uid = await insertUser(user);
     console.log(uid);
@@ -162,9 +162,6 @@ app.post('/users', async (req, res, next) => {
     const token = await crypto.generateToken(req.body.username, req.body.password);
 
     // Update the token in the database
-    const update = {
-        Token: token
-    };
     updateUserToken(result, token.toString());
 
     // Add the token to the response
@@ -209,9 +206,53 @@ app.get('/users/:user_id', async (req, res, next) => {
     }
 });
 
-// update a specific user
+/**
+ * update a specific user
+ * accepts json or urlencoded bodies
+ * @path user_id, should be 24 character hexadecimal string
+ * @header token (not implemented)
+ * @body username
+ * @body password
+ */
 app.put('/users/:user_id', async (req, res, next) => {
-  res.send('Update user_id');
+  console.log('Starting PUT request /users/%s', req.params.user_id);
+  // check if the provided user_id is valid
+  try {
+    const id = ObjectId(req.params.user_id);
+
+    // Check that the username and password were provided
+    if (req.body.username === undefined || req.body.password === undefined)
+    {
+        res.sendStatus(400);
+        console.log('Failed PUT request /users/%s. Not all data is present', req.params.user_id);
+        return;
+    }
+
+    // Create new user and hash the password
+    const user = {
+      UserName: req.body.username,
+      UserPassword: await crypto.hashPassword(req.body.password)
+    };
+
+    const result = await updateReivew(userid, { _id: id }, user);
+    if (result.matchedCount === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed PUT request /users/$s, 404', req.params.user_id);
+    } else {
+      // success
+      if (result.matchedCount > result.modifiedCount) {
+        console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
+      }
+      res.sendStatus(200);
+      console.log('Successful PUT request /users/%s', req.params.user_id);
+    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed PUT request /users/$s, 404', req.params.user_id);
+  }
 });
 
 /**
@@ -250,7 +291,9 @@ app.get('/users/:user_id/logout', async (req, res, next) => {
   res.send('Logout user_id');
 });
 
-// Game requests
+/**
+ * Game requests
+ */
 
 /**
  * get all the games of a user
@@ -300,8 +343,8 @@ app.post('/users/:user_id/games', async (req, res, next) => {
     };
     const invalid = Boolean(
       req.body.gametitle === undefined ||
-            req.body.gametype === undefined ||
-            (await retrieveReview(userid, query)).length > 0
+      req.body.gametype === undefined ||
+      (await retrieveReview(userid, query)).length > 0
     );
     if (invalid) {
       // bad request
@@ -348,7 +391,9 @@ app.delete('/users/:user_id/games/:game', (req, res, next) => {
   res.send('Delete game for user_id');
 });
 
-// TCP connection
+/**
+ * TCP connection
+ */
 
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), () => {
