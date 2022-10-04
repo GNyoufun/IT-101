@@ -94,7 +94,7 @@ app.use('/users/:user_id*', require('./auth.js').authenticate);
 
 /**
  * get all users
- * @header token (not implemented)
+ * @header Authorization, should be user_id:token
  * @responseBody list of users, user fields are {_id, username}
  */
 app.get('/users', async (req, res, next) => {
@@ -108,7 +108,7 @@ app.get('/users', async (req, res, next) => {
 /**
  * create a new user
  * accepts json or urlencoded bodies
- * @header token (not implemented)
+ * @header Authorization, should be user_id:token
  * @body username
  * @body password
  */
@@ -178,8 +178,8 @@ app.post('/users', async (req, res, next) => {
 /** 
  * get a specific user
  * @path user_id, should be 24 character hexadecimal string
- * @header token (not implemented)
- * @responseBody list of users (should only be one), user fields are {_id, username}
+ * @header Authorization, should be user_id:token
+ * @responseBody user json object, user fields are {_id, username}
  */
 app.get('/users/:user_id', async (req, res, next) => {
     console.log('Starting GET request /users/%s', req.params.user_id);
@@ -194,7 +194,7 @@ app.get('/users/:user_id', async (req, res, next) => {
         else {
             // success
             res.status(200);
-            res.json(result);
+            res.json(result[0]);
             console.log('Successful GET request /users/%s', req.params.user_id);
         }
     }
@@ -210,7 +210,7 @@ app.get('/users/:user_id', async (req, res, next) => {
  * update a specific user
  * accepts json or urlencoded bodies
  * @path user_id, should be 24 character hexadecimal string
- * @header token (not implemented)
+ * @header Authorization, should be user_id:token
  * @body username
  * @body password
  */
@@ -234,7 +234,7 @@ app.put('/users/:user_id', async (req, res, next) => {
       UserPassword: await crypto.hashPassword(req.body.password)
     };
 
-    const result = await updateReivew(userid, { _id: id }, user);
+    const result = await updateReivew(userid, { _id: id }, { $set: user });
     if (result.matchedCount === 0) {
       // not found user id
       res.sendStatus(404);
@@ -258,7 +258,7 @@ app.put('/users/:user_id', async (req, res, next) => {
 /**
  * delete a specified user
  * @path user_id, should be 24 character hexadecimal string
- * @header token (not implemented)
+ * @header Authorization, should be user_id:token
  */
 app.delete('/users/:user_id', async (req, res, next) => {
   console.log('Starting DELETE request /users/%s', req.params.user_id);
@@ -298,8 +298,8 @@ app.get('/users/:user_id/logout', async (req, res, next) => {
 /**
  * get all the games of a user
  * @path user_id, should be 24 character hexadecimal string
- * @header token (not implemented)
- * @responseBody list of users (should only be one), with user having list of games, game fields are { GameTitle, GameType }
+ * @header Authorization, should be user_id:token
+ * @responseBody list of games, game fields are { GameTitle, GameType }
  */
 app.get('/users/:user_id/games', async (req, res, next) => {
   console.log('Starting GET request /users/%s/games', req.params.user_id);
@@ -313,7 +313,7 @@ app.get('/users/:user_id/games', async (req, res, next) => {
     } else {
       // success
       res.status(200);
-      res.json(result);
+      res.json(result[0].Games);
       console.log('Successful GET request /users/%s/games', req.params.user_id);
     }
   } catch (err) {
@@ -327,7 +327,7 @@ app.get('/users/:user_id/games', async (req, res, next) => {
 /**
  * add a game for a user
  * @path user_id, should be 24 character hexadecimal string
- * @header token (not implemented)
+ * @header Authorization, should be user_id:token
  * @body gametitle
  * @body gametype
  */
@@ -379,15 +379,41 @@ app.post('/users/:user_id/games', async (req, res, next) => {
   }
 });
 
-app.get('/users/:user_id/games/:game', (req, res, next) => {
-  res.send('Return game for user_id');
+/**
+ * get a specific game of a user
+ * @path user_id, should be 24 character hexadecimal string
+ * @path game, the name of the game
+ * @header Authorization, should be user_id:token
+ * @responseBody one game json object, game fields are { GameTitle, GameType }
+ */
+app.get('/users/:user_id/games/:game', async (req, res, next) => {
+  console.log('Starting GET request /users/%s/games/%s', req.params.user_id, req.params.game);
+  try {
+    const id = ObjectId(req.params.user_id);
+    const result = await retrieveReview(userid, { _id: id, 'Games.GameTitle': req.params.game }, { _id: 0, Games: 1 });
+    if (result.length === 0) {
+      // not found user id
+      res.sendStatus(404);
+      console.log('Failed GET request /users/$s/games/%s, 404', req.params.user_id, req.params.game);
+    } else {
+      // success
+      res.status(200);
+      res.json(result[0].Games.find(x => x.GameTitle === req.params.game));
+      console.log('Successful GET request /users/%s/games/%s', req.params.user_id, req.params.game);
+    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed GET request /users/$s/games/%s, 404', req.params.user_id, req.params.game);
+  }
 });
 
-app.put('/users/:user_id/games/:game', (req, res, next) => {
+app.put('/users/:user_id/games/:game', async (req, res, next) => {
   res.send('Update game for user_id');
 });
 
-app.delete('/users/:user_id/games/:game', (req, res, next) => {
+app.delete('/users/:user_id/games/:game', async (req, res, next) => {
   res.send('Delete game for user_id');
 });
 
