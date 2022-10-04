@@ -397,7 +397,7 @@ paths:
         '403':
           description: Invalid privileges for supplied token
         '404':
-          description: User_id or game not found
+          description: User_id or game not found 
   /users/{user_id}/review:
     get:
       tags:
@@ -576,6 +576,95 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or GameTitle not found
+  /users/{user_id}/review/{EndDate}/{StartDate}:
+    get:
+      tags:
+        - Reviews
+      summary: Get reviews of dates for a user 
+      description: Returns reviews the user recorded for a time period
+      operationId: getUserReviewByDate
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: EndDate
+          in: path
+          description: The last date 
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: StartDate
+          in: path
+          description: The first date
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/requestBodies/ReviewArray'
+        '400':
+          description: invalid token supplied 
+        '401':
+          description: No token supplied 
+        '403':
+          description: Invalid privileges for supplied token
+        '404':
+          description: User_id not found
+    delete:
+      tags:
+        - Reviews
+      summary: Delete a user's reviews during a time period
+      description: remove all reviews for a user that was stored during a spcified time period
+      operationId: deleteUserReviewsByDate
+      parameters:
+        - name: user_id
+          in: path
+          description: The specified user
+          required: true
+          schema:
+            type: string
+        - name: EndDate
+          in: path
+          description: The last date 
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: StartDate
+          in: path
+          description: The first date
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid token supplied
+        '401':
+          description: No token supplied
+        '403':
+          description: Invalid privileges for supplied token
+        '404':
+          description: User_id not found     
   /users/{user_id}/review/{EndDate}/{StartDate}/{GameTitle}:
     get:
       tags:
@@ -733,95 +822,6 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or GameTitle not found
-  /users/{user_id}/review/{EndDate}/{StartDate}:
-    get:
-      tags:
-        - Reviews
-      summary: Get reviews of dates for a user 
-      description: Returns reviews the user recorded for a time period
-      operationId: getUserReviewByDate
-      parameters:
-        - name: user_id
-          in: path
-          description: The specified user
-          required: true
-          schema:
-            type: string
-        - name: EndDate
-          in: path
-          description: The last date 
-          required: true
-          schema:
-            type: string
-            format: date
-        - name: StartDate
-          in: path
-          description: The first date
-          required: true
-          schema:
-            type: string
-            format: date
-        - name: token
-          in: header
-          description: Authentication token
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/requestBodies/ReviewArray'
-        '400':
-          description: invalid token supplied 
-        '401':
-          description: No token supplied 
-        '403':
-          description: Invalid privileges for supplied token
-        '404':
-          description: User_id not found
-    delete:
-      tags:
-        - Reviews
-      summary: Delete a user's reviews during a time period
-      description: remove all reviews for a user that was stored during a spcified time period
-      operationId: deleteUserReviewsByDate
-      parameters:
-        - name: user_id
-          in: path
-          description: The specified user
-          required: true
-          schema:
-            type: string
-        - name: EndDate
-          in: path
-          description: The last date 
-          required: true
-          schema:
-            type: string
-            format: date
-        - name: StartDate
-          in: path
-          description: The first date
-          required: true
-          schema:
-            type: string
-            format: date
-        - name: token
-          in: header
-          description: Authentication token
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful operation
-        '400':
-          description: Invalid token supplied
-        '401':
-          description: No token supplied
-        '403':
-          description: Invalid privileges for supplied token
-        '404':
-          description: User_id not found     
   /users/{user_id}/review/{_id}:
     get:
       tags:
@@ -1017,9 +1017,6 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or GameTitle or TeammateName not found
-
-
-
 components:
   schemas:
     Token:
