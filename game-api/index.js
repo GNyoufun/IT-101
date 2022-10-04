@@ -423,7 +423,7 @@ app.put('/users/:user_id/games/:game', async (req, res, next) => {
   try {
     const id = ObjectId(req.params.user_id);
 
-    // Check that the username and password were provided
+    // Check that the gametitle and gametype were provided
     if (req.body.gametitle === undefined || req.body.gametype === undefined)
     {
         res.sendStatus(400);
@@ -458,8 +458,38 @@ app.put('/users/:user_id/games/:game', async (req, res, next) => {
   }
 });
 
+/**
+ * update a specific game of a user
+ * @path user_id, should be 24 character hexadecimal string
+ * @path game, the name of the game
+ * @header Authorization, should be user_id:token
+ */
 app.delete('/users/:user_id/games/:game', async (req, res, next) => {
-  res.send('Delete game for user_id');
+  console.log('Starting DELETE request /users/%s/games/%s', req.params.user_id, req.params.game);
+  // check if the provided user_id is valid
+  try {
+    const id = ObjectId(req.params.user_id);
+    const result = await updateReivew(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $pull: { Games: { GameTitle: req.params.game } } });
+    if (result.matchedCount === 0) {
+      // not found user id or game
+      res.sendStatus(404);
+      console.log('Failed DELETE request /users/$s/games/%s, 404', req.params.user_id, req.params.game);
+    } else {
+      // success
+      if (result.matchedCount > result.modifiedCount) {
+        console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
+      } else if(result.modifiedCount > result.matchedCount) {
+        console.warn('Modified more than matched. %d matched, %d modified', result.matchedCount, result.modifiedCount);
+      }
+      res.sendStatus(200);
+      console.log('Successful DELETE request /users/%s/games/%s', req.params.user_id, req.params.game);
+    }
+  } catch (err) {
+    // invalid (not found) user id
+    res.sendStatus(404);
+    console.error(err);
+    console.log('Failed DELETE request /users/$s/games/%s, 404', req.params.user_id, req.params.game);
+  }
 });
 
 /**
