@@ -89,8 +89,8 @@ async function updateReivew (collect, finddocs, changes) {
  * @param {*} query the query to find the user
  * @param {*} token the new token for the user
  */
-function updateUserToken(query, token){
-    userid.findOneAndUpdate(query, {Token: token}, function(err, doc){
+function updateUserToken(id, token){
+    userid.findOneAndUpdate({_id: id}, {"Token": token}, function(err, doc){
         if (err) {
             return console.error(err);
         } else {

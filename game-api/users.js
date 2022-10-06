@@ -57,7 +57,8 @@ module.exports = function (app) {
                 const update = {
                     Token: token
                 };
-                updateUserToken(result, token.toString());
+                
+                updateUserToken(result[0]._id, token.toString());
     
                 // Add the token to the response
                 result[0].Token = token;
