@@ -59,7 +59,7 @@ const userSchema = new Schema({
  * @inner comments : general comments for the Raid
  */
 const reviewSchema = new Schema({
-  UserId: Number,
+  UserId: ObjectId,
   Title: String,
   Date: { type: Date, default: Date.now },
   // Team: [{ type: Schema.Types.ObjectId, ref: gameIDSchema }],
