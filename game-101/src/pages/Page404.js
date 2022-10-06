@@ -1,4 +1,4 @@
-import { Button, Typography, Container, Box } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import pageNotFound from "../style/404.svg";

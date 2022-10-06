@@ -2,7 +2,7 @@ import * as React from "react";
 
 import dayjs from "dayjs";
 
-import { Box, Container, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
 import {
   Comment,
   SubmitButton,
@@ -48,7 +48,7 @@ export default function AddRecordForm() {
 
   return (
     <Box
-      component='form'
+      component="form"
       sx={{
         flexGrow: 2,
         height: "100vh",
@@ -59,19 +59,19 @@ export default function AddRecordForm() {
         e.key === "Enter" && e.preventDefault();
       }}
       noValidate
-      autoComplete='off'
+      autoComplete="off"
     >
-      <Container maxWidth='sm' sx={{ mt: 8, mb: 4 }}>
+      <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
         <Paper
           sx={{
             p: 4,
           }}
         >
           <Box sx={{ my: 3 }}>
-            <Typography variant='h4'>Add New Raid Record</Typography>
+            <Typography variant="h4">Add New Raid Record</Typography>
           </Box>
 
-          <Grid container spacing={3} alignItems='center'>
+          <Grid container spacing={3} alignItems="center">
             <Grid item xs={12}>
               <SelectGameName inputs={inputs} setInputs={setInputs} />
             </Grid>
@@ -99,7 +99,12 @@ export default function AddRecordForm() {
             <Grid item xs={12}>
               <Comment inputs={inputs} setInputs={setInputs} />
             </Grid>
-
+            <Grid item xs={12}>
+              <Button variant="contained" component="label">
+                Upload Image
+                <input type="file" accept="image/*" hidden />
+              </Button>
+            </Grid>
             <Grid container xs={12} sx={{ mt: 4, justifyContent: "center" }}>
               <SubmitButton />
             </Grid>
