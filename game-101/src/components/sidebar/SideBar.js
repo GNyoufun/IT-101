@@ -91,6 +91,7 @@ export default function SideBar() {
           </Grid>
         </Grid>
 
+        {/* Side Bar items */}
         <Grid item>
           <SideBarListItems />
         </Grid>
@@ -109,9 +110,12 @@ export default function SideBar() {
           alignItems="center"
           sx={{ pt: 1 }}
         >
+          {/* Light Dark Switch */}
           <Box sx={{ ml: 3 }}>
             <LightDarkSwitch />
           </Box>
+
+          {/* Logout button, after clicking it, direct to "/login" */}
           <Box sx={{ my: [1] }}>
             <IconButton component={Link} to="/login">
               <LogoutButton />

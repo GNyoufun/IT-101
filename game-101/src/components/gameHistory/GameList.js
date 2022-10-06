@@ -11,6 +11,9 @@ GameList.propTypes = {
 export default function GameList({ games }) {
   return (
     <TableContainer sx={{ height: 570 }}>
+      {/* Go to "GameCard.js" in "components/gameHistory"
+       *  A card contains Game's name and picture
+       */}
       <Grid container spacing={3}>
         {games.map((game) => (
           <Grid key={game.id} item xs={12} sm={6} md={3}>

@@ -3,9 +3,10 @@ import * as React from "react";
 import dayjs from "dayjs";
 
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
+
+import { SubmitButton } from "../../style/style";
 import {
   Comment,
-  SubmitButton,
   SelectDate,
   SelectGameName,
   SelectOutcome,
@@ -15,6 +16,7 @@ import {
   SelectDifficulty,
 } from "./";
 
+/* router: /add-record */
 export default function AddRecordForm() {
   const defaultInput = {
     game_title: "",
@@ -72,41 +74,54 @@ export default function AddRecordForm() {
           </Box>
 
           <Grid container spacing={3} alignItems="center">
+            {/* Select Game */}
             <Grid item xs={12}>
               <SelectGameName inputs={inputs} setInputs={setInputs} />
             </Grid>
 
+            {/* Select Date */}
             <Grid item xs={12} sm={6}>
               <SelectDate inputs={inputs} setInputs={setInputs} />
             </Grid>
 
+            {/* Select Game Duration */}
             <Grid item xs={12} sm={6}>
               <SelectDurations inputs={inputs} setInputs={setInputs} />
             </Grid>
 
+            {/* Select Teammates */}
             <Grid item xs={12} sm={9}>
               <SelectTeammates inputs={inputs} setInputs={setInputs} />
             </Grid>
 
+            {/* Select Result */}
             <Grid item xs={7} sm={3}>
               <SelectOutcome inputs={inputs} setInputs={setInputs} />
             </Grid>
 
+            {/* Rating for Enjoyment */}
             <SelectRating inputs={inputs} setInputs={setInputs} />
 
+            {/* Select Difficulty */}
             <SelectDifficulty inputs={inputs} setInputs={setInputs} />
 
+            {/* Write Comments */}
             <Grid item xs={12}>
               <Comment inputs={inputs} setInputs={setInputs} />
             </Grid>
+
+            {/* Upload Image */}
             <Grid item xs={12}>
               <Button variant="contained" component="label">
                 Upload Image
                 <input type="file" accept="image/*" hidden />
               </Button>
             </Grid>
+
             <Grid container xs={12} sx={{ mt: 4, justifyContent: "center" }}>
-              <SubmitButton />
+              <SubmitButton variant="contained" type="submit">
+                Submit
+              </SubmitButton>
             </Grid>
           </Grid>
         </Paper>

@@ -20,10 +20,12 @@ export default function GameCard({ game }) {
 
   return (
     <Card>
+      {/* Game's picture */}
       <Box sx={{ pt: "100%", position: "relative" }}>
         <GameImgStyle alt={name} src={cover} />
       </Box>
 
+      {/* Game's name with href */}
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
