@@ -201,6 +201,9 @@ module.exports = function (app) {
      */
     app.put('/users/:user_id', async (req, res, next) => {
         console.log('Starting PUT request /users/%s', req.params.user_id);
+
+        // TODO: update relevant reviews when user is updated
+
         // check if the provided user_id is valid
         try {
         const id = ObjectId(req.params.user_id);

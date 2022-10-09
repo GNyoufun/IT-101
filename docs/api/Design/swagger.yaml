@@ -384,7 +384,7 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or game not found 
-  /users/{user_id}/review:
+  /users/{user_id}/reviews:
     get:
       tags:
         - Reviews
@@ -505,7 +505,7 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id not found
-  /users/{user_id}/review/{game}:
+  /users/{user_id}/reviews/{game}:
     get:
       tags:
         - Reviews
@@ -578,7 +578,7 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or game not found
-  /users/{user_id}/review/{game}/{friend}:
+  /users/{user_id}/reviews/{game}/{friend}:
     get:
       tags:
         - Reviews
@@ -621,12 +621,12 @@ paths:
           description: Invalid privileges for supplied token
         '404':
           description: User_id or game or friend not found
-  /users/{user_id}/review/{_id}:
+  /users/{user_id}/reviews/{raid_id}:
     get:
       tags:
         - Reviews
       summary: Get a specific review for a user 
-      description: Returns a review the user recorded with a unique _id
+      description: Returns a review the user recorded with a unique raid_id
       operationId: getUserReviewById
       parameters:
         - name: user_id
@@ -635,7 +635,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: _id
+        - name: raid_id
           in: path
           description: The specified review Id
           required: true
@@ -657,12 +657,12 @@ paths:
         '403':
           description: Invalid privileges for supplied token
         '404':
-          description: User_id or _id not found
+          description: User_id or raid_id not found
     put:
       tags:
         - Reviews
       summary: Update a specific review details for a user
-      description: Update a specific review (by its _id) details according to the attributes specified in the request body
+      description: Update a specific review (by its raid_id) details according to the attributes specified in the request body
       operationId: updateUserReviewById
       parameters:
         - name: user_id
@@ -671,7 +671,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: _id
+        - name: raid_id
           in: path
           description: The specified id of the review record to update
           required: true
@@ -699,7 +699,7 @@ paths:
         '400':
           description: Incorrect attributes specified
         '404':
-          description: User_id or _id not found
+          description: User_id or raid_id not found
     delete:
       tags:
         - Reviews
@@ -713,7 +713,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: _id
+        - name: raid_id
           in: path
           description: The specified id of the review for deletion
           required: true
@@ -735,8 +735,8 @@ paths:
         '403':
           description: Invalid privileges for supplied token
         '404':
-          description: User_id or _id not found    
-  /users/{user_id}/teammate/{game}:
+          description: User_id or raid_id not found    
+  /users/{user_id}/teammates/{game}:
     get:
       tags:
         - Teammates
