@@ -7,10 +7,10 @@ nav_order: 8
 # StandUp 6 - 01/09/22
 ## Meeting Information
 
- Objective:	Execute user stories, and update Github Pages
+ Objective:	Frontend finalise and backend implementation
 
 
-| __Date:__         | 01/09/22      | __Location:__     | Room 131      |
+| __Date:__         | 15/09/22      | __Location:__     | Room 131      |
 |:------------------|:--------------|:------------------|:--------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |

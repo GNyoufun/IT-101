@@ -7,10 +7,10 @@ nav_order: 9
 # StandUp 6 - 01/09/22
 ## Meeting Information
 
- Objective:	Execute user stories, and update Github Pages
+ Objective:	Focus on intergration and expend API design 
 
 
-| __Date:__         | 01/09/22      | __Location:__     | Zoom      |
+| __Date:__         | 22/09/22      | __Location:__     | Zoom      |
 |:------------------|:--------------|:------------------|:--------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |

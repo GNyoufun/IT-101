@@ -1,6 +1,7 @@
 ---
-parent: Communication
 title: First Sprint 
+parent: Retro
+grand_parent: Communication
 nav_order: 1
 ---
 

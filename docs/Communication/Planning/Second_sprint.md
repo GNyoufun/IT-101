@@ -1,6 +1,7 @@
 ---
-parent: Communication
 title: Second Sprint 
+parent: Planning
+grand_parent: Communication
 nav_order: 1
 ---
 
