@@ -1,7 +1,7 @@
 ---
 parent: Communication
-title: Planning - Second Sprint 
-nav_order: 5
+title: Second Sprint 
+nav_order: 1
 ---
 
 # Planning 

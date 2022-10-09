@@ -33,7 +33,6 @@ nav_order: 2
 - Non functional requirements
     - Ease of use
     - Fast/efficient
-- <mark style="background-color: Aqua">Light mode in the web application </mark>
 
 ## Could have requirements:
 - Functionality for specific games (e.g. Overwatch, FFXIV) to record relevant information
