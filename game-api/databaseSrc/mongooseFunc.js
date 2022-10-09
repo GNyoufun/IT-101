@@ -38,32 +38,6 @@ async function insertCollection (collect, reviews) {
 }
 
 /**
- * Provide a list of users to insert into the database
- * @param {[object]} users a list of users
- */
-async function insertUser(user) {
-  // Password should already be hashed before given here
-  // Check that password and username are given
-  if (!user.UserPassword || !user.UserName) {
-    console.warn('Error: Password or Username not given');
-    return;
-  }
-  let result = await userid.collection.insertOne(user);
-  console.log('Inserted user ' + result.insertedId +' into collection');
-  return result.insertedId;
-}
-
-/**
- * Returns the result of finding a single user by id
- * @param {ObjectId} id 
- * @returns the user with the given id
- */
-async function retrieveUserById(id){
-  const user = await userid.findById(id).lean();
-  return user;
-}
-
-/**
  * Provide the search query parameters, and the changable as changes to apply
  * @param  {model}  collect the collection model name 
  * @param  {object} finddocs a list of search queries
@@ -71,7 +45,7 @@ async function retrieveUserById(id){
  * @param  {object} changes a list of changable value for the given field
  * @example { header : changes }
  */
-async function updateCollection (collect, finddocs, changes) {
+ async function updateCollection (collect, finddocs, changes) {
   let updated;
   try {
     updated = await collect.collection.updateMany(finddocs, changes);
@@ -80,25 +54,6 @@ async function updateCollection (collect, finddocs, changes) {
     console.error(err);
   }
   return updated;
-}
-
-/**
- * Updates the token for a given user
- * @param {*} query the query to find the user
- * @param {*} token the new token for the user
- */
-function updateUserToken(id, token){
-    userid.findOneAndUpdate({_id: id}, {"Token": token}, function(err, doc){
-        if (err) {
-            return console.error(err);
-        } else {
-            try {
-                console.log(doc);
-            }catch (err) {
-                console.error(err);
-            }
-        }
-    });
 }
 
 /**
@@ -113,7 +68,7 @@ function updateUserToken(id, token){
  *                               older versions of document when false
  *                               It is defaulted to false
  */
-function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false) {
+ function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false) {
   collect.collection.findOneAndReplace( finddocs, changes,
     { returnNewDocument: returnedDoc }, function (err, doc) {
       if (err) {
@@ -142,6 +97,51 @@ async function deleteCollection (collect, docs) {
     console.error(err);
   }
   return deleted.deletedCount;
+}
+
+/**
+ * Provide a list of users to insert into the database
+ * @param {[object]} users a list of users
+ */
+async function insertUser(user) {
+  // Password should already be hashed before given here
+  // Check that password and username are given
+  if (!user.UserPassword || !user.UserName) {
+    console.warn('Error: Password or Username not given');
+    return;
+  }
+  let result = await userid.collection.insertOne(user);
+  console.log('Inserted user ' + result.insertedId +' into collection');
+  return result.insertedId;
+}
+
+/**
+ * Returns the result of finding a single user by id
+ * @param {ObjectId} id 
+ * @returns the user with the given id
+ */
+async function retrieveUserById(id){
+  const user = await userid.findById(id).lean();
+  return user;
+}
+
+/**
+ * Updates the token for a given user
+ * @param {*} query the query to find the user
+ * @param {*} token the new token for the user
+ */
+function updateUserToken(id, token){
+    userid.findOneAndUpdate({_id: id}, {"Token": token}, function(err, doc){
+        if (err) {
+            return console.error(err);
+        } else {
+            try {
+                console.log(doc);
+            }catch (err) {
+                console.error(err);
+            }
+        }
+    });
 }
 
 /**
@@ -181,6 +181,26 @@ async function extractTeam(GameTitle, id) {
   });
   
   return uniqueTeammate;
+}
+
+/**
+ * 
+ * @param {*} GameTitle 
+ * @param {*} id 
+ * @param {*} teammate 
+ * @returns 
+ */
+async function retrieveByTeammate(GameTitle, id, teammate){
+  const games = await review.find({Title: GameTitle, UserId: id}).lean();
+  let raidReview = []
+
+  for (let i = 0; i < games.length; i++) {
+    let team = games[i].Team
+    if (team.includes(teammate)){
+      reidReview.push(games[i])
+    }
+  }
+  return raidReview
 }
 
 /**
@@ -497,7 +517,6 @@ function calcAverageDiff(collection, documents, result){
     }
   }
 }
-
 
 /**
 * Helper function for averageRating, extract the difficulty
