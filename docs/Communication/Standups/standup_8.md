@@ -4,7 +4,7 @@ parent: StandUps
 grand_parent: Communication
 nav_order: 8
 ---
-# StandUp 6 - 01/09/22
+# StandUp 8 - 15/09/22
 ## Meeting Information
 
  Objective:	Frontend finalise and backend implementation

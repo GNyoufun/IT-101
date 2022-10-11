@@ -4,7 +4,7 @@ parent: StandUps
 grand_parent: Communication
 nav_order: 10
 ---
-# StandUp 6 - 01/09/22
+# StandUp 10 - 06/10/22
 ## Meeting Information
 
  Objective:	Focus on intergration and API implementation
