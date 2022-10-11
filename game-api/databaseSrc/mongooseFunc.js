@@ -161,7 +161,7 @@ async function extractGames(id){
 /**
  * Find and list the teammate that the User has recorded in the specified game
  * @param {String} GameTitle The game title of the documents that wished to find
- * @param {Int}    id The User ID registered in the server
+ * @param {Int}    id The User ID registered in the database
  * @returns The list of Teammate in the specified Game that belong to the user
  */
 async function extractTeam(GameTitle, id) {
@@ -184,11 +184,12 @@ async function extractTeam(GameTitle, id) {
 }
 
 /**
- * 
- * @param {*} GameTitle 
- * @param {*} id 
- * @param {*} teammate 
- * @returns 
+ * Retrieve raid review by the user ID and the teammate who the user played with 
+ * @param {String} GameTitle The title of the game that the user played with the 
+ *                        user specified teammate name 
+ * @param {ObjectId} id The user Id registered in the database 
+ * @param {Object} teammate The object contained teammate name and level 
+ * @returns A list of raid review where the teammate is in 
  */
 async function retrieveByTeammate(GameTitle, id, teammate){
   const games = await review.find({Title: GameTitle, UserId: id}).lean();
@@ -204,21 +205,22 @@ async function retrieveByTeammate(GameTitle, id, teammate){
 }
 
 /**
- * 
- * @param {*} str 
- * @param {*} department 
- * @param {*} time 
+ * United logging function for records 
+ * @param {String} str The out for logging
+ * @param {String} department The logging from which to part of the app
+ * @param {Date} [time=new Date()] The time for which the log was generated
  */
- function logging (str, department, time = new Date()) {
+function logging (str, department, time = new Date()) {
   const logs = time + ' - '; + department + " - " + str + "\n";
   console.log(logs);
 }
 
 /**
  * Calculate the win rate of the user with different teammate in specified game
- * @param {String}   GameTitle       The title of the game that wish to calculated from
+ * @param {String}   GameTitle       The title of the game that wish to 
+ *                                      calculated from
  * @param {Int}      id              The Users ID registered in the server
- * @param {DateTime}      [Time = Date()] The DateTime that the documents is recorded
+ * @param {DateTime} [Time = Date()] The DateTime that the documents is recorded
  * @returns Return an array of objects of item specified in gameIDSchema and 
  *              the number of wins, losts and the win rate with that teammate 
  */
@@ -330,24 +332,24 @@ async function averageTime (GameTitle, id, result = 'both') {
   }).lean();
 
   const difficult = [];
-    let totalDiff = 0;
+  let totalDiff = 0;
 
-    calcAverageDiff(difficult, win, "win");
-    calcAverageDiff(difficult, lost, "lost");
+  calcAverageDiff(difficult, win, "win");
+  calcAverageDiff(difficult, lost, "lost");
 
-    for(let i = 0; i < difficult.length; i++){
-        totalDiff += difficult[i].total;
-    }
+  for(let i = 0; i < difficult.length; i++){
+    totalDiff += difficult[i].total;
+  }
 
-    for(let i = 0; i < difficult.length; i++){
-        let num_win_diff = difficult[i].win;
-        let num_lost_diff = difficult[i].lost;
-        let total = difficult[i].total;
-        difficult[i].winRate = (num_win_diff / total) * precent;
-        difficult[i].lostRate = (num_lost_diff / total) * precent;
-        difficult[i].totalRate = (total / totalDiff) * precent;
-    }
-    return difficulty;
+  for(let i = 0; i < difficult.length; i++){
+    let num_win_diff = difficult[i].win;
+    let num_lost_diff = difficult[i].lost;
+    let total = difficult[i].total;
+    difficult[i].winRate = (num_win_diff / total) * precent;
+    difficult[i].lostRate = (num_lost_diff / total) * precent;
+    difficult[i].totalRate = (total / totalDiff) * precent;
+  }
+  return difficulty;
 };
 
 /**
@@ -435,9 +437,9 @@ async function midRating(GameTitle, id, Time = new Date()){
 }
 
 /**
- * 
- * @param {*} arr 
- * @returns 
+ * Sort the arrary and extract the midian value
+ * @param {*} arr The array to extract the midian value from
+ * @returns the midian value
  */
 function midian(arr){
   if(arr.length === 0) {
@@ -451,13 +453,14 @@ function midian(arr){
   let half = Math.floor(arr.length / 2);
   
   if (arr.length % 2){
-    return arr[half];
+    return (arr[half - 1] + arr[half]) / 2.0;
   }
-  return (arr[half - 1] + arr[half]) / 2.0;
+  return arr[half];
 }
 
-/**
- * 
+/** 
+ * ! Change the object into dynamically created
+ * Calculate 
  * @param {*} players 
  * @param {*} documents 
  * @param {*} result 
@@ -489,6 +492,7 @@ function calcResult (players, documents, result) {
 }
 
 /**
+ * ! Change the object into dynamically created
  * Helper function for averageDifficulty, extract the difficulty from the object 
  * array and calculate the win rate 
  * @param {list}     collection A list of record 
@@ -519,11 +523,12 @@ function calcAverageDiff(collection, documents, result){
 }
 
 /**
-* Helper function for averageRating, extract the difficulty
-* or rating from the object array and calculate the win rate 
-* @param {list}     collection A list of record 
-* @param {[object]} documents the object array that contains the review 
-* @param {String}   result The result of the raid 
+ * ! Change the object into dynamically created
+ * Helper function for averageRating, extract the difficulty
+ * or rating from the object array and calculate the win rate 
+ * @param {list}     collection A list of record 
+ * @param {[object]} documents the object array that contains the review 
+ * @param {String}   result The result of the raid 
 */
 function calcAverageRate(collection, documents, result){
   const win_preset = preset(result)[0]; 
@@ -550,8 +555,8 @@ function calcAverageRate(collection, documents, result){
 
 /**
  * Set the win and lost preset base on the result 
- * @param {*} result 
- * @returns 
+ * @param {String} result 
+ * @returns a tuple of win and lost presets 
  */
 function preset (result) {
   const winPreset = 0;
@@ -571,6 +576,8 @@ module.exports = {
   updateCollection,
   FindReplaceCollection,
   deleteCollection,
+
+  retrieveByTeammate,
 
   logging,
 
