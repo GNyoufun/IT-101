@@ -2,7 +2,6 @@ import * as React from "react";
 
 import {
   Box,
-  Button,
   Container,
   Grid,
   Paper,
@@ -14,6 +13,17 @@ import { SubmitButton } from "../../style/style";
 
 /* router: /add-game */
 export default function AddGameForm() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    var sendData = {
+      GameTitle: data.get("GameTitle"),
+      GameType: data.get("GameType")
+    };
+    // test printing
+    console.log(sendData);
+  }
+
   return (
     <Box
       component="form"
@@ -22,7 +32,7 @@ export default function AddGameForm() {
         height: "100vh",
         overflow: "auto",
       }}
-      /* onSubmit={handleSubmit} */
+      onSubmit={handleSubmit}
       onKeyPress={(e) => {
         e.key === "Enter" && e.preventDefault();
       }}
@@ -49,7 +59,7 @@ export default function AddGameForm() {
               <TextField
                 fullWidth
                 label="Game Name"
-                name="game-name"
+                name="GameTitle"
                 required
                 variant="outlined"
                 margin="normal"
@@ -59,23 +69,15 @@ export default function AddGameForm() {
               <TextField
                 fullWidth
                 label="Type"
-                name="type"
+                name="GameType"
                 required
                 variant="outlined"
                 margin="normal"
               />
             </Grid>
 
-            {/* Upload Image button */}
-            <Grid item xs={12}>
-              <Button variant="contained" component="label">
-                Upload Image
-                <input type="file" accept="image/*" hidden />
-              </Button>
-            </Grid>
-
             {/* Submit button */}
-            <Grid container xs={12} sx={{ mt: 4, justifyContent: "center" }}>
+            <Grid container sx={{ mt: 4, justifyContent: "center" }}>
               <SubmitButton variant="contained" type="submit">
                 Submit
               </SubmitButton>

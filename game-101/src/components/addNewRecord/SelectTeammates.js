@@ -4,8 +4,15 @@ import { Autocomplete, Chip, TextField } from "@mui/material";
 
 export default function SelectTeammates(props) {
   const handleChange = (e, newValues) => {
-    props.setInputs({ ...props.inputs, team: newValues });
+    var formatValue = [];
+    // loop for each teammate i
+    for (let i = 0; i < newValues.length; i += 1) {
+      var id_n_level = newValues[i].replace("lv.", "").split(" ");
+      formatValue[i] = { in_game_id: id_n_level[1], level: id_n_level[0] };
+    }
+    props.setInputs({ ...props.inputs, team: formatValue});
   };
+
 
   const teammates = [
     { in_game_id: "Brendan", level: 3 },
@@ -19,6 +26,7 @@ export default function SelectTeammates(props) {
     <Autocomplete
       multiple
       id="team"
+      name="team"
       //freeSolo
       options={teammates.map(
         (option) => "lv." + option.level + " " + option.in_game_id
@@ -30,7 +38,7 @@ export default function SelectTeammates(props) {
         ))
       }
       renderInput={(params) => (
-        <TextField {...params} label="Teammates" placeholder="Enter Name" />
+        <TextField name="team" {...params} label="Teammates" placeholder="Enter Name" />
       )}
     />
   );

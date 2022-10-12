@@ -19,7 +19,8 @@ import {
 /* router: /add-record */
 export default function AddRecordForm() {
   const defaultInput = {
-    game_title: "",
+    // TODO: add UserId
+    GameTitle: "",
     date: dayjs(),
     durations: 30,
     result: "Draw",
@@ -28,25 +29,33 @@ export default function AddRecordForm() {
     team: [],
     comment: "",
   };
-  const [inputs, setInputs] = React.useState(defaultInput);
+  
+  const[inputs, setInputs] = React.useState(defaultInput);
 
   const handleSubmit = (event) => {
-    convertInputs();
-    console.log(inputs);
+    var sendData;
+    /*
+    const data = new FormData(event.currentTarget);
+    sendData = {
+      GameTitle: data.get("GameTitle"),
+      date: data.get("date"),
+      result: data.get("result"),
+      difficulty: data.get("difficulty"),
+      enjoyment: data.get("rating"),
+      team: data.get("team")
+    };
+    console.log(sendData);
+    */
+
+    sendData = {...inputs, 
+                date: inputs.date.format("DD/MM/YYYY")}
+    // print for testing
+    console.log(sendData);
+
     event.preventDefault();
+    // TO DO: redirect or refresh
   };
 
-  const convertInputs = () => {
-    // convert date format
-    inputs["date"] = inputs["date"].format("DD/MM/YYYY");
-    // convert teammate format
-    for (let i = 0; i < inputs["team"].length; i += 1) {
-      for (let j = 0; j < inputs["team"][i].length; j += 1) {
-        var temp = inputs["team"][i].replace("lv.", "").split(": ");
-        inputs["team"][i] = { in_game_id: temp[1], level: temp[0] };
-      }
-    }
-  };
 
   return (
     <Box
@@ -114,11 +123,11 @@ export default function AddRecordForm() {
             <Grid item xs={12}>
               <Button variant="contained" component="label">
                 Upload Image
-                <input type="file" accept="image/*" hidden />
+                <input name="images" type="file" accept="image/*" hidden multiple/>
               </Button>
             </Grid>
 
-            <Grid container xs={12} sx={{ mt: 4, justifyContent: "center" }}>
+            <Grid container sx={{ mt: 4, justifyContent: "center" }}>
               <SubmitButton variant="contained" type="submit">
                 Submit
               </SubmitButton>

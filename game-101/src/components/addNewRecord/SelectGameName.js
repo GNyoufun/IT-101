@@ -4,13 +4,14 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export default function SelectGameName(props) {
   const handleChange = (e) => {
-    props.setInputs({ ...props.inputs, game_title: e.target.value });
+    props.setInputs({ ...props.inputs, GameTitle: e.target.value });
   };
 
   const savedGameTitles = [
-    { game_title: "League of Legends" },
-    { game_title: "Overwatch" },
-    { game_title: "Final Fantasy XIV" },
+    // TO DO: change to GET request
+    { "GameTitle": "League of Legends",  "GameType": "MOBA" },
+    { "GameTitle": "Overwatch",  "GameType": "FPS"  },
+    { "GameTitle": "Final Fantasy XIV" ,  "GameType": "MMORPG" },
   ];
 
   return (
@@ -19,12 +20,15 @@ export default function SelectGameName(props) {
       <Select
         labelId="game"
         id="game"
-        label="game"
-        value={props.inputs.game_title}
+        name="GameTitle"
+        label="Game Name"
+        value={props.inputs.GameTitle}
         onChange={handleChange}
       >
         {savedGameTitles.map((option) => (
-          <MenuItem value={option.game_title}>{option.game_title}</MenuItem>
+          <MenuItem key={option.GameTitle} value={option.GameTitle}>
+            {option.GameTitle}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

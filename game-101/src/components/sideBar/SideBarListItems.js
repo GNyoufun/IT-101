@@ -77,6 +77,7 @@ export default function SideBarListItems() {
           return (
             <ListItemButton
               to={item.to}
+              key={text}
               selected={selectedRoute === item.to}
               onClick={(e) => handleListItemClick(e, item.to)}
             >
@@ -93,6 +94,7 @@ export default function SideBarListItems() {
           return (
             <ListItemButton
               to={item.to}
+              key={text}
               selected={selectedRoute === item.to}
               onClick={(e) => handleListItemClick(e, item.to)}
             >

@@ -13,6 +13,7 @@ export default function SelectOutcome(props) {
       <Select
         labelId="result"
         id="result"
+        name="result"
         label="Result"
         value={props.inputs.result}
         onChange={handleChange}

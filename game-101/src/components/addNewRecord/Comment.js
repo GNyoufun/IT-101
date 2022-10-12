@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 export default function Comment(props) {
   const handleChange = (e) => {
@@ -8,16 +8,14 @@ export default function Comment(props) {
   };
 
   return (
-    <Box component="form" noValidate autoComplete="off">
-      <TextField
-        fullWidth
-        id="outlined-textarea"
-        label="Comment"
-        placeholder="Add your comment here"
-        multiline
-        value={props.inputs.comment}
-        onChange={handleChange}
-      />
-    </Box>
+    <TextField
+      fullWidth
+      id='outlined-textarea'
+      label='Comment'
+      placeholder='Add your comment here'
+      multiline
+      value={props.inputs.comment}
+      onChange={handleChange}
+    />
   );
 }

@@ -27,6 +27,7 @@ export default function SelectDifficulty(props) {
       <Typography component="legend">Difficulty</Typography>
       <Box sx={{ ml: 2 }}>
         <Slider
+          name="difficulty"
           aria-label="Difficulty"
           defaultValue={5}
           step={1}
