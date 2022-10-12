@@ -27,7 +27,7 @@ export default function GameCard({ game }) {
 
       {/* Game's name with href */}
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover">
+        <Link href="/table" color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
             {name}
           </Typography>

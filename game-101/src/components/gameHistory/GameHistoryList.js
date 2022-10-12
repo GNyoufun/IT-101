@@ -1,6 +1,7 @@
 import { Container, Stack } from "@mui/material";
 
-import { AddNewGameButton, GameList, SearchBar } from "./";
+import { GameList, SearchBar } from "./";
+import { AddNewButton } from "../../style/buttonStyle";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 import GAMES from "../../_mock/games";
@@ -43,7 +44,9 @@ export default function GameHistoryList() {
         py={4}
       >
         <SearchBar />
-        <AddNewGameButton />
+        <AddNewButton variant="contained" href="/add-game" disableRipple>
+          + New Game
+        </AddNewButton>
       </Stack>
 
       {/* Go to "GameList.js" in "components/gameHistory"

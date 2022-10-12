@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { SubmitButton } from "../../style/style";
+import { SubmitButton } from "../../style/buttonStyle";
 
 /* router: /add-game */
 export default function AddGameForm() {
@@ -18,11 +18,11 @@ export default function AddGameForm() {
     const data = new FormData(event.currentTarget);
     var sendData = {
       GameTitle: data.get("GameTitle"),
-      GameType: data.get("GameType")
+      GameType: data.get("GameType"),
     };
     // test printing
     console.log(sendData);
-  }
+  };
 
   return (
     <Box

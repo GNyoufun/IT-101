@@ -9,6 +9,7 @@ import {
   ChangeDetails,
   DashboardContent,
   GameHistoryList,
+  GameHistoryTable,
 } from "./components";
 import { SignInUp, MainPage } from "./pages";
 import dTheme from "./style/theme";
@@ -38,6 +39,10 @@ const App = () => {
         />
         <Route path="/add-game" element={<MainPage page={<AddGameForm />} />} />
         <Route path="/add-new" element={<MainPage page={<AddNew />} />} />
+        <Route
+          path="/table"
+          element={<MainPage page={<GameHistoryTable />} />}
+        />
       </Routes>
     </ThemeProvider>
   );

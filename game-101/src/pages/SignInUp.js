@@ -5,7 +5,7 @@ import { Box, CssBaseline, Grid, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { SignIn, SignUp } from "../components";
-import { Tab, TabsList } from "../style/style";
+import { Tab, TabsList } from "../style/tabStyle";
 import banner from "../style/logo.svg";
 import dTheme from "../style/theme";
 
