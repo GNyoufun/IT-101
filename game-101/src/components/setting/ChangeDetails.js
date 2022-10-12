@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import security from "../../style/security.svg";
-import { SubmitButton } from "../../style/style";
+import { SubmitButton } from "../../style/buttonStyle";
 
 /* router: /setting */
 export const ChangeDetails = (props) => {

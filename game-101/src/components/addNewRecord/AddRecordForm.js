@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
 
-import { SubmitButton } from "../../style/style";
+import { SubmitButton } from "../../style/buttonStyle";
 import {
   Comment,
   SelectDate,
@@ -29,8 +29,8 @@ export default function AddRecordForm() {
     team: [],
     comment: "",
   };
-  
-  const[inputs, setInputs] = React.useState(defaultInput);
+
+  const [inputs, setInputs] = React.useState(defaultInput);
 
   const handleSubmit = (event) => {
     var sendData;
@@ -47,15 +47,13 @@ export default function AddRecordForm() {
     console.log(sendData);
     */
 
-    sendData = {...inputs, 
-                date: inputs.date.format("DD/MM/YYYY")}
+    sendData = { ...inputs, date: inputs.date.format("DD/MM/YYYY") };
     // print for testing
     console.log(sendData);
 
     event.preventDefault();
     // TO DO: redirect or refresh
   };
-
 
   return (
     <Box
@@ -123,10 +121,17 @@ export default function AddRecordForm() {
             <Grid item xs={12}>
               <Button variant="contained" component="label">
                 Upload Image
-                <input name="images" type="file" accept="image/*" hidden multiple/>
+                <input
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  multiple
+                />
               </Button>
             </Grid>
 
+            {/* Submit Button */}
             <Grid container sx={{ mt: 4, justifyContent: "center" }}>
               <SubmitButton variant="contained" type="submit">
                 Submit

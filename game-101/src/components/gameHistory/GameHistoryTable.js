@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Container,
   Stack,
@@ -11,7 +12,8 @@ import {
   TableRow,
 } from "@mui/material";
 
-import { AddNewRecordButton, BackButton, SearchBar } from "./";
+import { SearchBar } from "./";
+import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
 function createData(
   GamingRecord,
@@ -127,9 +129,17 @@ export default function GameHistoryTable() {
         px={4}
         py={4}
       >
-        <BackButton />
+        <BackButton
+          variant="text"
+          startIcon={<ArrowBackIcon />}
+          href="/history"
+        >
+          Back
+        </BackButton>
         <SearchBar />
-        <AddNewRecordButton />
+        <AddNewButton variant="contained" href="/add-record" disableRipple>
+          + New Record
+        </AddNewButton>
       </Stack>
 
       <TableContainer sx={{ height: 570 }}>
