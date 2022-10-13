@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
+import { GetGameNames } from "../apiRequest/DataStorage";
+
 export default function SelectGameName(props) {
   const handleChange = (e) => {
     props.setInputs({ ...props.inputs, GameTitle: e.target.value });
@@ -13,6 +15,12 @@ export default function SelectGameName(props) {
     { "GameTitle": "Overwatch",  "GameType": "FPS"  },
     { "GameTitle": "Final Fantasy XIV" ,  "GameType": "MMORPG" },
   ];
+
+  /*
+  GetGameNames().then((response) => {
+    savedGameTitles = response;
+  });
+  */
 
   return (
     <FormControl fullWidth>

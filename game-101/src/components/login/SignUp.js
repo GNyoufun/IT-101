@@ -34,7 +34,7 @@ async function sendSignUp(formData) {
     window.location.href = "/";
     return true;
   } else {
-    console.log("Error signing up.");
+    console.log("Error signing up. Response status: " + response.status);
     return false;
   }
 }

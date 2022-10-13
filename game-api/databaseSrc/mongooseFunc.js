@@ -137,7 +137,7 @@ function updateUserToken(id, token){
             return console.error(err);
         } else {
             try {
-                console.log(doc);
+                //console.log(doc);
             }catch (err) {
                 console.error(err);
             }

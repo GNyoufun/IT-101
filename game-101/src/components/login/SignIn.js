@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { GetAuthorizedResponse, GetLoginResponse } from "../apiRequest/AuthorizedRequest";
+import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
 import {
   Box,
@@ -28,9 +28,6 @@ async function sendSignIn(formData) {
   if (response.status === 200) {
     // Get the response data
     var responseData = await response.json();
-    console.log(responseData);
-    // The id and token for the user
-    console.log(responseData._id + ":" + responseData.Token);
 
     // TODO: Base on whether the user wishes to be remembered or not
     sessionStorage.setItem("user_id", responseData._id);

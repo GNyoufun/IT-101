@@ -4,31 +4,13 @@ import { GameList, SearchBar } from "./";
 import { AddNewButton } from "../../style/buttonStyle";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
+import { GetAllGames } from "../apiRequest/DataStorage";
+
 import GAMES from "../../_mock/games";
 
-function convertResponseData(responseData) {
-  responseData = responseData[0].Games;
-  var g = [];
-  for (var i = 0; i < responseData.length; i++) {
-    g.push({
-      id: responseData[i].id || i,
-      name: responseData[i].GameTitle || "No Title",
-      type: responseData[i].GameType || "No Type",
-      cover: responseData[i].Image || "No Cover",
-    });
-  }
-  console.log(g);
-}
-
-async function retrieveGames() {
-  var response = await GetAuthorizedResponse("/users/{user_id}/games", "GET");
-  if (response.status === 200) {
-    var responseData = await response.json();
-    return convertResponseData(responseData);
-  }
-}
-
-//var GAMES = retrieveGames();
+/*
+var GAMES = GetAllGames();
+*/
 
 /* router: /history
  * Display all the games with Name and Picture

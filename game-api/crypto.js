@@ -33,9 +33,9 @@ async function checkPassword(password, hash) {
  * @returns 
  */
 async function generateToken(username, password) {
-    console.log('Generating token for ' + username);
+    //console.log('Generating token for ' + username);
     const token = jwt.sign({ username: username, password: password }, process.env.JWT_SECRET, { expiresIn: '8h' });
-    console.log('Generated token: ' + token);
+    //console.log('Generated token: ' + token);
     return token;
 }
 

@@ -50,7 +50,7 @@ module.exports = function (app) {
                 
                 // Remove the password from the response
                 delete responseUser.UserPassword;
-                console.log("Username:" + responseUser.UserName);
+                //console.log("Username:" + responseUser.UserName);
     
                 // Generate a new token
                 const token = await crypto.generateToken(req.headers.username, req.headers.password);

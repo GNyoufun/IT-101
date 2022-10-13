@@ -1,8 +1,8 @@
 const ObjectId = require('mongodb').ObjectId;
 const {
-    retrieveReview,
-    updateReivew,
-    deleteReivew,
+    retrieveCollection,
+    updateCollection,
+    deleteCollection,
     updateUserToken,
     insertUser,
     retrieveUserById,
@@ -26,7 +26,7 @@ module.exports = function (app) {
         console.log('Starting GET request /users/%s/reviews', req.params.user_id);
         try {
             const id = ObjectId(req.params.user_id);
-            const result = await retrieveCollection(userid, { UserId: id }, {});
+            const result = await retrieveCollection(review, { UserId: id }, {});
             if (result.length === 0) {
                 // not found user id
                 res.sendStatus(404);
@@ -123,7 +123,28 @@ module.exports = function (app) {
     });
 
     app.get('/users/:user_id/reviews/:game', async (req, res, next) => {
-        res.send('get game');
+        console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+        try {
+            const id = ObjectId(req.params.user_id);
+            const game = req.params.game;
+
+            const result = await retrieveCollection(review, { UserId: id, Title: game}, {});
+            if (result.length === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+            } else {
+                // success
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+            }
+            } catch (err) {
+                // invalid (not found) user id
+                res.sendStatus(404);
+                console.error(err);
+                console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+        }
     });
 
     app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
