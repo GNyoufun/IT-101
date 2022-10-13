@@ -15,12 +15,28 @@ import {
   SelectRating,
   SelectDifficulty,
 } from "./";
+import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
+
+async function sendNewReview(sendData) {
+  var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
+  
+  if (response.status === 200) {
+    // Review successfully added, redirect to the home page
+    // TODO: Use a React Router redirect
+    window.location.href = "/";
+    return true;
+  } else {
+    console.log("Error adding new raid.");
+    return false;
+  }
+}
 
 /* router: /add-record */
 export default function AddRecordForm() {
+  // TODO: Check that the game date isn't in the future
   const defaultInput = {
     // TODO: add UserId
-    GameTitle: "",
+    GameTitle: "", // TODO: Get first game in list
     date: dayjs(),
     durations: 30,
     result: "Draw",
@@ -33,7 +49,6 @@ export default function AddRecordForm() {
   const [inputs, setInputs] = React.useState(defaultInput);
 
   const handleSubmit = (event) => {
-    var sendData;
     /*
     const data = new FormData(event.currentTarget);
     sendData = {
@@ -47,9 +62,32 @@ export default function AddRecordForm() {
     console.log(sendData);
     */
 
-    sendData = { ...inputs, date: inputs.date.format("DD/MM/YYYY") };
+    // Prepare the data to send
+    var sendData;
+    sendData = { ...inputs, date: inputs.date.format("MM/DD/YYYY") };
     // print for testing
     console.log(sendData);
+  
+    // Change "enjoyment" to "rating"
+    sendData.rating = sendData.enjoyment;
+    delete sendData.enjoyment;
+  
+    // Change "comment" to "comments"
+    sendData.comments = sendData.comment;
+    delete sendData.comment;
+
+    // Change "in_game_id" to "InGameID" for each teammate
+    // Change "level" to "Level" for each teammate
+    sendData.team.forEach((teammate) => {
+      teammate.InGameID = teammate.in_game_id;
+      delete teammate.in_game_id;
+      teammate.Level = teammate.level;
+      delete teammate.level;
+    });
+
+    // Send the data
+    sendNewReview(sendData);
+
 
     event.preventDefault();
     // TO DO: redirect or refresh

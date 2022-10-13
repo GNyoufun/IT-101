@@ -95,16 +95,16 @@ module.exports = function (app) {
         } else {
             // success
             if (result.matchedCount > result.modifiedCount) {
-            console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
+                console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
             }
             res.sendStatus(200);
             console.log('Successful POST request /users/%s/games', req.params.user_id);
         }
         } catch (err) {
-        // invalid (not found) user id
-        res.sendStatus(404);
-        console.error(err);
-        console.log('Failed POST request /users/%s/games, 404', req.params.user_id);
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed POST request /users/%s/games, 404', req.params.user_id);
         }
     });
     
@@ -169,7 +169,7 @@ module.exports = function (app) {
             GameType: req.body.gametype
         };
     
-        const result = await updateCollection(userid, { _id: id, 'Games.GameTitle': req.params.game}, { %set: { "Games.$": game } });
+        const result = await updateCollection(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $set: { "Games.$": game } });
         if (result.matchedCount === 0) {
             // not found user id
             res.sendStatus(404);

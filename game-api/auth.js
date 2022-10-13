@@ -17,7 +17,7 @@ mongoose.connection.once('open', () => {
  * @param {*} next the next function to call
  */
 module.exports.authenticate = (req, res, next) => {
-    console.log("User ID Requested: " + req.params['user_id']);
+    //console.log("User ID Requested: " + req.params['user_id']);
     if (req.get('Authorization')) {
         // console.log('Authorization header found: ' + req.get('Authorization'));
 
@@ -35,7 +35,7 @@ module.exports.authenticate = (req, res, next) => {
         // Parse the user as a mongoose object
         //authUser = parseInt(authUser);
 
-        console.log("Authenticating user: " + authUser + " with token: " + token);
+        //console.log("Authenticating user: " + authUser + " with token: " + token);
         
         // Find the user in the database
         mongooseSchema.userid.findById(authUser, (err, user) => {
@@ -46,9 +46,9 @@ module.exports.authenticate = (req, res, next) => {
                 console.log('User not found');
                 res.status(404).send('User not found');
             } else {
-                console.log('User found: ' + user);
+                // console.log('User found: ' + user);
                 if (user.Token == token) {
-                    console.log('Token matches');
+                    // console.log('Token matches');
                     next();
                 } else {
                     console.log('Token does not match');

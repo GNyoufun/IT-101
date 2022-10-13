@@ -30,7 +30,7 @@ module.exports = function (app) {
             if (result.length === 0) {
                 // not found user id
                 res.sendStatus(404);
-                console.log('Failed GET request /users/$s/reviews, 404', req.params.user_id);
+                console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
             } else {
                 // success
                 res.status(200);
@@ -41,7 +41,7 @@ module.exports = function (app) {
                 // invalid (not found) user id
                 res.sendStatus(404);
                 console.error(err);
-                console.log('Failed GET request /users/$s/reviews, 404', req.params.user_id);
+                console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
         }
     });
 
@@ -61,10 +61,15 @@ module.exports = function (app) {
     app.post('/users/:user_id/reviews', async (req, res, next) => {
         console.log('Starting POST request /users/%s/reviews', req.params.user_id);
         try {
-            // check for invalid attributes
+            // Console log the request body
+            console.log(req.body);
+
+            // Load the user id
             const id = ObjectId(req.params.user_id);
+
+            // check for invalid attributes
             const invalid = Boolean(
-                req.body.gametitle === undefined ||
+                req.body.GameTitle === undefined ||
                 req.body.date === undefined ||
                 req.body.team === undefined ||
                 req.body.durations === undefined ||
@@ -76,23 +81,23 @@ module.exports = function (app) {
             if (invalid) {
                 // bad request
                 res.sendStatus(400);
-                console.log('Failed POST request /users/$s/reviews, 400', req.params.user_id);
+                console.log('Failed POST request /users/%s/reviews, 400', req.params.user_id);
                 return;
             }
         
             // add the new review
             const raidReview = {
                 UserId: id,
-                Title: req.body.gametitle,
-                Date: req.body.date,
+                Title: req.body.GameTitle,
+                Date: new Date(req.body.date), // Parse the Date
                 Team: req.body.team,
-                Durations: req.body.durations,
+                Durations: req.body.durations, // Parse the Durations
                 Result: req.body.result,
-                Difficulty: req.body.difficulty,
-                Rating: req.body.rating,
+                Difficulty: req.body.difficulty, // Parse the Difficulty
+                Rating: req.body.rating, // Parse the Rating
                 comments: req.body.comments
             };
-            const result = await insertCollection(review, raidReview);
+            const result = await insertCollection(review, [raidReview]);
             if (result.length === 0) {
                 // server error in insertion
                 res.sendStatus(500);
