@@ -1,5 +1,3 @@
-import * as React from "react";
-
 const API_ENDPOINT = "http://localhost:4000"
 
 export async function GetLoginResponse(username, password) {
@@ -56,19 +54,4 @@ export async function GetAuthorizedResponse(location, httpMethod, sendData) {
     console.log(error);
     return error;
   }
-        // .then((res) => res.text())
-        // .then((result) => {
-        //   // Check the response code
-        //   if (result.status === 200) {
-        //     // Return the response data
-        //     let final_data = JSON.parse(result);
-        //     return final_data;
-        //   } else {
-        //     // Return an error
-        //     return "Error";
-        //   }
-        // })
-        // .catch((err) => {
-        //   console.log(err.message);
-        // });
 }

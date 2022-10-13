@@ -8,7 +8,7 @@ export default function SelectDate(props) {
   const handleChange = (newDate) => {
     props.setInputs({ ...props.inputs, date: newDate });
   };
-
+  // TODO: Force date to be in the past
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <FormControl fullWidth name="date">

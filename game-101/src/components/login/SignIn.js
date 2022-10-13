@@ -36,7 +36,7 @@ async function sendSignIn(formData) {
     sessionStorage.setItem("user_id", responseData._id);
     sessionStorage.setItem("user_token", responseData.Token);
     sessionStorage.setItem("user_name", responseData.UserName);
-    console.log("User \'" + responseData.UserName + "\' logged in.");
+    console.log("User '" + responseData.UserName + "' logged in.");
     
     // Login succeeded, redirect to the home page
     // TODO: Use a React Router redirect

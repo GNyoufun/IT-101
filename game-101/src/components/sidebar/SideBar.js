@@ -77,7 +77,7 @@ export default function SideBar() {
                 component="h6"
                 sx={{ mt: "6px", lineHeight: 1.1 }}
               >
-                Username
+                {sessionStorage.getItem("user_name")} {/* TODO: Load this differently?*/}
               </Typography>
               <Typography
                 variant="body"

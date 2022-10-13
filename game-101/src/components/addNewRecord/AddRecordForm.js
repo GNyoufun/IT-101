@@ -17,12 +17,14 @@ import {
 } from "./";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
+// Sends a new record to the server
 async function sendNewReview(sendData) {
   var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
   
   if (response.status === 200) {
     // Review successfully added, redirect to the home page
     // TODO: Use a React Router redirect
+    // TODO: Decide on redirect location? Reviews or Home?
     window.location.href = "/";
     return true;
   } else {
@@ -76,8 +78,7 @@ export default function AddRecordForm() {
     sendData.comments = sendData.comment;
     delete sendData.comment;
 
-    // Change "in_game_id" to "InGameID" for each teammate
-    // Change "level" to "Level" for each teammate
+    // Change "in_game_id" to "InGameID" and "level" to "Level" for each teammate
     sendData.team.forEach((teammate) => {
       teammate.InGameID = teammate.in_game_id;
       delete teammate.in_game_id;
@@ -87,7 +88,6 @@ export default function AddRecordForm() {
 
     // Send the data
     sendNewReview(sendData);
-
 
     event.preventDefault();
     // TO DO: redirect or refresh

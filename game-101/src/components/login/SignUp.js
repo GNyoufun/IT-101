@@ -20,16 +20,13 @@ async function sendSignUp(formData) {
     // Get the response data
     var responseData = await response.json();
     // The id and token for the user
-    console.log(responseData._id + ":" + responseData.Token);
+    console.log(responseData);
 
-    // TODO: Base on whether the user wishes to be remembered or not
-    if (localStorage.getItem("remember") === "true") {
-      localStorage.setItem("user_id", responseData._id);
-      localStorage.setItem("user_token", responseData.Token);
-    } else {
-      sessionStorage.setItem("user_id", responseData._id);
-      sessionStorage.setItem("user_token", responseData.Token);
-    }
+    
+    sessionStorage.setItem("user_id", responseData._id);
+    sessionStorage.setItem("user_token", responseData.Token);
+    sessionStorage.setItem("user_name", responseData.UserName);
+    
     console.log("User signed up.");
     
     // Signup succeeded, redirect to the home page
