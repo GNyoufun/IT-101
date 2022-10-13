@@ -33,8 +33,8 @@ export const ChangeDetails = (props) => {
     <form autoComplete="off" noValidate {...props}>
       <Box
         component="form"
+        display="flex"
         sx={{
-          flexGrow: 2,
           height: "100vh",
           overflow: "auto",
         }}
@@ -49,39 +49,23 @@ export const ChangeDetails = (props) => {
           <Grid
             container
             maxWidth="md"
-            xs={11}
+            xs={12}
             md={7}
             spacing={3}
             alignItems="center"
           >
-            {/* Display user's email */}
-            <Grid item xs={12}>
-              <Card sx={{ p: 2 }}>
-                <CardHeader title="Email Address" />
-                <Divider />
-                <CardContent>
-                  <Grid item md={8} xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Email Address"
-                      name="email"
-                      onChange={handleChange}
-                      required
-                      value={values.email}
-                      variant="outlined"
-                    />
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-
             {/* Display username */}
             <Grid item xs={12}>
               <Card sx={{ p: 2 }}>
                 <CardHeader title="Username" />
                 <Divider />
                 <CardContent>
-                  <Grid item md={8} xs={12}>
+                <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="flex-end"
+                  >
+                  <Grid item md={8} sm={9}>
                     <TextField
                       fullWidth
                       label="Username"
@@ -91,6 +75,12 @@ export const ChangeDetails = (props) => {
                       value={values.username}
                       variant="outlined"
                     />
+                  </Grid>
+                  <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
+                      <SubmitButton variant="contained" type="submit">
+                        Submit
+                      </SubmitButton>
+                    </Grid>
                   </Grid>
                 </CardContent>
               </Card>
@@ -108,7 +98,7 @@ export const ChangeDetails = (props) => {
                     alignItems="flex-end"
                   >
                     {/* Enter current password */}
-                    <Grid item md={8} sm={12}>
+                    <Grid item md={8} sm={9}>
                       <TextField
                         fullWidth
                         label="Current Password"
@@ -140,7 +130,7 @@ export const ChangeDetails = (props) => {
                       />
                     </Grid>
 
-                    <Grid item md={3.2} sm={12} sx={{ mt: 2, mb: 1 }}>
+                    <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
                       <SubmitButton variant="contained" type="submit">
                         Submit
                       </SubmitButton>
