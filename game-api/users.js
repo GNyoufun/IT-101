@@ -37,9 +37,8 @@ module.exports = function (app) {
         const query = {
             UserName: req.headers.username,
         };
-        const result = await retrieveCollection(userid, query, { Token: 1, UserPassword: 1 });
+        const result = await retrieveCollection(userid, query, { Token: 1, UserPassword: 1 , UserName: 1});
         const responseUser = result[0];
-        console.log(responseUser);
         if(result.length === 0) {
             // no such user found
             res.sendStatus(400);
@@ -51,6 +50,7 @@ module.exports = function (app) {
                 
                 // Remove the password from the response
                 delete responseUser.UserPassword;
+                console.log("Username:" + responseUser.UserName);
     
                 // Generate a new token
                 const token = await crypto.generateToken(req.headers.username, req.headers.password);
