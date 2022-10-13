@@ -1,37 +1,87 @@
 import * as React from "react";
-
-import { Chart, PieSeries } from "@devexpress/dx-react-chart-material-ui";
-import Link from "@mui/material/Link";
+import { Cell, PieChart, Pie, ResponsiveContainer, Sector } from "recharts";
 
 import Title from "./Title";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+
+const renderActiveShape = (props) => {
+  const {
+    cx,
+    cy,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload
+  } = props;
+
+  return (
+    <g>
+      <text x={cx} y={cy-8} dy={8} textAnchor="middle" fill={fill}>
+        {payload.name}<br/>
+      </text>
+      <text x={cx} y={cy+12} dy={8} textAnchor="middle" fill={fill}>
+        {payload.value} min
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius+2}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+    </g>
+  );
+};
 
 export default function MostWon() {
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
   const data = [
-    { argument: "Monday", value: 10 },
-    { argument: "Tuesday", value: 40 },
-    { argument: "Wednesday", value: 10 },
-    { argument: "Thursday", value: 20 },
-    { argument: "Friday", value: 20 },
+    { name: "LOL", value: 5 },
+    { name: "FFXIV", value: 40 },
+    { name: "Overwatch", value: 25 },
+    { name: "Minecraft", value: 30 },
   ];
+
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const onPieEnter = React.useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
+
   return (
     <React.Fragment>
       <Title>Time Spent</Title>
-      <Chart data={data}>
-        <PieSeries
-          valueField="value"
-          argumentField="argument"
-          innerRadius={0.8}
-        />
-      </Chart>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View Detail
-        </Link>
-      </div>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey='value'
+            nameKey='name'
+            cx='50%'
+            cy='50%'
+            innerRadius={"80%"}
+            outerRadius={"100%"}
+            activeIndex={activeIndex}
+            onMouseEnter={onPieEnter}
+            activeShape={renderActiveShape}
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+                stroke={false}
+              />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
     </React.Fragment>
   );
 }
