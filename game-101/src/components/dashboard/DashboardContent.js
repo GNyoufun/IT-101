@@ -17,7 +17,7 @@ export default function DashboardContent() {
       <Container maxWidth="lg" sx={{ mt: 8, mb: 2 }}>
         <Grid container spacing={4}>
           {/* Text */}
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          <Grid item xs={12} sm={6} md={3.2} lg={3}>
             <Paper
               sx={{
                 p: 2,
@@ -31,7 +31,7 @@ export default function DashboardContent() {
           </Grid>
 
           {/* Chart */}
-          <Grid item xs={12} sm={6} md={4} lg={4}>
+          <Grid item xs={12} sm={6} md={3} lg={3}>
             <Paper
               sx={{
                 p: 2,
@@ -45,7 +45,7 @@ export default function DashboardContent() {
           </Grid>
 
           {/* Chart */}
-          <Grid item xs={12} md={5} lg={5}>
+          <Grid item xs={12} md={5.8} lg={6}>
             <Paper
               sx={{
                 p: 2,
