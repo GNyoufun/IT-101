@@ -2,16 +2,22 @@ import { useState } from "react";
 
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Checkbox,
   Divider,
+  FormControlLabel,
   Grid,
+  Radio,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 
 import security from "../../style/security.svg";
-import { SubmitButton } from "../../style/buttonStyle";
+import { DeleteButton, SubmitButton } from "../../style/buttonStyle";
 
 /* router: /setting */
 export const ChangeDetails = (props) => {
@@ -144,6 +150,25 @@ export const ChangeDetails = (props) => {
                       </SubmitButton>
                     </Grid>
                   </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Delete User */}
+            <Grid item xs={12}>
+              <Card sx={{ p: 2 }}>
+                <CardHeader title="Delete My Account" />
+                <Divider />
+                <CardContent>
+                  <FormControlLabel
+                    value="delete-account"
+                    control={<Radio />}
+                    label="By clicking this, I understand I will delete my
+                    account permanently."
+                  />
+                  <DeleteButton variant="contained">
+                    Delete My Account
+                  </DeleteButton>
                 </CardContent>
               </Card>
             </Grid>

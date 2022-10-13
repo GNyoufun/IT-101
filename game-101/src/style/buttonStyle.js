@@ -57,6 +57,35 @@ const BackButton = styled(Button)({
   ].join(","),
 });
 
+const DeleteButton = styled(Button)({
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  padding: "6px 12px",
+  lineHeight: 1.5,
+  backgroundColor: "#C80000",
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:hover": {
+    backgroundColor: "#E80000",
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#C80000",
+  },
+});
+
 const SubmitButton = styled(Button)({
   borderRadius: 50,
   boxShadow: "none",
@@ -91,4 +120,4 @@ const SubmitButton = styled(Button)({
   },
 });
 
-export { AddNewButton, BackButton, SubmitButton };
+export { AddNewButton, BackButton, DeleteButton, SubmitButton };
