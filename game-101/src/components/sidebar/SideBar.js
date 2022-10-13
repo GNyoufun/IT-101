@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { LogoutButton, LightDarkSwitch, SideBarListItems } from "./";
+import { LogoutButton, SideBarListItems } from "./";
 
 const drawerWidth = 240;
 
@@ -111,12 +111,12 @@ export default function SideBar() {
           sx={{ pt: 1 }}
         >
           {/* Light Dark Switch */}
-          <Box sx={{ ml: 3 }}>
+          {/* <Box sx={{ ml: 3 }}>
             <LightDarkSwitch />
-          </Box>
+          </Box> */}
 
           {/* Logout button, after clicking it, direct to "/login" */}
-          <Box sx={{ my: [1] }}>
+          <Box>
             <IconButton component={Link} to="/login">
               <LogoutButton />
             </IconButton>
