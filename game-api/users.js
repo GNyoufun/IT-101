@@ -1,8 +1,8 @@
 const ObjectId = require('mongodb').ObjectId;
 const {
-    retrieveReview,
-    updateReivew,
-    deleteReivew,
+    retrieveCollection,
+    updateCollection,
+    deleteCollection,
     updateUserToken,
     insertUser,
     retrieveUserById,
@@ -37,7 +37,7 @@ module.exports = function (app) {
         const query = {
             UserName: req.headers.username,
         };
-        const result = await retrieveReview(userid, query, { Token: 1, UserPassword: 1 });
+        const result = await retrieveCollection(userid, query, { Token: 1, UserPassword: 1 });
         if(result.length === 0) {
             // no such user found
             res.sendStatus(400);
@@ -86,7 +86,7 @@ module.exports = function (app) {
         // TODO: Make Secure
         console.log('Starting GET request /users');
         res.status(200);
-        res.json(await retrieveReview(userid, {}, { UserName: 1 }));
+        res.json(await retrieveCollection(userid, {}, { UserName: 1 }));
         console.log('Successful GET request /users');
     });
     
@@ -112,7 +112,7 @@ module.exports = function (app) {
         const query = {
             UserName: req.body.username
         };
-        if((await retrieveReview(userid, query)).length > 0) {
+        if((await retrieveCollection(userid, query)).length > 0) {
             res.sendStatus(400);
             console.log('Failed POST request /users. User already exists');
             return;
@@ -170,7 +170,7 @@ module.exports = function (app) {
         console.log('Starting GET request /users/%s', req.params.user_id);
         try {
             const id = ObjectId(req.params.user_id);
-            const result = await retrieveReview(userid, { _id: id }, { UserName: 1 });
+            const result = await retrieveCollection(userid, { _id: id }, { UserName: 1 });
             if(result.length === 0) {
                 // not found user id
                 res.sendStatus(404);
@@ -222,7 +222,7 @@ module.exports = function (app) {
             UserPassword: await crypto.hashPassword(req.body.password)
         };
     
-        const result = await updateReivew(userid, { _id: id }, { $set: user });
+        const result = await updateCollection(userid, { _id: id }, { $set: user });
         if (result.matchedCount === 0) {
             // not found user id
             res.sendStatus(404);
@@ -253,7 +253,7 @@ module.exports = function (app) {
         // check if the provided user_id is valid
         try {
         const id = ObjectId(req.params.user_id);
-        const result = await deleteReivew(userid, { _id: id });
+        const result = await deleteCollection(userid, { _id: id });
         if (result === 0) {
             // not found user id
             res.sendStatus(404);

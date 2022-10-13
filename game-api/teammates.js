@@ -1,8 +1,8 @@
 const ObjectId = require('mongodb').ObjectId;
 const {
-    retrieveReview,
-    updateReivew,
-    deleteReivew,
+    retrieveCollection,
+    updateCollection,
+    deleteCollection,
     updateUserToken,
     insertUser,
     retrieveUserById,
