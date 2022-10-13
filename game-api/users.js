@@ -38,6 +38,8 @@ module.exports = function (app) {
             UserName: req.headers.username,
         };
         const result = await retrieveCollection(userid, query, { Token: 1, UserPassword: 1 });
+        const responseUser = result[0];
+        console.log(responseUser);
         if(result.length === 0) {
             // no such user found
             res.sendStatus(400);
@@ -45,10 +47,10 @@ module.exports = function (app) {
         }
         else {
             // Check that the password matches
-            if(await crypto.checkPassword(req.headers.password, result[0].UserPassword)) {
+            if(await crypto.checkPassword(req.headers.password, responseUser.UserPassword)) {
                 
                 // Remove the password from the response
-                delete result[0].UserPassword;
+                delete responseUser.UserPassword;
     
                 // Generate a new token
                 const token = await crypto.generateToken(req.headers.username, req.headers.password);
@@ -58,12 +60,12 @@ module.exports = function (app) {
                     Token: token
                 };
                 
-                updateUserToken(result[0]._id, token.toString());
+                updateUserToken(responseUser._id, token.toString());
     
                 // Add the token to the response
-                result[0].Token = token;
+                responseUser.Token = token;
     
-                res.json(result);
+                res.json(responseUser);
                 res.status(200);
                 console.log('Successful GET request /users/login');
             }
