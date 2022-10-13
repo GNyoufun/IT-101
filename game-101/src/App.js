@@ -26,10 +26,6 @@ const App = () => {
           element={<MainPage page={<GameHistoryList />} />}
         />
         <Route
-          path="/people"
-          element={<MainPage page={<DashboardContent />} />}
-        />
-        <Route
           path="/setting"
           element={<MainPage page={<ChangeDetails />} />}
         />
