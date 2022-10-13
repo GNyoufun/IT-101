@@ -1,9 +1,8 @@
 const {
-    retrieveReview,
-    insertReivew,
-    updateReivew,
-    FindReplaceReivew,
-    deleteReivew,
+    retrieveCollection,
+    insertCollection,
+    updateCollection,
+    deleteCollection,
 
     TeamWinRate,
     gameWinRate,
@@ -128,11 +127,11 @@ const raid = [
 //     Games: [{GameTitle: "FFXIV", GameType: "MMORPG"}]
 //     }];
 
-// deleteReivew(review);
-// insertReivew(review, raid);
+// deleteCollection(review);
+// insertCollection(review, raid);
 
 // let retrieved = new Promise(function (resolve, reject) {
-//     retrieveReview(review, {Title: "FFXIV"});
+//     retrieveCollection(review, {Title: "FFXIV"});
 // });
 
 // retrieved.then(function (result){

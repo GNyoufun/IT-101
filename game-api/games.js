@@ -1,7 +1,7 @@
 const ObjectId = require('mongodb').ObjectId;
 const {
-    retrieveReview,
-    updateReivew,
+    retrieveCollection,
+    updateCollection,
 } = require('./databaseSrc/mongooseFunc.js');
 const {
     userid
@@ -21,7 +21,7 @@ module.exports = function (app) {
         console.log('Starting GET request /users/%s/games', req.params.user_id);
         try {
         const id = ObjectId(req.params.user_id);
-        const result = await retrieveReview(userid, { _id: id }, { _id: 0, Games: 1 });
+        const result = await retrieveCollection(userid, { _id: id }, { _id: 0, Games: 1 });
         if (result.length === 0) {
             // not found user id
             res.sendStatus(404);
@@ -60,7 +60,7 @@ module.exports = function (app) {
         const invalid = Boolean(
             req.body.gametitle === undefined ||
             req.body.gametype === undefined ||
-            (await retrieveReview(userid, query)).length > 0
+            (await retrieveCollection(userid, query)).length > 0
         );
         if (invalid) {
             // bad request
@@ -74,7 +74,7 @@ module.exports = function (app) {
             GameTitle: req.body.gametitle,
             GameType: req.body.gametype
         };
-        const result = await updateReivew(userid, { _id: id }, { $push: { Games: game } });
+        const result = await updateCollection(userid, { _id: id }, { $push: { Games: game } });
         if (result.matchedCount === 0) {
             // not found user id
             res.sendStatus(404);
@@ -106,7 +106,7 @@ module.exports = function (app) {
         console.log('Starting GET request /users/%s/games/%s', req.params.user_id, req.params.game);
         try {
         const id = ObjectId(req.params.user_id);
-        const result = await retrieveReview(userid, { _id: id, 'Games.GameTitle': req.params.game }, { _id: 0, Games: 1 });
+        const result = await retrieveCollection(userid, { _id: id, 'Games.GameTitle': req.params.game }, { _id: 0, Games: 1 });
         if (result.length === 0) {
             // not found user id
             res.sendStatus(404);
@@ -156,7 +156,7 @@ module.exports = function (app) {
             GameType: req.body.gametype
         };
     
-        const result = await updateReivew(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $set: { "Games.$": game } });
+        const result = await updateCollection(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $set: { "Games.$": game } });
         if (result.matchedCount === 0) {
             // not found user id
             res.sendStatus(404);
@@ -188,7 +188,7 @@ module.exports = function (app) {
         // check if the provided user_id is valid
         try {
         const id = ObjectId(req.params.user_id);
-        const result = await updateReivew(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $pull: { Games: { GameTitle: req.params.game } } });
+        const result = await updateCollection(userid, { _id: id, 'Games.GameTitle': req.params.game}, { $pull: { Games: { GameTitle: req.params.game } } });
         if (result.matchedCount === 0) {
             // not found user id or game
             res.sendStatus(404);
