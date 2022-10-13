@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
 import SettingIcon from "@mui/icons-material/Settings";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import {
@@ -38,11 +37,6 @@ export default function SideBarListItems() {
       text: "Game History",
       icon: <TimelineIcon />,
       to: "/history",
-    },
-    {
-      text: "People",
-      icon: <PeopleIcon />,
-      to: "/people",
     },
     {
       text: "Setting",
