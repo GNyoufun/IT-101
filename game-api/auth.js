@@ -35,7 +35,7 @@ module.exports.authenticate = (req, res, next) => {
         // Parse the user as a mongoose object
         //authUser = parseInt(authUser);
 
-        console.log("Authenticating user: " + authUser);
+        console.log("Authenticating user: " + authUser + " with token: " + token);
         
         // Find the user in the database
         mongooseSchema.userid.findById(authUser, (err, user) => {

@@ -11,17 +11,41 @@ import {
 
 import { SubmitButton } from "../../style/buttonStyle";
 
+import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
+
+async function sendNewGame(formData) {
+  // Make the send data into a json object
+  var sendData = {
+    GameTitle: formData.get("GameTitle"),
+    GameType: formData.get("GameType")
+  };
+
+  // Get the response from the server
+  var response = await GetAuthorizedResponse("/users/{user_id}/games", "POST", JSON.stringify(sendData));
+
+  if (response.status === 200) {
+    // Game successfully added, redirect to the home page
+    // TODO: Use a React Router redirect
+    window.location.href = "/";
+    return true;
+  } else {
+    console.log("Error adding new game.");
+    return false;
+  }
+}
+
 /* router: /add-game */
 export default function AddGameForm() {
   const handleSubmit = (event) => {
+    // Prevent default behaviour
     event.preventDefault();
+    // Get the form data
     const data = new FormData(event.currentTarget);
-    var sendData = {
-      GameTitle: data.get("GameTitle"),
-      GameType: data.get("GameType"),
-    };
-    // test printing
-    console.log(sendData);
+
+    // TODO: Check that this game hasn't already been recently sent
+
+    // Send the data to the server
+    sendNewGame(data);
   };
 
   return (

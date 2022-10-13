@@ -27,8 +27,8 @@ export async function GetLoginResponse(username, password) {
 export async function GetAuthorizedResponse(location, httpMethod, sendData) {
   //console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
   // TODO: Redirect back to login
-  let user_id = localStorage.getItem("user_id");
-  let user_token = localStorage.getItem("user_token");
+  let user_id = sessionStorage.getItem("user_id");
+  let user_token = sessionStorage.getItem("user_token");
   
 
   // String replace the User ID
