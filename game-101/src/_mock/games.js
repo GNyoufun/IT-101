@@ -16,7 +16,7 @@ const games = [...Array(8)].map((_, index) => {
 
   return {
     id: faker.datatype.uuid(),
-    cover: `/src/style/mock-images/game_${setIndex}.jpg`,
+    cover: `/mock-images/game_${setIndex}.jpg`,
     name: GAME_NAME[index],
   };
 });
