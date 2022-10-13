@@ -15,6 +15,12 @@ require('./users.js')(app);
 // Game requests
 require('./games.js')(app);
 
+// Review requests
+require('./reviews.js')(app);
+
+// Teammates requests
+require('./teammates.js')(app);
+
 // TCP connection
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), () => {

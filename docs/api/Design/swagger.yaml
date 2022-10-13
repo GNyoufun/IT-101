@@ -461,6 +461,8 @@ paths:
           description: invalid attributes
         '404':
           description: User_id not found
+        '500':
+          description: server error when inserting raid review
     delete:
       tags:
         - Reviews
@@ -856,6 +858,12 @@ components:
           type: string
           enum: ["Win", "Draw", "Lost"]
         difficulty:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          example: 5
+        rating:
           type: integer
           format: int32
           minimum: 1
