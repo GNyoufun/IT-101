@@ -256,7 +256,7 @@ async function TeamWinRate (GameTitle, id, Time = new Date()) {
 /**
  * Calculate the user's win rate in general for the specified game
  * @param {String}   GameTitle       The title of the game that wish to calculated from
- * @param {Int}      id              The Users ID registered in the server
+ * @param {ObjectId}      id         The Users ID registered in the server
  * @param {DateTime} [Time = Date()] The DateTime that the documents is recorded
  * @returns The win rate of the specified game
  */
@@ -285,7 +285,13 @@ async function gameWinRate (GameTitle, id, Time = new Date()) {
   return rate 
 }
 
-async function bestWinRate(id, document){
+/**
+ * Extract result from review and calcuate win/lost/draw rate by games in last 
+ * 7 days 
+ * @param {ObjectId} id The Users ID registered in the server
+ * @returns a list of objects contain rate data 
+ */
+async function bestWinRate(id){
   let today = new Date(new Date().setUTCHours(0,0,0,0));
   let svnDay = new Date((today - 7 * 24 * 60 * 60 * 1000));
   let rates = []
@@ -606,6 +612,7 @@ module.exports = {
   
   TeamWinRate,
   gameWinRate,
+  bestWinRate,
   totalTime,
   totalTimeByDay,
   average,
