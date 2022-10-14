@@ -162,9 +162,7 @@ module.exports = function (app) {
                 console.log('Failed DELETE request /users/%s/reviews, 404', req.params.user_id);
             } else {
                 // success
-                if (result > 1) {
-                    console.warn('Deleted more than one raid review. %d reviews deleted', result)
-                }
+                console.log('%d reviews deleted', result)
                 res.sendStatus(200);
                 console.log('Successful DELETE request /users/%s/reviews', req.params.user_id);
             }
@@ -179,6 +177,7 @@ module.exports = function (app) {
     /**
      * get all the reviews of a specific game of a user
      * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
      * @header Authorization, should be user_id:token
      * @responseBody list of reviews
      */
@@ -207,8 +206,35 @@ module.exports = function (app) {
         }
     });
 
+    /**
+     * delete all the reviews of a game for a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @header Authorization, should be user_id:token
+     */
     app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
-        res.send('delete game');
+        console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+        try {
+            const id = ObjectId(req.params.user_id);
+
+            // query and process result
+            const result = await deleteCollection(review, { UserId: id, Title: req.params.game });
+            if (result === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+            } else {
+                // success
+                console.log('%d reviews deleted', result)
+                res.sendStatus(200);
+                console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+        }
     });
 
     app.get('/users/:user_id/reviews/:game/:friend', async (req, res, next) => {
