@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Container, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, Stack } from "@mui/material";
 
 import { GameList, SearchBar } from "./";
 import { AddNewButton } from "../../style/buttonStyle";
@@ -31,7 +31,7 @@ export default function GameHistoryList() {
     setLoading(false);
     console.log(g);
   }
-  
+
   async function retrieveGames() {
     var response = await GetAuthorizedResponse("/users/{user_id}/games", "GET");
     if (response.status === 200) {
@@ -53,23 +53,35 @@ export default function GameHistoryList() {
   return (
     <Container>
       {loading ? (
-        <Box
-          display="flex"
-          
-          sx={{alignContent:"center", alignItems: 'center', justifyContent:"center"}} >
+        <Grid
+          container
+          justifyContent="center"
+          alignContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
+          <Box
+            display="flex"
+            sx={{
+              alignContent: "center",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <CircularProgress />
-        </Box>
+          </Box>
+        </Grid>
       ) : (
         <div>
           <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='space-between'
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
             px={4}
             py={4}
           >
             <SearchBar />
-            <AddNewButton variant='contained' href='/add-game' disableRipple>
+            <AddNewButton variant="contained" href="/add-game" disableRipple>
               + New Game
             </AddNewButton>
           </Stack>
