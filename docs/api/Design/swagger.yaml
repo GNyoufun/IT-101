@@ -837,7 +837,7 @@ components:
           example: 632bdb704a342e1d5ab2dcd3
         date:
           type: string
-          example: 21/09/2022
+          example: 2022-09-21
         team:
           type: array
           items:

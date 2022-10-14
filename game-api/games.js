@@ -79,7 +79,7 @@ module.exports = function (app) {
         };
 
         // Double check data is good
-        if (game.GameTitle === undefined || game.GameType === undefined) {
+        if (game.GameTitle === "" || game.GameType === "") {
             // bad request
             res.sendStatus(400);
             console.log('Failed POST request /users/%s/games, 400', req.params.user_id);

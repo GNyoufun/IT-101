@@ -38,6 +38,10 @@ async function insertCollection (collect, docs) {
   return inserted.insertedIds;
 }
 
+function insertReview (raidReview) {
+  
+}
+
 /**
  * Provide the search query parameters, and the changable as changes to apply
  * @param  {model}  collect the collection model name 
@@ -69,7 +73,7 @@ async function insertCollection (collect, docs) {
  *                               older versions of document when false
  *                               It is defaulted to false
  */
- function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false) {
+function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false) {
   collect.collection.findOneAndReplace( finddocs, changes,
     { returnNewDocument: returnedDoc }, function (err, doc) {
       if (err) {

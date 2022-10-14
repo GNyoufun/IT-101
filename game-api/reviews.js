@@ -3,9 +3,6 @@ const {
     retrieveCollection,
     updateCollection,
     deleteCollection,
-    updateUserToken,
-    insertUser,
-    retrieveUserById,
     insertCollection,
 } = require('./databaseSrc/mongooseFunc.js');
 const {
@@ -26,7 +23,22 @@ module.exports = function (app) {
         console.log('Starting GET request /users/%s/reviews', req.params.user_id);
         try {
             const id = ObjectId(req.params.user_id);
-            const result = await retrieveCollection(review, { UserId: id }, {});
+            const query = { UserId: id };
+            const date = {};
+
+            // add in optional date params
+            if (req.query.StartDate !== undefined) {
+                date.$gte = new Date(req.query.StartDate);
+            }
+            if (req.query.EndDate !== undefined) {
+                date.$lte = new Date(req.query.EndDate);
+            }
+            if (Object.keys(date).length !== 0) {
+                query.Date = date;
+            }
+            
+            // query and process result
+            const result = await retrieveCollection(review, query, {});
             if (result.length === 0) {
                 // not found user id
                 res.sendStatus(404);
@@ -37,7 +49,7 @@ module.exports = function (app) {
                 res.json(result);
                 console.log('Successful GET request /users/%s/reviews', req.params.user_id);
             }
-            } catch (err) {
+        } catch (err) {
                 // invalid (not found) user id
                 res.sendStatus(404);
                 console.error(err);
