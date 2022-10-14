@@ -237,18 +237,95 @@ module.exports = function (app) {
         }
     });
 
+    /**
+     * get all the reviews of a specific game of a user with a specific teammate/friend
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @path friend, the friend/teammate who participated in the raid
+     * @header Authorization, should be user_id:token
+     * @responseBody list of reviews
+     */
     app.get('/users/:user_id/reviews/:game/:friend', async (req, res, next) => {
-        res.send('get game friend');
+        console.log('Starting GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
+        try {
+            const id = ObjectId(req.params.user_id);
+            const game = req.params.game;
+
+            const result = await retrieveCollection(review, { UserId: id, Title: game, 'Team.InGameID': req.params.friend }, {});
+            if (result.length === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
+            } else {
+                // success
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
+        }
     });
 
+    /**
+     * get a specific review of a specific user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path raid_id, should be 24 character hexadecimal string
+     * @header Authorization, should be user_id:token
+     * @responseBody list of reviews
+     */
     app.get('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
-        res.send('get raid id');
+        console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+        try {
+            const userId = ObjectId(req.params.user_id);
+            const raidId = ObjectId(req.params.raid_id);
+
+            const result = await retrieveCollection(review, { _id: raidId, UserId: userId }, {});
+            if (result.length === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+            } else {
+                // success
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+        }
     });
 
+    /**
+     * update a specific review of a specific user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path raid_id, should be 24 character hexadecimal string
+     * @header Authorization, should be user_id:token
+     * @body gametitle, title of the game being reviewed
+     * @body date, date of the raid
+     * @body team, array of teammates, having fields {in_game_id, level}
+     * @body durations, duration of the raid
+     * @body result, raid result, can be "Win", "Draw", or "Lost"
+     * @body difficulty, raid difficulty from 1-10
+     * @body rating, raid rating from 1-10
+     * @body comments, additional comments for the raid
+     */
     app.put('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
         res.send('put raid id');
     });
 
+    /**
+     * delete a specific review of a specific user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path raid_id, should be 24 character hexadecimal string
+     * @header Authorization, should be user_id:token
+     */
     app.delete('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
         res.send('delete raid id');
     });
