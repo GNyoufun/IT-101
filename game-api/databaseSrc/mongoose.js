@@ -1,5 +1,6 @@
 // Path name to dotenv file
-var str = __dirname + "\\.env";
+// var str = __dirname + "\\.env"; // path for windows 
+var str = __dirname + "//.env"; // path for mac 
 require('dotenv').config({ path: str });
 const mongoose = require('mongoose');
 
