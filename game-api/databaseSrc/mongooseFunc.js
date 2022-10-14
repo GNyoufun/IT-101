@@ -281,44 +281,79 @@ async function gameWinRate (GameTitle, id, Time = new Date()) {
   return rate 
 }
 
-
-
 /**
- * ! Total per game for past 7 days
- * ! Total time per day 
+ * Extract and get the time duration for all game for past seven days 
+ * @param {ObjectId} id The Users ID registered in the server
+ * @returns a list of objects of the time related data
  */
-/**
- * Calculate the averge time the user spend in each raid for the specified game
- * @param {String} GameTitle       The title of the game that wish to calculated from
- * @param {Int}    id              The Users ID registered in the server
- * @param {String} [result = all]  The result state for the time to be calculated
- * @returns The average time for the specified game
- */
-async function TotalTime (GameTitle, id, result = "all") {
-  let totalTime = 0;
-  let numReview = 0;
+ async function totalTime(id){
+  let today = new Date(new Date().setUTCHours(0,0,0,0));
+  let svnDay = new Date((today - 7 * 24 * 60 * 60 * 1000));
+  let durations = []
 
   let document = await review.find({
-    Title: GameTitle,
     UserId: id, 
-    Result: result,
-    Date: { $lt: ISODate(Time) }
+    Date: { 
+      $gte: ISODate(svnDay),
+      $lt: ISODate(today) }
   }).lean();
-  
-  if (result === 'all') {
-    document = await review.find({
-      Title: GameTitle,
-      UserId: id, 
-      Date: { $lt: ISODate(Time) }
-    }).lean();
-  }
 
   for (let i = 0; i < document.length; i++) {
-    totalTime += document[i].Durations;
-    numReview++;
-  }
+    let gameTitle = document[i].Title;
+    let duration = document[i].Durations
+    let date = document[i].Date
+    let title;
 
-  return totalTime;
+    let difference = Math.ceil((today - date) / (24 * 60 * 60 * 1000))
+    let day = "day" + difference.toString();
+
+    if ((title =
+              durations.findIndex(obj => obj.Title === gameTitle)) !== -1) {
+        durations[title]["totalTime"] += duration;
+        durations[title][day] = duration;
+    } else {
+      let obj = {
+        Title: gameTitle,
+        totalTime: duration,
+        day1: 0,
+        day2: 0,
+        day3: 0,
+        day4: 0,
+        day5: 0,
+        day6: 0,
+        day7: 0
+      }
+      obj[day] = duration;
+
+      durations.push(obj);
+    }
+  }
+  return durations;
+}
+
+/**
+ * Get the total time for past seven days in daily format
+ * @param {ObjectId} id The UserID registered in the server 
+ * @returns  a list of objects of the time related data
+ */
+async function totalTimeByDay(id){
+  let timeArr = await totalTime(id);
+  let daily = {}
+
+  for (let i = 0; i < timeArr.length; i++){
+    for(let key in timeArr[i]){
+      let curr = timeArr[i][key]
+
+      if (typeof curr != 'string' && !(curr instanceof String)){
+        if (i === 0){
+          daily[key] = curr;
+        }else{
+          daily[key] += curr;
+        }
+      }
+    }
+  }
+  return daily;
 }
 
 /**
@@ -517,7 +552,8 @@ module.exports = {
   
   TeamWinRate,
   gameWinRate,
-  averageTime,
+  totalTime,
+  totalTimeByDay,
   average,
   median
 };
