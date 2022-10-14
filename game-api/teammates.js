@@ -11,6 +11,13 @@ const {
  * Teammates requests
  */
 module.exports = function (app) {
+    /**
+     * gets all of the teammates for a particular game associated with a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @header Authorization, should be user_id:token
+     * @responseBody list of teammates
+     */
     app.get('/users/:user_id/teammates/:game', async (req, res, next) => {
         console.log('Starting GET request /users/%s/teammates/%s', req.params.user_id, req.params.game);
         try {
