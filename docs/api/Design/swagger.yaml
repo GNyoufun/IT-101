@@ -831,10 +831,6 @@ components:
         GameTitle:
           type: string
           example: FFXIV
-        UserId:
-          type: string
-          format: hexadecimal_24
-          example: 632bdb704a342e1d5ab2dcd3
         date:
           type: string
           example: 2022-09-21

@@ -146,7 +146,7 @@ module.exports = function (app) {
             if (req.query.StartDate === undefined || req.query.EndDate === undefined) {
                 // bad request
                 res.sendStatus(400);
-                console.log('Failed POST request /users/%s/reviews, 400', req.params.user_id);
+                console.log('Failed DELETE request /users/%s/reviews, 400', req.params.user_id);
                 return;
             }
 
@@ -162,7 +162,7 @@ module.exports = function (app) {
                 console.log('Failed DELETE request /users/%s/reviews, 404', req.params.user_id);
             } else {
                 // success
-                console.log('%d reviews deleted', result)
+                console.log('%d reviews deleted', result);
                 res.sendStatus(200);
                 console.log('Successful DELETE request /users/%s/reviews', req.params.user_id);
             }
@@ -225,7 +225,7 @@ module.exports = function (app) {
                 console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
             } else {
                 // success
-                console.log('%d reviews deleted', result)
+                console.log('%d reviews deleted', result);
                 res.sendStatus(200);
                 console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
             }
@@ -317,7 +317,64 @@ module.exports = function (app) {
      * @body comments, additional comments for the raid
      */
     app.put('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
-        res.send('put raid id');
+        console.log('Starting PUT request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+        try {
+            // Console log the request body
+            console.log(req.body);
+
+            // Load the ids
+            const userId = ObjectId(req.params.user_id);
+            const raidId = ObjectId(req.params.raid_id);
+
+            // check for invalid attributes
+            const invalid = Boolean(
+                req.body.GameTitle === undefined ||
+                req.body.date === undefined ||
+                req.body.team === undefined ||
+                req.body.durations === undefined ||
+                req.body.result === undefined ||
+                req.body.difficulty === undefined ||
+                req.body.rating === undefined ||
+                req.body.comments === undefined
+            );
+            if (invalid) {
+                // bad request
+                res.sendStatus(400);
+                console.log('Failed PUT request /users/%s/reviews/%s, 400', req.params.user_id, req.params.raid_id);
+                return;
+            }
+        
+            // created the updated review
+            const raidReview = {
+                UserId: userId,
+                Title: req.body.GameTitle,
+                Date: new Date(req.body.date), // Parse the Date
+                Team: req.body.team,
+                Durations: req.body.durations, // Parse the Durations
+                Result: req.body.result,
+                Difficulty: req.body.difficulty, // Parse the Difficulty
+                Rating: req.body.rating, // Parse the Rating
+                comments: req.body.comments
+            };
+            const result = await updateCollection(review, { _id: raidId, UserId: userId }, { $set: raidReview });
+            if (result.length === 0) {
+                // server error in update
+                res.sendStatus(500);
+                console.log('Failed PUT request /users/$s/reviews/%s, 500', req.params.user_id, req.params.raid_id);
+            } else {
+                // success
+                if (result.length > 1) {
+                    console.warn('Updated more than one raid review, %d updated', result.length);
+                }
+                res.sendStatus(200);
+                console.log('Successful PUT request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed PUT request /users/$s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+        }
     });
 
     /**
@@ -327,6 +384,30 @@ module.exports = function (app) {
      * @header Authorization, should be user_id:token
      */
     app.delete('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
-        res.send('delete raid id');
+        console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+        try {
+            const userId = ObjectId(req.params.user_id);
+            const raidId = ObjectId(req.params.raid_id);
+
+            // query and process result
+            const result = await deleteCollection(review, { _id: raidId, UserId: userId });
+            if (result === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+            } else {
+                // success
+                if (result > 1) {
+                    console.warn('Multiple reviews deleted: %d reviews deleted', result);
+                }
+                res.sendStatus(200);
+                console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+        }
     });
 };
