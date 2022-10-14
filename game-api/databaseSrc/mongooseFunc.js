@@ -37,10 +37,6 @@ async function insertCollection (collect, reviews) {
   });
 }
 
-function insertReview (raidReview) {
-  
-}
-
 /**
  * Provide the search query parameters, and the changable as changes to apply
  * @param  {model}  collect the collection model name 
