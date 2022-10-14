@@ -16,6 +16,8 @@ module.exports = function (app) {
     /**
      * get all the reviews of a user
      * @path user_id, should be 24 character hexadecimal string
+     * @query StartDate, start date of date filter applied to search
+     * @query EndDate, end date of date filter applied to search
      * @header Authorization, should be user_id:token
      * @responseBody list of reviews
      */
@@ -50,10 +52,10 @@ module.exports = function (app) {
                 console.log('Successful GET request /users/%s/reviews', req.params.user_id);
             }
         } catch (err) {
-                // invalid (not found) user id
-                res.sendStatus(404);
-                console.error(err);
-                console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
         }
     });
 
@@ -130,17 +132,63 @@ module.exports = function (app) {
         }
     });
 
+    /**
+     * delete all the reviews of a certain time period of a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @query StartDate, start date of date filter applied to search
+     * @query EndDate, end date of date filter applied to search
+     * @header Authorization, should be user_id:token
+     */
     app.delete('/users/:user_id/reviews', async (req, res, next) => {
-        res.send('delete');
+        console.log('Starting DELETE request /users/%s/reviews', req.params.user_id);
+        try {
+            const id = ObjectId(req.params.user_id);
+            if (req.query.StartDate === undefined || req.query.EndDate === undefined) {
+                // bad request
+                res.sendStatus(400);
+                console.log('Failed POST request /users/%s/reviews, 400', req.params.user_id);
+                return;
+            }
+
+            // query and process result
+            const query = {
+                UserId: id,
+                Date: { $gte: (new Date(req.query.StartDate)), $lte: (req.query.EndDate) }
+            }
+            const result = await deleteCollection(review, query);
+            if (result === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed DELETE request /users/%s/reviews, 404', req.params.user_id);
+            } else {
+                // success
+                if (result > 1) {
+                    console.warn('Deleted more than one raid review. %d reviews deleted', result)
+                }
+                res.sendStatus(200);
+                console.log('Successful DELETE request /users/%s/reviews', req.params.user_id);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed DELETE request /users/%s/reviews, 404', req.params.user_id);
+        }
     });
 
+    /**
+     * get all the reviews of a specific game of a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @header Authorization, should be user_id:token
+     * @responseBody list of reviews
+     */
     app.get('/users/:user_id/reviews/:game', async (req, res, next) => {
         console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
         try {
             const id = ObjectId(req.params.user_id);
             const game = req.params.game;
 
-            const result = await retrieveCollection(review, { UserId: id, Title: game}, {});
+            const result = await retrieveCollection(review, { UserId: id, Title: game }, {});
             if (result.length === 0) {
                 // not found user id
                 res.sendStatus(404);
@@ -151,11 +199,11 @@ module.exports = function (app) {
                 res.json(result);
                 console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
             }
-            } catch (err) {
-                // invalid (not found) user id
-                res.sendStatus(404);
-                console.error(err);
-                console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
         }
     });
 
