@@ -281,6 +281,56 @@ async function gameWinRate (GameTitle, id, Time = new Date()) {
   return rate 
 }
 
+async function bestWinRate(id, document){
+  let today = new Date(new Date().setUTCHours(0,0,0,0));
+  let svnDay = new Date((today - 7 * 24 * 60 * 60 * 1000));
+  let rates = []
+
+  let document = await review.find({
+    UserId: id, 
+    Date: { 
+      $gte: ISODate(svnDay),
+      $lt: ISODate(today)}
+  }).lean();
+
+  for (let i = 0; i < document.length; i++) {
+    let gameTitle = document[i].Title;
+    let result = document[i].Result
+    let title;
+
+    if ((title =
+              rates.findIndex(obj => obj.Title === gameTitle)) !== -1) {
+        rates[title][result]++;
+        rates[title]["Total"]++;
+    } else {
+      let obj = {
+        Title: gameTitle,
+        Total: 1,
+        Win: 0,
+        Lost: 0,
+        Draw: 0
+      }
+      obj[result]++;
+
+      rates.push(obj);
+    }
+  }
+
+  for (let i = 0; i < rates.length; i++) {
+    const winResult = rates[i].Win;
+    const lostResult = rates[i].Lost;
+    const drawResult = rates[i].Draw;
+    const total = rates[i].Total;
+    rates[i].winRate = (winResult / total) * precent;
+    rates[i].lostRate = (lostResult / total) * precent;
+    rates[i].drawRate = (drawResult / total) * precent;
+  }
+
+  let sorted = rates.sort((a, b) => b.winRate - a.winRate);
+
+  return sorted;
+}
+
 /**
  * Extract and get the time duration for all game for past seven days 
  * @param {ObjectId} id The Users ID registered in the server
