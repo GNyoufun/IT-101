@@ -1,20 +1,25 @@
 const {
-    retrieveCollection,
-    insertCollection,
-    updateCollection,
-    deleteCollection,
-
-    TeamWinRate,
-    gameWinRate,
-    averageTime,
-    averageDifficulty,
-    averageRating,
-
-    extractGames,
-    extractTeam,
-
-    insertUser,
-
+  retrieveCollection,
+  insertCollection,
+  updateCollection,
+  FindReplaceCollection,
+  deleteCollection,
+  
+  insertUser,
+  updateUserToken,
+  retrieveUserById,
+  retrieveByTeammate,
+  
+  extractGames,
+  extractTeam,
+  
+  TeamWinRate,
+  gameWinRate,
+  bestWinRate,
+  totalTime,
+  totalTimeByDay,
+  average,
+  median
 } = require('./mongooseFunc.js');
 
 const {
@@ -23,14 +28,18 @@ const {
 } = require('./mongooseSchema.js');
 
 // Example schemas
-const IDLost = [{ GameID: 'GAMER1100', Level: 11 },
+const IDLost = [
+  { GameID: 'GAMER1100', Level: 11 },
   { GameID: 'StromBreaker', Level: 18 },
-  { GameID: 'StoryQ', Level: 17 }];
+  { GameID: 'StoryQ', Level: 17 }
+];
 
-const IDS = [{ GameID: 'GAMER1100', Level: 11 },
+const IDS = [
+  { GameID: 'GAMER1100', Level: 11 },
   { GameID: 'StromBreaker', Level: 18 },
   { GameID: 'StoryQ', Level: 17 },
-  { GameID: 'Player102934', Level: 40 }];
+  { GameID: 'Player102934', Level: 40 }
+];
 
 const raid = [
             {   Title: "FFXIV", 
@@ -155,3 +164,27 @@ const raid = [
 // team.then(function (result){
 //     console.log(result)
 // })
+
+
+// bestWinRate("6347bc211c807d438298e193").then(data => console.log(data));
+// totalTime("6347bc211c807d438298e193").then(data => console.log(data));
+// totalTimeByDay("6347bc211c807d438298e193").then(data => console.log(data));
+
+// retrieveByTeammate("Overwatch", "63478fd9fb0388e56c026258", 
+//   {InGameID: 'Brendan', Level: 3})
+//   .then(data => console.log(data));
+
+// retrieveCollection(review, {UserId: "63478fd9fb0388e56c026258"}, )
+//   .then(data => {
+    
+//     for (let i = 0; i <data.length; i++){
+//       console.log(data[i])}
+//     }
+//   );
+
+// extractTeam("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
+// extractGames("63478fd9fb0388e56c026258").then(data => console.log(data));
+// TeamWinRate("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
+// gameWinRate("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
+// average("Overwatch", "63478fd9fb0388e56c026258", "Rating").then(data => console.log(data));
+// median("Overwatch", "63478fd9fb0388e56c026258", "Rating").then(data => console.log(data));

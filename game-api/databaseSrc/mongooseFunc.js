@@ -161,7 +161,7 @@ async function extractGames(id){
 /**
  * Find and list the teammate that the User has recorded in the specified game
  * @param {String} GameTitle The game title of the documents that wished to find
- * @param {Int}    id The User ID registered in the database
+ * @param {ObjectId}    id The User ID registered in the database
  * @returns The list of Teammate in the specified Game that belong to the user
  */
 async function extractTeam(GameTitle, id) {
@@ -193,15 +193,18 @@ async function extractTeam(GameTitle, id) {
  */
 async function retrieveByTeammate(GameTitle, id, teammate){
   const games = await review.find({Title: GameTitle, UserId: id}).lean();
-  let raidReview = []
+  let gameID = teammate.InGameID;
+  let level = teammate.Level;
+  let raidReview = [];
 
   for (let i = 0; i < games.length; i++) {
-    let team = games[i].Team
-    if (team.includes(teammate)){
-      reidReview.push(games[i])
+    let team = games[i].Team;
+    console.log(team)
+    if (team.some(e => e.InGameID === gameID && e.Level === level)){
+      raidReview.push(games[i])
     }
   }
-  return raidReview
+  return raidReview;
 }
 
 
@@ -210,29 +213,29 @@ async function retrieveByTeammate(GameTitle, id, teammate){
  * Calculate the win rate of the user with different teammate in specified game
  * @param {String}   GameTitle       The title of the game that wish to 
  *                                      calculated from
- * @param {Int}      id              The Users ID registered in the server
+ * @param {ObjectId}      id              The Users ID registered in the server
  * @param {DateTime} [Time = Date()] The DateTime that the documents is recorded
  * @returns Return an array of objects of item specified in gameIDSchema and 
  *              the number of wins, losts and the win rate with that teammate 
  */
 async function TeamWinRate (GameTitle, id, Time = new Date()) {
-{  const win = await review.find({
+  const win = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const players = [];
 
@@ -245,7 +248,7 @@ async function TeamWinRate (GameTitle, id, Time = new Date()) {
     const total = players[i].total;
     players[i].winRate = (winResult / total) * precent;
   }
-}
+
   return players;
 }
 
@@ -261,19 +264,19 @@ async function gameWinRate (GameTitle, id, Time = new Date()) {
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
 
   let rate = (win.length / (win.length + lost.length + draw.length)) * precent;
@@ -295,8 +298,8 @@ async function bestWinRate(id){
   let document = await review.find({
     UserId: id, 
     Date: { 
-      $gte: ISODate(svnDay),
-      $lt: ISODate(today)}
+      $gte: svnDay,
+      $lt: today}
   }).lean();
 
   for (let i = 0; i < document.length; i++) {
@@ -350,8 +353,8 @@ async function bestWinRate(id){
   let document = await review.find({
     UserId: id, 
     Date: { 
-      $gte: ISODate(svnDay),
-      $lt: ISODate(today) }
+      $gte: svnDay,
+      $lt: today }
   }).lean();
 
   for (let i = 0; i < document.length; i++) {
@@ -429,19 +432,19 @@ async function average(GameTitle, id, target, Time = new Date()) {
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: ISODate(Time) }
+    Date: { $lt: Time }
   }).lean();
 
   const avrArr = [];
@@ -482,7 +485,7 @@ function calcResult (players, documents, result) {
   for (let i = 0; i < documents.length; i++) {
     const team = documents[i].Team;
     for (let j = 0; j < team.length; j++) {
-      const gameid = team[j].GameID;
+      const gameid = team[j].InGameID;
       let playerID;
 
       if ((playerID =
@@ -491,7 +494,7 @@ function calcResult (players, documents, result) {
         players[playerID]["total"]++;
       } else {
         players.push({
-          GameID: gameid,
+          InGameID: gameid,
           total: 1,
           win: winPreset,
           lost: lostPreset,
@@ -517,15 +520,15 @@ function calcResult (players, documents, result) {
 
   for (let i = 0; i < documents.length; i++) {
     let data = documents[i][target];
-    let diffID;
+    let dataID;
 
-    if ((diffID =
+    if ((dataID =
             collection.findIndex(obj => obj[target] === data)) !== -1) {
-      collection[diffID][result]++;
-      collection[diffID]["total"]++;
+      collection[dataID][result]++;
+      collection[dataID]["total"]++;
     } else {
       collection.push({
-        [target]: diff,
+        [target]: data,
         total: 1,
         win: winPreset,
         lost: lostPreset,
@@ -549,24 +552,23 @@ async function median(GameTitle, id, target, Time = new Date()){
 
   for (let i = 0; i < averageArr.length; i++) {
     let avr = averageArr[i][target];
-    let total = avr[i].total;
-    let arr = Array(total).fill(diff);
-    mid.push(arr);
+    let total = averageArr[i]["total"];
+    let arr = Array(total).fill(avr);
+    mid.push(...arr);
   }
 
   if(mid.length === 0) {
     throw new Error("Empty Array");
   }
 
-  mid.sort(function(a,b){
-    return a-b;
-  });
-
+  mid.sort((a, b) => a - b);
+  
   let half = Math.floor(mid.length / 2);
   
-  if (mid.length % 2){
+  if ((mid.length % 2) === 0) {
     return (mid[half - 1] + mid[half]) / 2.0;
   }
+
   return mid[half];
 };
 
