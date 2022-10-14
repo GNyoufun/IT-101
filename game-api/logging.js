@@ -9,4 +9,4 @@
     console.log(logs);
   }
 
-  module.exports = logging;
+module.exports = logging;
