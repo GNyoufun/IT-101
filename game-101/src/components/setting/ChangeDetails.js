@@ -60,23 +60,23 @@ export const ChangeDetails = (props) => {
                 <CardHeader title="Username" />
                 <Divider />
                 <CardContent>
-                <Grid
+                  <Grid
                     container
                     justifyContent="space-between"
                     alignItems="flex-end"
                   >
-                  <Grid item md={8} sm={9}>
-                    <TextField
-                      fullWidth
-                      label="Username"
-                      name="username"
-                      onChange={handleChange}
-                      required
-                      value={values.username}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
+                    <Grid item md={8} sm={9}>
+                      <TextField
+                        fullWidth
+                        label="Username"
+                        name="username"
+                        onChange={handleChange}
+                        required
+                        value={values.username}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
                       <SubmitButton variant="contained" type="submit">
                         Submit
                       </SubmitButton>
@@ -152,9 +152,11 @@ export const ChangeDetails = (props) => {
                     label="By clicking this, I understand I will delete my
                     account permanently."
                   />
-                  <DeleteButton variant="contained">
-                    Delete My Account
-                  </DeleteButton>
+                  <Grid mt={2}>
+                    <DeleteButton variant="contained">
+                      Delete My Account
+                    </DeleteButton>
+                  </Grid>
                 </CardContent>
               </Card>
             </Grid>

@@ -77,15 +77,8 @@ export default function SideBar() {
                 component="h6"
                 sx={{ mt: "6px", lineHeight: 1.1 }}
               >
-                {sessionStorage.getItem("user_name")} {/* TODO: Load this differently?*/}
-              </Typography>
-              <Typography
-                variant="body"
-                component="h6"
-                color="text.secondary"
-                sx={{ fontSize: 12 }}
-              >
-                address@email.com
+                {sessionStorage.getItem("user_name")}{" "}
+                {/* TODO: Load this differently?*/}
               </Typography>
             </Box>
           </Grid>
