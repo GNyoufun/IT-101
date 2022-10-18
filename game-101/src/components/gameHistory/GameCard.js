@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
-import { Box, Card, Link, Typography, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Box, Card, CardActionArea, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const GameImgStyle = styled("img")({
@@ -20,19 +21,25 @@ export default function GameCard({ game }) {
 
   return (
     <Card>
-      {/* Game's picture */}
-      <Box sx={{ pt: "100%", position: "relative" }}>
-        <GameImgStyle alt={name} src={cover} />
-      </Box>
+      <CardActionArea
+        component={Link}
+        to={{
+          pathname: "/table",
+          search: "?utm="+name
+        }}
+      >
+        {/* Game's picture */}
+        <Box sx={{ pt: "100%", position: "relative", height: "320px" }}>
+          <GameImgStyle alt={name} src={cover} />
+        </Box>
 
-      {/* Game's name with href */}
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link href="/table" color="inherit" underline="hover">
-          <Typography variant="subtitle2" noWrap>
+        {/* Game's name */}
+        <Stack spacing={2} sx={{ p: 1.5 }}>
+          <Typography variant='subtitle2' noWrap>
             {name}
           </Typography>
-        </Link>
-      </Stack>
+        </Stack>
+      </CardActionArea>
     </Card>
   );
 }

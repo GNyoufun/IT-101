@@ -4,11 +4,12 @@
   "private": true,
   "dependencies": {
     "@devexpress/dx-react-chart-material-ui": "^3.0.5",
-    "@faker-js/faker": "^7.5.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@faker-js/faker": "^7.5.0",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.3",
+    "@mui/x-data-grid": "^5.17.7",
     "@mui/x-date-pickers": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",

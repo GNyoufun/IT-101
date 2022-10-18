@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useLocation } from 'react-router-dom';
 
 import dayjs from "dayjs";
 import { Box, Typography } from "@mui/material";
@@ -20,6 +21,8 @@ async function sendUpdateReview(sendData) {
 
 /* router: /add-record */
 export default function EditRecordForm() {
+  const data = useLocation().state;
+
   const defaultInput = {
     // TODO: change everything, fetch from prop.
     GameTitle: "", 
@@ -40,6 +43,8 @@ export default function EditRecordForm() {
     )
   }
 
+  console.log("test:"+data);
+  console.log("d:"+defaultInput);
   return (
     <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );

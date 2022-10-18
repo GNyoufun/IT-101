@@ -10,7 +10,7 @@ GameList.propTypes = {
 
 export default function GameList({ games }) {
   return (
-    <TableContainer sx={{ height: 570 }}>
+    <TableContainer sx={{ height: 600 }}>
       {/* Go to "GameCard.js" in "components/gameHistory"
        *  A card contains Game's name and picture
        */}
