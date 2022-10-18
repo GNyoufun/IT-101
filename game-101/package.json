@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@devexpress/dx-react-chart-material-ui": "^3.0.5",
+    "@faker-js/faker": "^7.5.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
@@ -45,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.5.0",
     "file-loader": "^6.2.0"
   }
 }
