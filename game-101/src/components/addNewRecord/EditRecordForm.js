@@ -5,14 +5,11 @@ import { Box, Typography } from "@mui/material";
 import RecordForm from "./RecordForm";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
-// Sends a new record to the server
-async function sendNewReview(sendData) {
+// TO DO!!! UPDATE REVIEW
+async function sendUpdateReview(sendData) {
   var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
   
   if (response.status === 200) {
-    // Review successfully added, redirect to the home page
-    // TODO: Use a React Router redirect
-    // TODO: Decide on redirect location? Reviews or Home?
     window.location.href = "/";
     return true;
   } else {
@@ -22,11 +19,10 @@ async function sendNewReview(sendData) {
 }
 
 /* router: /add-record */
-export default function AddRecordForm() {
-  // TODO: Check that the game date isn't in the future
+export default function EditRecordForm() {
   const defaultInput = {
-    // TODO: add UserId
-    GameTitle: "", // TODO: Get first game in list
+    // TODO: change everything, fetch from prop.
+    GameTitle: "", 
     date: dayjs(),
     durations: 30,
     result: "Draw",
@@ -39,12 +35,12 @@ export default function AddRecordForm() {
   function title() {
     return(
       <Box sx={{ my: 3 }}>
-        <Typography variant="h4">Add New Raid Record</Typography>
+        <Typography variant="h4">Edit Raid Record</Typography>
       </Box>
     )
   }
 
   return (
-    <RecordForm defaultInput={defaultInput} sendReview={sendNewReview} title={title} />
+    <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );
 }
