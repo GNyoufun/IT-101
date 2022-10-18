@@ -6,15 +6,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "client-build": "cd game-101 && npm install",
+    "client-build": "cd game-101 && npm install && npm run build",
     "server-build": "cd game-api && npm install",
-    "client-start": "cd game-101 && npm start",
-    "server-start": "cd game-api && npm start",
-    "start": "concurrently \"npm run client-start\" \"npm run server-start\"",
-    "heroku-postbuild": "npm install && npm run client-build && npm run server-build"
-  },
-  "dependencies": {
-    "concurrently": "^7.4.0"
+    "start": "cd game-api && npm start",
+    "heroku-postbuild": "npm run client-build && npm run server-build"
   },
   "repository": {
     "type": "git",
