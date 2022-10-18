@@ -1,10 +1,12 @@
 // Path name to dotenv file
-var str = __dirname + "\\.env";
-require('dotenv').config({ path: str });
+// var str = __dirname + "\\.env";
+const pathResolve = require('node:path');
+require('dotenv').config({ path: pathResolve.resolve(__dirname, '../.env') });
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+// const { path } = require('.');
 
 
 /**

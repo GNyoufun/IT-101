@@ -1,0 +1,24 @@
+{
+  "name": "it-101",
+  "version": "1.0.0",
+  "description": "it-101 game web app",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "client-build": "cd game-101 && npm install",
+    "server-build": "cd game-api && npm install",
+    "client-start": "cd game-101 && npm start",
+    "server-start": "cd game-api && npm start",
+    "start": "concurrently \"npm run client-start\" \"npm run server-start\"",
+    "heroku-postbuild": "npm install && npm run client-build && npm run server-build"
+  },
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GNyoufun/IT-101.git"
+  },
+  "homepage": "https://github.com/GNyoufun/IT-101#readme"
+}
