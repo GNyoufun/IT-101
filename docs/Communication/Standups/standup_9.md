@@ -10,7 +10,7 @@ nav_order: 9
  Objective:	Focus on intergration and expend API design 
 
 
-| __Date:__         | 22/09/22      | __Location:__     | Zoom      |
+| __Date:__         | 22/09/22      | __Location:__     | Room 131      |
 |:------------------|:--------------|:------------------|:--------------|
 | __Time:__         | 2:15PM        | __Meeting Type:__ | StandUp       |
 | __Timekeeper:__   | Ishaann       | __Note Taker:__   | Brendan       |
