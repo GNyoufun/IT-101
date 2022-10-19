@@ -1,4 +1,7 @@
-const API_ENDPOINT = "http://localhost:4000"
+var API_ENDPOINT = ""
+if (process.env.NODE_ENV === "development") {
+  API_ENDPOINT = "http://localhost:4000"
+}
 
 export async function GetLoginResponse(username, password) {
   try {
