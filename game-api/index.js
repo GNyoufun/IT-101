@@ -6,9 +6,10 @@ const cors = require('cors');
 
 // App setup
 const app = express();
+app.use(express.static(path.resolve(__dirname, '../game-101/build')));
+app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, '../game-101/build/index.html')); });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '../game-101/build')));
 app.use(cors());
 
 // User requests
