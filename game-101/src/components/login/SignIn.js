@@ -2,24 +2,16 @@ import * as React from "react";
 
 import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 async function sendSignIn(formData) {
   // Clear user_token, user_id, and user_name from sessionStorage
   sessionStorage.clear();
-  
+
   // Make the send data into a json object
   var sendData = {
     username: formData.get("username"),
-    password: formData.get("password")
+    password: formData.get("password"),
   };
 
   // Store whether user wishes to be remembered
@@ -37,7 +29,7 @@ async function sendSignIn(formData) {
     sessionStorage.setItem("user_token", responseData.Token);
     sessionStorage.setItem("user_name", responseData.UserName);
     console.log("User '" + responseData.UserName + "' logged in.");
-    
+
     // Login succeeded, redirect to the home page
     // TODO: Use a React Router redirect
     window.location.href = "/";
@@ -102,29 +94,13 @@ export default function SignIn() {
         autoComplete="current-password"
       />
 
-      <Grid
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ my: 1 }}
-      >
-        <Grid item xs>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            name="remember"
-            id="remember"
-          />
-        </Grid>
-      </Grid>
-
       <Grid container sx={{ justifyContent: "center" }}>
         <Grid item>
           <Button
             type="submit"
             variant="contained"
             size="large"
-            sx={{ my: 3, px: 4, borderRadius: "16px" }}
+            sx={{ my: 4, px: 4, borderRadius: "16px" }}
           >
             Sign In
           </Button>
