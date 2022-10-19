@@ -1,77 +1,61 @@
 import React, { useState, useEffect } from "react";
-import { Box, CircularProgress, Container, Grid, Stack } from "@mui/material";
+import {  Container, Stack } from "@mui/material";
+import Loading from "../apiRequest/DataStorage";
 
 import { GameList, SearchBar } from "./";
 import { AddNewButton } from "../../style/buttonStyle";
-import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 import { GetAllGames } from "../apiRequest/DataStorage";
 
 import GAMES from "../../_mock/games";
 
-//var GAMES = retrieveGames();
 
 /* router: /history
  * Display all the games with Name and Picture
  */
 export default function GameHistoryList() {
+  const [currentGames, setAllGames] = useState(GAMES);
   const [loading, setLoading] = useState(true);
 
-  function convertResponseData(responseData) {
-    responseData = responseData[0].Games;
-    var g = [];
-    for (var i = 0; i < responseData.length; i++) {
-      g.push({
-        id: responseData[i].id || i,
-        name: responseData[i].GameTitle || "No Title",
-        type: responseData[i].GameType || "No Type",
-        cover: responseData[i].Image || "No Cover",
-      });
-    }
-    setLoading(false);
-    console.log(g);
-  }
-
   async function retrieveGames() {
-    var response = await GetAuthorizedResponse("/users/{user_id}/games", "GET");
-    if (response.status === 200) {
-      var responseData = await response.json();
-      return convertResponseData(responseData);
-    }
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    // retrive data
-    retrieveGames();
-    // load for 2 sec
-    setTimeout(() => {
+    GetAllGames().then((gameData) => {
+      setAllGames(gameData);
       setLoading(false);
-    }, 2000);
-  }, []);
+    });
+  }
+  retrieveGames();
+
+  //const [loading, setLoading] = useState(true);
+
+  // function convertResponseData(responseData) {
+  //   responseData = responseData[0].Games;
+  //   var g = [];
+  //   for (var i = 0; i < responseData.length; i++) {
+  //     g.push({
+  //       id: responseData[i].id || i,
+  //       name: responseData[i].GameTitle || "No Title",
+  //       type: responseData[i].GameType || "No Type",
+  //       cover: responseData[i].Image || "No Cover",
+  //     });
+  //   }
+  //   setLoading(false);
+  //   console.log(g);
+  // }
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   // retrive data
+  //   retrieveGames();
+  //   // load for 2 sec
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  // }, []);
 
   return (
     <Container>
-      {loading ? (
-        <Grid
-          container
-          justifyContent="center"
-          alignContent="center"
-          alignItems="center"
-          minHeight="100vh"
-        >
-          <Box
-            display="flex"
-            sx={{
-              alignContent: "center",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        </Grid>
-      ) : (
+      {loading ?
+      Loading() : (
         <div>
           <Stack
             direction="row"
@@ -90,7 +74,7 @@ export default function GameHistoryList() {
             <GameList games={GAMES} />
           </Container>
         </div>
-      )}
+        )}
     </Container>
   );
 }

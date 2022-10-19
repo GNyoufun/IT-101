@@ -24,13 +24,19 @@ export async function GetLoginResponse(username, password) {
 
 export async function GetAuthorizedResponse(location, httpMethod, sendData) {
   //console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
-  // TODO: Redirect back to login
+  // Check that the user is logged in
+  if (!sessionStorage.getItem("user_token")) {
+    window.location.href = "/login";
+  }
+
   let user_id = sessionStorage.getItem("user_id");
   let user_token = sessionStorage.getItem("user_token");
   
 
   // String replace the User ID
   location = location.replace("{user_id}", user_id);
+
+  console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
 
   try {
     // Fetch the result and only attach the body if the data is not null

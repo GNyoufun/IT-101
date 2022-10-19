@@ -111,11 +111,15 @@ module.exports = function (app) {
                 Rating: req.body.rating, // Parse the Rating
                 comments: req.body.comments
             };
+
+            // Insert the raid and get the documents inserted
             const result = await insertCollection(review, [raidReview]);
+            
             if (result.length === 0) {
                 // server error in insertion
                 res.sendStatus(500);
-                console.log('Failed POST request /users/$s/reviews, 500', req.params.user_id);
+                console.log('Failed POST request /users/%s/reviews, 500', req.params.user_id);
+                return;
             } else {
                 // success
                 if (result.length > 1) {
@@ -128,7 +132,7 @@ module.exports = function (app) {
             // invalid (not found) user id
             res.sendStatus(404);
             console.error(err);
-            console.log('Failed POST request /users/$s/reviews, 404', req.params.user_id);
+            console.log('Failed POST request /users/%s/reviews, 404', req.params.user_id);
         }
     });
 

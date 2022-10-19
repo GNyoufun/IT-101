@@ -4,7 +4,7 @@ import { Grid, Rating, Typography } from "@mui/material";
 
 export default function SelectRating(props) {
   const handleChange = (e, newValue) => {
-    props.setInputs({ ...props.inputs, enjoyment: Number(newValue * 2) });
+    props.setInputs({ ...props.inputs, rating: Number(newValue * 2) });
   };
 
   return (

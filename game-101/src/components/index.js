@@ -3,6 +3,7 @@ import AddNew from "./addNew/addNew";
 import AddGameForm from "./addNewGame/AddGameForm";
 
 import AddRecordForm from "./addNewRecord/AddRecordForm";
+import EditRecordForm from "./addNewRecord/EditRecordForm";
 
 import DashboardContent from "./dashboard/DashboardContent";
 
@@ -21,6 +22,7 @@ export {
   AddGameForm,
   AddRecordForm,
   DashboardContent,
+  EditRecordForm,
   GameHistoryList,
   GameHistoryTable,
   SignIn,

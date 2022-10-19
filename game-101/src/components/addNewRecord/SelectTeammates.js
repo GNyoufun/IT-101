@@ -8,18 +8,18 @@ export default function SelectTeammates(props) {
     // loop for each teammate i
     for (let i = 0; i < newValues.length; i += 1) {
       var id_n_level = newValues[i].replace("lv.", "").split(" ");
-      formatValue[i] = { in_game_id: id_n_level[1], level: id_n_level[0] };
+      formatValue[i] = { InGameID: id_n_level[1], Level: id_n_level[0] };
     }
     props.setInputs({ ...props.inputs, team: formatValue});
   };
 
 
   const teammates = [
-    { in_game_id: "Brendan", level: 3 },
-    { in_game_id: "Ella", level: 3 },
-    { in_game_id: "Ishaann", level: 3 },
-    { in_game_id: "Jessica", level: 3 },
-    { in_game_id: "Patrick", level: 3 },
+    { InGameID: "Brendan", Level: 3 },
+    { InGameID: "Ella", Level: 3 },
+    { InGameID: "Ishaann", Level: 3 },
+    { InGameID: "Jessica", Level: 3 },
+    { InGameID: "Patrick", Level: 3 },
   ];
 
   return (
@@ -29,7 +29,7 @@ export default function SelectTeammates(props) {
       name="team"
       //freeSolo
       options={teammates.map(
-        (option) => "lv." + option.level + " " + option.in_game_id
+        (option) => "lv." + option.Level + " " + option.InGameID
       )}
       onChange={handleChange}
       renderTags={(value, getTagProps) =>

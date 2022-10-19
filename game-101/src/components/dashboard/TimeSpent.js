@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Cell, PieChart, Pie, ResponsiveContainer, Sector } from "recharts";
+import { GetDashboardContent } from "../apiRequest/DataStorage";
 
 import Title from "./Title";
 
@@ -40,12 +41,30 @@ const renderActiveShape = (props) => {
 export default function MostWon() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  const data = [
-    { name: "LOL", value: 5 },
-    { name: "FFXIV", value: 40 },
-    { name: "Overwatch", value: 25 },
-    { name: "Minecraft", value: 30 },
-  ];
+  // Set the data
+  const [data, setData] = React.useState([]);
+
+  
+  async function retrieveTimeSpentEach() {
+    GetDashboardContent().then((dashboardContent) => {
+      // All the data is available, set it
+      //setData(dashboardContent.RecentRaids);
+      setData(dashboardContent.TimeSpentData);
+      console.log(dashboardContent.TimeSpentData);
+      console.log("Set data");
+    });
+  }
+  // Only run once
+  React.useEffect(() => {
+    retrieveTimeSpentEach();
+  }, []);
+
+  // const data = [
+  //   { name: "LOL", value: 5 },
+  //   { name: "FFXIV", value: 40 },
+  //   { name: "Overwatch", value: 25 },
+  //   { name: "Minecraft", value: 30 },
+  // ];
 
   const [activeIndex, setActiveIndex] = React.useState(0);
   const onPieEnter = React.useCallback(

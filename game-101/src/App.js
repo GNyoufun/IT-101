@@ -4,6 +4,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import {
   AddGameForm,
+  EditRecordForm,
   AddNew,
   AddRecordForm,
   ChangeDetails,
@@ -32,6 +33,10 @@ const App = () => {
         <Route
           path="/add-record"
           element={<MainPage page={<AddRecordForm />} />}
+        />
+        <Route
+          path="/edit-record" 
+          element={<MainPage page={<EditRecordForm/>} />}
         />
         <Route path="/add-game" element={<MainPage page={<AddGameForm />} />} />
         <Route path="/add-new" element={<MainPage page={<AddNew />} />} />

@@ -12,6 +12,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 
 import Title from "./Title";
+import { GetDashboardContent } from "../apiRequest/DataStorage";
 
 // Generate Sales Data
 function createData(time, amount) {
@@ -28,8 +29,27 @@ const data = [
   createData("03-17", 3.6),
 ];
 
+console.log(data);
+
 export default function TimeSpentEach() {
   const theme = useTheme();
+
+  // Set the data
+  const [data, setData] = React.useState([]);
+
+
+  async function retrieveTimeSpentEach() {
+    GetDashboardContent().then((dashboardContent) => {
+      // All the data is available, set it
+      //setData(dashboardContent.RecentRaids);
+      setData(dashboardContent.TimeSpentEachData);
+    });
+  }
+
+  // Only run once
+  React.useEffect(() => {
+    retrieveTimeSpentEach();
+  }, []);
 
   return (
     <React.Fragment>
