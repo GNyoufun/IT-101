@@ -9,6 +9,8 @@ const {
   updateUserToken,
   retrieveUserById,
   retrieveByTeammate,
+  retrieveLastN,
+
   
   extractGames,
   extractTeam,
@@ -188,3 +190,5 @@ const raid = [
 // gameWinRate("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
 // average("Overwatch", "63478fd9fb0388e56c026258", "Rating").then(data => console.log(data));
 // median("Overwatch", "63478fd9fb0388e56c026258", "Rating").then(data => console.log(data));
+
+retrieveLastN(10, "63478fd9fb0388e56c026258").then(data => console.log(data));
