@@ -217,8 +217,8 @@ async function retrieveByTeammate(GameTitle, id, teammate){
  * @param {String} options mongoose option/filter 
  * @returns a array of objects
  */
-async function retrieveLastN (n, finddocs, options) {
-  let docs = await retrieveCollection(review, finddocs, options);
+async function retrieveLastN (n, id) {
+  let docs = await retrieveCollection(review, {UserId: id}, options);
   
   docs.sort(function(a,b){
     return new Date(b.Date) - new Date(a.Date);
