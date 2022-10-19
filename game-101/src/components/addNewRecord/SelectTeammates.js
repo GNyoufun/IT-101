@@ -15,11 +15,11 @@ export default function SelectTeammates(props) {
 
 
   const teammates = [
-    { InGameID: "Brendan", Level: 3 },
-    { InGameID: "Ella", Level: 3 },
-    { InGameID: "Ishaann", Level: 3 },
-    { InGameID: "Jessica", Level: 3 },
-    { InGameID: "Patrick", Level: 3 },
+    { InGameID: "Brendan", Level: 20 },
+    { InGameID: "Ella", Level: 32 },
+    { InGameID: "Ishaann", Level: 34 },
+    { InGameID: "Jessica", Level: 48 },
+    { InGameID: "Patrick", Level: 59 },
   ];
 
   return (
@@ -27,7 +27,7 @@ export default function SelectTeammates(props) {
       multiple
       id="team"
       name="team"
-      //freeSolo
+      freeSolo
       options={teammates.map(
         (option) => "lv." + option.Level + " " + option.InGameID
       )}
@@ -38,7 +38,7 @@ export default function SelectTeammates(props) {
         ))
       }
       renderInput={(params) => (
-        <TextField name="team" {...params} label="Teammates" placeholder="Enter Name" />
+        <TextField name="team" {...params} label="Teammates" placeholder="Enter 'lv.__ username'" />
       )}
     />
   );
