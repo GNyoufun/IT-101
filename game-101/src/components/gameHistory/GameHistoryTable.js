@@ -7,156 +7,36 @@ import { Menu, MenuItem, Container, Stack } from "@mui/material";
 import { SearchBar } from "./";
 import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
-function createData(
-  GamingRecord,
-  Date,
-  Game,
-  Duration,
-  Difficulty,
-  Teammates,
-  Results,
-  Comments
-) {
-  const data = {
-    "id": GamingRecord,
-    "Date": Date,
-    "Game": Game,
-    "Duration": Duration,
-    "Difficulty": Difficulty,
-    "Results": Results,
-    "Teammates": Teammates,
-    "Comments": Comments,
-  };
-  return data;
-}
-
-const rows: GridRowsProp = [
-  createData(
-    1,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-    "Win",
-    "Really nice teammates, Really nice teammates, "
-  ),
-  createData(
-    2,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    3,
-    "2022/09/11",
-    "Overwatch",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    4,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-    "Win",
-    "Really nice teammates, Really nice teammates,"
-  ),
-  createData(
-    5,
-    "2022/09/11",
-    "Final Fantasy XIV",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    6,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    7,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-    "Win",
-    "Really nice teammates, Really nice teammates"
-  ),
-  createData(
-    8,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-  createData(
-    9,
-    "2022/09/11",
-    "League of Legends",
-    30,
-    5,
-    "12138, 12345",
-    "Win",
-    "Really nice teammates"
-  ),
-];
 
 const columns: GridColDef[] = [
   {
-    field: "Date",
+    field: "date",
     headerName: "Date",
     width: 100,
   },
   {
-    field: "Game",
-    headerName: "Game",
-    flex: 1,
-  },
-  {
-    field: "Duration",
+    field: "durations",
     headerName: "Duration",
     width: 80,
   },
   {
-    field: "Difficulty",
+    field: "difficulty",
     headerName: "Difficulty",
     width: 80,
   },
   {
-    field: "Results",
-    headerName: "Results",
+    field: "result",
+    headerName: "Result",
     width: 80,
   },
   {
-    field: "Teammates",
+    field: "team",
     headerName: "Teammates",
     width: 200,
   },
   {
-    field: "Comments",
-    headerName: "Comment",
+    field: "comments",
+    headerName: "Comments",
     width: 400,
   },
 ];
@@ -171,6 +51,7 @@ export default function GameHistoryTable() {
     details // GridCallbackDetails
   ) => {
     setData(params.row);
+
     setContextMenu(
       contextMenu === null
         ? {
@@ -182,6 +63,7 @@ export default function GameHistoryTable() {
   };
 
   const handleClose = () => {
+    console.log(data);
     setContextMenu(null);
   };
 
@@ -227,18 +109,148 @@ export default function GameHistoryTable() {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>
-          <Link
-            to={{
-              pathname: "/edit-record",
-              state: { message: 'testing' } 
-            }}
+        <MenuItem 
+          component = {Link}
+          onClick={handleClose}
+          to= "/edit-record"
+          state={data}
           >
             Edit
-          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>Delete</MenuItem>
       </Menu>
     </Container>
   );
 }
+
+
+
+/* dummy data */
+
+function createData(
+  raid_id,
+  date,
+  GameTitle,
+  durations,
+  difficulty,
+  rating,
+  team,
+  result,
+  comments
+) {
+  const data = {
+    "id": raid_id,
+    "date": date,
+    "GameTitle": GameTitle,
+    "durations": durations,
+    "difficulty": difficulty,
+    "rating": rating,
+    "result": result,
+    "team": team,
+    "comments": comments,
+  };
+  return data;
+}
+
+
+const rows: GridRowsProp = [
+  createData(
+    1,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    5,
+    8,
+    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
+    "Win",
+    "Really nice teammates, Really nice teammates, "
+  ),
+  createData(
+    2,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    5,
+    8,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+  createData(
+    3,
+    "2022/09/11",
+    "Overwatch",
+    30,
+    5,
+    8,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+  createData(
+    4,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    5,
+    8,
+    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
+    "Win",
+    "Really nice teammates, Really nice teammates,"
+  ),
+  createData(
+    5,
+    "2022/09/11",
+    "Final Fantasy XIV",
+    30,
+    9,
+    8,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+  createData(
+    6,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    6,
+    7,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+  createData(
+    7,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    5,
+    9,
+    "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
+    "Win",
+    "Really nice teammates, Really nice teammates"
+  ),
+  createData(
+    8,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    8,
+    9,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+  createData(
+    9,
+    "2022/09/11",
+    "League of Legends",
+    30,
+    5,
+    8,
+    "12138, 12345",
+    "Win",
+    "Really nice teammates"
+  ),
+];

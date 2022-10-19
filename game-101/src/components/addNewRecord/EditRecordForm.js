@@ -24,15 +24,14 @@ export default function EditRecordForm() {
   const data = useLocation().state;
 
   const defaultInput = {
-    // TODO: change everything, fetch from prop.
-    GameTitle: "", 
-    date: dayjs(),
-    durations: 30,
-    result: "Draw",
-    difficulty: 5,
-    rating: 6,
-    team: [],
-    comments: "",
+    GameTitle: data.GameTitle, 
+    date: dayjs(data.date, "YYYY/MM/DD"),
+    durations: data.durations,
+    result: data.result,
+    difficulty: data.difficulty,
+    rating: data.rating,
+    team: [],//TODO
+    comments: data.comments,
   };
 
   function title() {
@@ -43,8 +42,9 @@ export default function EditRecordForm() {
     )
   }
 
-  console.log("test:"+data);
-  console.log("d:"+defaultInput);
+  //testing
+  console.log("default:"+JSON.stringify(defaultInput));
+
   return (
     <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );

@@ -47,7 +47,7 @@ export default function SelectGameName(props) {
         labelId="game"
         id="game"
         name="GameTitle"
-        label="Game Name"
+        label="Game"
         value={props.inputs.GameTitle}
         onChange={handleChange}
       >

@@ -1,5 +1,5 @@
 ---
-title: First Sprint 
+title: Second Sprint 
 parent: Retro
 grand_parent: Communication
 nav_order: 2
