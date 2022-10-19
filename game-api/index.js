@@ -8,7 +8,20 @@ const cors = require('cors');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '../game-101/build')));
+// app.use(express.static(path.resolve(__dirname, '../game-101/build')));
+if (process.env.NODE_ENV === 'production') {
+  // Exprees will serve up production assets
+  app.use(express.static(path.resolve(__dirname, '../game-101/build')));
+  // app.use(express.static('../game-101/build'));
+
+  // Express serve up index.html file if it doesn't recognize route
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'game-101', 'build', 'index.html'));
+  });
+}
+
+
 app.use(cors());
 
 // User requests
@@ -32,15 +45,6 @@ app.listen(app.get('port'), () => {
   console.log(`Express web app available at localhost: ${app.get('port')}`);
 });
 
-if (process.env.NODE_ENV === 'production') {
-  // Exprees will serve up production assets
-  app.use(express.static('game-101/build'));
 
-  // Express serve up index.html file if it doesn't recognize route
-  const path = require('path');
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'game-101', 'build', 'index.html'));
-  });
-}
 
 module.exports = app;
