@@ -27,14 +27,16 @@ async function retrieveCollection (collect, finddocs, options) {
  * @param  {[object]} docs a list of schemas to be inserted into collections
  * @example { header: value }
  */
-async function insertCollection (collect, reviews) {
-  collect.collection.insertMany(reviews, function (err) {
-    if (err) {
-      return console.error(err);
-    } else {
-      console.log('Multiple documents inserted to Collection');
-    }
-  });
+async function insertCollection (collect, docs) {
+  let inserted;
+  try {
+    inserted = await collect.collection.insertMany(docs);
+    console.log('Multiple documents inserted to Collection');
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+  return inserted.insertedIds;
 }
 
 /**
@@ -387,6 +389,7 @@ async function bestWinRate(id){
       durations.push(obj);
     }
   }
+
   return durations;
 }
 

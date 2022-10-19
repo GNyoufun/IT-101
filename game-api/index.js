@@ -23,6 +23,9 @@ require('./reviews.js')(app);
 // Teammates requests
 require('./teammates.js')(app);
 
+// Teammates requests
+require('./summaries.js')(app);
+
 // TCP connection
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), () => {

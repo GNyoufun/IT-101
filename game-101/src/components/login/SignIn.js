@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 
 async function sendSignIn(formData) {
+  // Clear user_token, user_id, and user_name from sessionStorage
+  sessionStorage.clear();
+  
   // Make the send data into a json object
   var sendData = {
     username: formData.get("username"),
@@ -46,6 +49,11 @@ async function sendSignIn(formData) {
 }
 
 export default function SignIn() {
+  // Clear session storage on page load (only once)
+  React.useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
   const handleSubmit = (event) => {
     // Prevent default behaviour
     event.preventDefault();
