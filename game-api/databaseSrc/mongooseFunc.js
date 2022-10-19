@@ -7,8 +7,9 @@ const precent = 100;
 
 /**
  * Provide the search query parameters to retrieve documents
- * @param  {model}  collect the collection model name 
- * @param  {object} finddocs a list of quaries
+ * @param {model}  collect the collection model name 
+ * @param {object} finddocs a list of quaries
+ * @param {String} options mongoose option/filter 
  * @example { header : matches }
  */
 async function retrieveCollection (collect, finddocs, options) {
@@ -209,6 +210,23 @@ async function retrieveByTeammate(GameTitle, id, teammate){
   return raidReview;
 }
 
+/**
+ * Get the last N value from the review model sorted by descending Date
+ * @param {Int} n the last N value to retrieve
+ * @param {object} finddocs a list of quaries
+ * @param {String} options mongoose option/filter 
+ * @returns a array of objects
+ */
+async function retrieveLastN (n, finddocs, options) {
+  let docs = await retrieveCollection(review, finddocs, options);
+  
+  docs.sort(function(a,b){
+    return new Date(b.Date) - new Date(a.Date);
+  });
+  
+  return docs.slice(0, n)
+}
+
 
 
 /**
@@ -371,11 +389,12 @@ async function bestWinRate(id){
     if ((title =
               durations.findIndex(obj => obj.Title === gameTitle)) !== -1) {
         durations[title]["totalTime"] += duration;
-        durations[title][day] = duration;
+        durations[title][day] += duration;
     } else {
       let obj = {
         Title: gameTitle,
         totalTime: duration,
+        day0: 0,
         day1: 0,
         day2: 0,
         day3: 0,
@@ -607,6 +626,7 @@ module.exports = {
   updateUserToken,
   retrieveUserById,
   retrieveByTeammate,
+  retrieveLastN,
   
   extractGames,
   extractTeam,
