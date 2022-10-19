@@ -40,3 +40,4 @@ For example, [Postman](https://www.postman.com/) is used to test the backend api
 ## Deployment
 
 The application will be deployed to [Heroku](https://www.heroku.com/) through a GitHub Actions pipeline.
+The current deployment can be found [here](https://game-101-heroku.herokuapp.com/). 
