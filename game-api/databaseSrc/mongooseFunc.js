@@ -213,12 +213,11 @@ async function retrieveByTeammate(GameTitle, id, teammate){
 /**
  * Get the last N value from the review model sorted by descending Date
  * @param {Int} n the last N value to retrieve
- * @param {object} finddocs a list of quaries
- * @param {String} options mongoose option/filter 
+ * @param {objectId} id The user Id registered in the database 
  * @returns a array of objects
  */
 async function retrieveLastN (n, id) {
-  let docs = await retrieveCollection(review, {UserId: id}, options);
+  let docs = await retrieveCollection(review, {UserId: id});
   
   docs.sort(function(a,b){
     return new Date(b.Date) - new Date(a.Date);
