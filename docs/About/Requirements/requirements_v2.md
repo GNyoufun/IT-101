@@ -22,14 +22,12 @@ nav_order: 2
 ## Should have requirements:
 - Specific records related to games
     - Game achievements
-    - Game items
     - Game statistics
     - Game raids
         - Team member review 
         - Raid Duration 
         - Difficulty 
         - Enhancement 
-    - Game friends
 - Non functional requirements
     - Ease of use
     - Fast/efficient
@@ -47,3 +45,5 @@ nav_order: 2
 
 ## Removed Requirements from preivous version:
 - <mark style="background-color: Red"> Custom category records </mark>
+- <mark style="background-color: Red"> Game items </mark>
+- <mark style="background-color: Red"> Game friends </mark>
