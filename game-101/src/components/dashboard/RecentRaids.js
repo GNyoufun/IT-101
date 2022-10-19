@@ -13,9 +13,9 @@ import Title from "./Title";
 import { GetDashboardContent } from "../apiRequest/DataStorage";
 
 // Generate Order Data
-function createData(id, date, name, game, outcome) {
-  return { id, date, name, game, outcome };
-}
+// function createData(id, date, name, game, outcome) {
+//   return { id, date, name, game, outcome };
+// }
 
 // const rows = [
 //   createData(0, "17 Mar, 2022", "C", "LOL", "Draw"),
@@ -35,10 +35,14 @@ export default function Orders() {
   async function retrieveRaids() {
     GetDashboardContent().then((dashboardContent) => {
       // All the data is available, set it
-      //setData(dashboardContent.RecentRaids);
+      setData(dashboardContent.RecentRaidsData);
     });
   }
-  retrieveRaids();
+
+  // Only run once
+  React.useEffect(() => {
+    retrieveRaids();
+  }, []);
 
   return (
     <React.Fragment>
@@ -47,7 +51,6 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
             <TableCell>Game</TableCell>
             <TableCell align="right">Outcome</TableCell>
           </TableRow>
@@ -56,7 +59,6 @@ export default function Orders() {
           {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
               <TableCell>{row.game}</TableCell>
               <TableCell align="right">{row.outcome}</TableCell>
             </TableRow>

@@ -14,16 +14,22 @@ import GAMES from "../../_mock/games";
  * Display all the games with Name and Picture
  */
 export default function GameHistoryList() {
-  const [currentGames, setAllGames] = useState(GAMES);
+  const [gameList, setAllGames] = useState({});
   const [loading, setLoading] = useState(true);
 
   async function retrieveGames() {
     GetAllGames().then((gameData) => {
+      // Use the gameData to set the state of the gameList
       setAllGames(gameData);
       setLoading(false);
     });
   }
-  retrieveGames();
+
+
+  // Retrieve all games when the page is loaded
+  useEffect(() => {
+    retrieveGames();
+  }, []);
 
   //const [loading, setLoading] = useState(true);
 

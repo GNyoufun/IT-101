@@ -8,6 +8,7 @@ const {
     retrieveUserById,
     bestWinRate,
     gameWinRate,
+    retrieveLastN,
     totalTimeByDay,
     totalTime,
 } = require('./databaseSrc/mongooseFunc.js');
@@ -25,19 +26,20 @@ module.exports = function (app) {
     app.get('/users/:user_id/summary', async (req, res, next) => {
         console.log('Starting GET request /users/%s/summary', req.params.user_id);
         try {
+            // Convert the user ID to an object ID
             const id = ObjectId(req.params.user_id);
-            // TODO: Construct a summary with a few different results from different database functions
+
+            // Construct a summary for the user's dashboard
             var result = {}; //await retrieveCollection(userid, { _id: id }, { UserName: 1 });
-            var promiseRecentRaids = bestWinRate(id);
+            var promiseRecentRaids = retrieveLastN(5, id);
             var promiseMostWon = bestWinRate(id);
             var promiseTimeSpent = totalTime(id);
             var promiseTimeSpentEach = totalTimeByDay(id);
 
-            console.log(result);
-
             // TODO: Check data return validity
             promiseRecentRaids.then(function (value) {
                 result.RecentRaids = value;
+                console.log("RecentRaids: " + value);
             });
             promiseMostWon.then(function (value) {
                 result.MostWon = value;

@@ -223,7 +223,7 @@ async function retrieveLastN (n, id) {
     return new Date(b.Date) - new Date(a.Date);
   });
   
-  return docs.slice(0, n)
+  return docs.slice(0, n);
 }
 
 
