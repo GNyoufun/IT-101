@@ -35,3 +35,5 @@ async function getImage(game, random = false){
   }
   return images ;
 }
+
+module.exports = getImage;
