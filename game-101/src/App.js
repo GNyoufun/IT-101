@@ -35,7 +35,7 @@ const App = () => {
           element={<MainPage page={<AddRecordForm />} />}
         />
         <Route
-          path="/edit-record"
+          path="/edit-record" 
           element={<MainPage page={<EditRecordForm/>} />}
         />
         <Route path="/add-game" element={<MainPage page={<AddGameForm />} />} />

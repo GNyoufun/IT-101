@@ -43,8 +43,9 @@ export default function EditRecordForm() {
     )
   }
 
-  console.log("test:"+data);
-  console.log("d:"+defaultInput);
+  //testing
+  console.log("test:"+JSON.stringify(data));
+
   return (
     <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );
