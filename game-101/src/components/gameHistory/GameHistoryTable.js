@@ -10,38 +10,33 @@ import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
 const columns: GridColDef[] = [
   {
-    field: "Date",
+    field: "date",
     headerName: "Date",
     width: 100,
   },
   {
-    field: "Game",
-    headerName: "Game",
-    flex: 1,
-  },
-  {
-    field: "Duration",
+    field: "durations",
     headerName: "Duration",
     width: 80,
   },
   {
-    field: "Difficulty",
+    field: "difficulty",
     headerName: "Difficulty",
     width: 80,
   },
   {
-    field: "Results",
-    headerName: "Results",
+    field: "result",
+    headerName: "Result",
     width: 80,
   },
   {
-    field: "Teammates",
+    field: "team",
     headerName: "Teammates",
     width: 200,
   },
   {
-    field: "Comments",
-    headerName: "Comment",
+    field: "comments",
+    headerName: "Comments",
     width: 400,
   },
 ];
@@ -118,7 +113,7 @@ export default function GameHistoryTable() {
           component = {Link}
           onClick={handleClose}
           to= "/edit-record"
-          state={{data}}
+          state={data}
           >
             Edit
         </MenuItem>
@@ -133,27 +128,30 @@ export default function GameHistoryTable() {
 /* dummy data */
 
 function createData(
-  GamingRecord,
-  Date,
-  Game,
-  Duration,
-  Difficulty,
-  Teammates,
-  Results,
-  Comments
+  raid_id,
+  date,
+  GameTitle,
+  durations,
+  difficulty,
+  rating,
+  team,
+  result,
+  comments
 ) {
   const data = {
-    "id": GamingRecord,
-    "Date": Date,
-    "Game": Game,
-    "Duration": Duration,
-    "Difficulty": Difficulty,
-    "Results": Results,
-    "Teammates": Teammates,
-    "Comments": Comments,
+    "id": raid_id,
+    "date": date,
+    "GameTitle": GameTitle,
+    "durations": durations,
+    "difficulty": difficulty,
+    "rating": rating,
+    "result": result,
+    "team": team,
+    "comments": comments,
   };
   return data;
 }
+
 
 const rows: GridRowsProp = [
   createData(
@@ -162,6 +160,7 @@ const rows: GridRowsProp = [
     "League of Legends",
     30,
     5,
+    8,
     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
     "Win",
     "Really nice teammates, Really nice teammates, "
@@ -172,6 +171,7 @@ const rows: GridRowsProp = [
     "League of Legends",
     30,
     5,
+    8,
     "12138, 12345",
     "Win",
     "Really nice teammates"
@@ -182,6 +182,7 @@ const rows: GridRowsProp = [
     "Overwatch",
     30,
     5,
+    8,
     "12138, 12345",
     "Win",
     "Really nice teammates"
@@ -192,6 +193,7 @@ const rows: GridRowsProp = [
     "League of Legends",
     30,
     5,
+    8,
     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
     "Win",
     "Really nice teammates, Really nice teammates,"
@@ -201,7 +203,8 @@ const rows: GridRowsProp = [
     "2022/09/11",
     "Final Fantasy XIV",
     30,
-    5,
+    9,
+    8,
     "12138, 12345",
     "Win",
     "Really nice teammates"
@@ -211,7 +214,8 @@ const rows: GridRowsProp = [
     "2022/09/11",
     "League of Legends",
     30,
-    5,
+    6,
+    7,
     "12138, 12345",
     "Win",
     "Really nice teammates"
@@ -222,6 +226,7 @@ const rows: GridRowsProp = [
     "League of Legends",
     30,
     5,
+    9,
     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
     "Win",
     "Really nice teammates, Really nice teammates"
@@ -231,7 +236,8 @@ const rows: GridRowsProp = [
     "2022/09/11",
     "League of Legends",
     30,
-    5,
+    8,
+    9,
     "12138, 12345",
     "Win",
     "Really nice teammates"
@@ -242,6 +248,7 @@ const rows: GridRowsProp = [
     "League of Legends",
     30,
     5,
+    8,
     "12138, 12345",
     "Win",
     "Really nice teammates"
