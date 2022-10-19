@@ -7,7 +7,6 @@ const cors = require('cors');
 // App setup
 const app = express();
 app.use(express.static(path.resolve(__dirname, '../game-101/build')));
-app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, '../game-101/build/index.html')); });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -28,6 +27,7 @@ require('./teammates.js')(app);
 require('./summaries.js')(app);
 
 // TCP connection
+app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, '../game-101/build/index.html')); });
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), () => {
   console.log(`Express web app available at localhost: ${app.get('port')}`);
