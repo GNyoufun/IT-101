@@ -20,9 +20,9 @@ module.exports = function (app) {
     app.get('/users/:user_id/games', async (req, res, next) => {
         console.log('Starting GET request /users/%s/games', req.params.user_id);
         try {
-            console.log('id: %s', req.params.user_id);
+            //console.log('id: %s', req.params.user_id);
             const id = ObjectId(req.params.user_id);
-            console.log('id: %s', id);
+            //console.log('id: %s', id);
             const result = await retrieveCollection(userid, { _id: id }, { _id: 0, Games: 1 });
             if (result.length === 0) {
                 // not found user id
@@ -59,7 +59,7 @@ module.exports = function (app) {
             'Games.GameTitle': req.body.GameTitle,
             'Games.GameType': req.body.GameType
         };
-        console.log('query: %s', query);
+        //console.log('query: %s', query);
         const invalid = Boolean(
             req.body.GameTitle === undefined ||
             req.body.GameTitle === undefined ||
@@ -118,23 +118,23 @@ module.exports = function (app) {
     app.get('/users/:user_id/games/:game', async (req, res, next) => {
         console.log('Starting GET request /users/%s/games/%s', req.params.user_id, req.params.game);
         try {
-        const id = ObjectId(req.params.user_id);
-        const result = await retrieveCollection(userid, { _id: id, 'Games.GameTitle': req.params.game }, { _id: 0, Games: 1 });
-        if (result.length === 0) {
-            // not found user id
-            res.sendStatus(404);
-            console.log('Failed GET request /users/%s/games/%s, 404', req.params.user_id, req.params.game);
-        } else {
-            // success
-            res.status(200);
-            res.json(result[0].Games.find(x => x.GameTitle === req.params.game));
-            console.log('Successful GET request /users/%s/games/%s', req.params.user_id, req.params.game);
-        }
+            const id = ObjectId(req.params.user_id);
+            const result = await retrieveCollection(userid, { _id: id, 'Games.GameTitle': req.params.game }, { _id: 0, Games: 1 });
+            if (result.length === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed GET request /users/%s/games/%s, 404', req.params.user_id, req.params.game);
+            } else {
+                // success
+                res.status(200);
+                res.json(result[0].Games.find(x => x.GameTitle === req.params.game));
+                console.log('Successful GET request /users/%s/games/%s', req.params.user_id, req.params.game);
+            }
         } catch (err) {
-        // invalid (not found) user id
-        res.sendStatus(404);
-        console.error(err);
-        console.log('Failed GET request /users/%s/games/%s, 404', req.params.user_id, req.params.game);
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/games/%s, 404', req.params.user_id, req.params.game);
         }
     });
     
