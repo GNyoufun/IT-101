@@ -53,13 +53,18 @@ export async function GetAuthorizedResponse(location, httpMethod, sendData) {
       },
       body: sendData
     });
+    
     if (!response.ok) {
+      console.log(response.status);
       const message = `An error has occured: ${response.status}`;
       throw new Error(message);
     }
     return response;
   }
   catch (error) {
+    if (error.message.includes("401")) {
+      window.location.href = "/login";
+    }
     console.log(error);
     return error;
   }

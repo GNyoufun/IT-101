@@ -6,9 +6,6 @@ const { GetAuthorizedResponse } = require("./AuthorizedRequest");
 
 export default function Loading()
 {
-    // // Allow the loading to be set to true or false from other components
-    //const [loading, setLoading] = useState(true);
-      
     return (
         <Grid
             container
@@ -41,7 +38,7 @@ let gameNamesData = undefined;
 function convertDashboardData(summaryResponse) {
     // Store the data for each component to send back in a an object
     var MostWonData = {};
-    var RecentRaidsData = {};
+    var RecentRaidsData = [];
     var TimeSpentData = [];
     var TimeSpentEachData = [];
 
@@ -79,9 +76,21 @@ function convertDashboardData(summaryResponse) {
         TimeSpentEachData.push({time: day, "amount": value/60});
         //TimeSpentEachData.push({"time": key, "amount": value/60});
     }
+    
     // Reverse the array so that the most recent days are first
     TimeSpentEachData.reverse();
-    console.log(TimeSpentEachData);
+
+    // ID, name, date, game, outcome
+    for (let i = 0; i < summaryResponse.RecentRaids.length; i++) {
+        var raid = summaryResponse.RecentRaids[i];
+        var id = raid._id;
+        var game = raid.Title;
+        // Get the date as a DD/MM/YYYY string
+        var raidDate = new Date(raid.Date);
+        var dateStr = raidDate.toLocaleDateString("en-GB");
+        var outcome = raid.Result;
+        RecentRaidsData.push({id: id, date: dateStr, game: game, outcome: outcome});
+    }
 
     return {
         MostWonData: MostWonData,
