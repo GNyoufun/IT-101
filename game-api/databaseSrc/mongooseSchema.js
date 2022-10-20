@@ -16,7 +16,8 @@ mongoose.connection.once('open', () => {
  */
 const GameTitleSchema = new Schema({
   GameTitle: String,
-  GameType: String
+  GameType: String,
+  GameImageUrl: String
 });
 
 /**
