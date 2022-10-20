@@ -29,8 +29,7 @@ export default function GameCard(props) {
           sx={{
             pt: "100%",
             position: "relative",
-            height: "320px",
-            minWidth: "210px",
+            height: "300px",
           }}
         >
           <GameImgStyle alt={name} src={cover} />

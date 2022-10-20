@@ -24,14 +24,14 @@ export default function GameList() {
   }, []);
 
   return (
-    <TableContainer sx={{ height: 600 }}>
+    <TableContainer sx={{ height: 580 }}>
       {/* Go to "GameCard.js" in "components/gameHistory"
        *  A card contains Game's name and picture
        */}
       {loading ? (Loading()) : 
       (<Grid container spacing={3}>
         {games.map((game, index) => (
-          <Grid key={index} item xs={12} sm={6} md={3}>
+          <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
             <GameCard game={game} />
           </Grid>
         ))}
