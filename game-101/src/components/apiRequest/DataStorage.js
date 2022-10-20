@@ -89,7 +89,8 @@ function convertDashboardData(summaryResponse) {
         var raidDate = new Date(raid.Date);
         var dateStr = raidDate.toLocaleDateString("en-GB");
         var outcome = raid.Result;
-        RecentRaidsData.push({id: id, date: dateStr, game: game, outcome: outcome});
+        var comment = raid.comments;
+        RecentRaidsData.push({id: id, date: dateStr, game: game, outcome: outcome, comments: comment});
     }
 
     return {

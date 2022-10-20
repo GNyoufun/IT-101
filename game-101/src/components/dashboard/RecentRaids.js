@@ -52,6 +52,7 @@ export default function Orders() {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Game</TableCell>
+            <TableCell>Comments</TableCell>
             <TableCell align="right">Outcome</TableCell>
           </TableRow>
         </TableHead>
@@ -60,6 +61,7 @@ export default function Orders() {
             <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.game}</TableCell>
+              <TableCell>{row.comments}</TableCell>
               <TableCell align="right">{row.outcome}</TableCell>
             </TableRow>
           ))}
