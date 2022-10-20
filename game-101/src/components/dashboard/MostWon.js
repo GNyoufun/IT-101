@@ -30,7 +30,7 @@ export default function MostWon() {
 
   return (
     <React.Fragment>
-      <Title>Most Won Game</Title>
+      <Title>Most Successful Game</Title>
       <Typography component="p" variant="h4">
         {game.mostWonGame}
       </Typography>

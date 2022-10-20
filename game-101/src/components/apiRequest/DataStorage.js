@@ -168,15 +168,16 @@ function convertGameData(gameResponse) {
       });
     }
     console.log(g);
+    return g;
 }
 
 export async function GetAllGames()
 {
     // Get the data if it is not already loaded
-    if (gameData === undefined && gamePromise == null) {
+    if (gameData === undefined) {
         // Get all games
-        gamePromise =  GetAuthorizedResponse("/users/{user_id}/games", "GET");
-        var response = await gamePromise;
+        var promise =  GetAuthorizedResponse("/users/{user_id}/games", "GET");
+        var response = await promise;
         if (response.status === 200) {
             var responseData = await response.json();
             console.log(responseData);

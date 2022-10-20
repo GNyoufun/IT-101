@@ -17,7 +17,10 @@ GameCard.propTypes = {
 };
 
 export default function GameCard({ game }) {
-  const { name, cover } = game;
+  const name = game.name;
+  console.log(name);
+  const cover = null; //game.Image;
+  //const { name, cover } = game;
 
   return (
     <Card>
@@ -30,7 +33,7 @@ export default function GameCard({ game }) {
       >
         {/* Game's picture */}
         <Box sx={{ pt: "100%", position: "relative", height: "320px" }}>
-          <GameImgStyle alt={name} src={cover} />
+          {/*<GameImgStyle alt={name} src={cover} />*/}
         </Box>
 
         {/* Game's name */}

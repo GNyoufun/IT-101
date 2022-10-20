@@ -7,29 +7,29 @@ import { AddNewButton } from "../../style/buttonStyle";
 
 import { GetAllGames } from "../apiRequest/DataStorage";
 
-import GAMES from "../../_mock/games";
+//import GAMES from "../../_mock/games";
 
 
 /* router: /history
  * Display all the games with Name and Picture
  */
 export default function GameHistoryList() {
-  const [gameList, setAllGames] = useState({});
-  const [loading, setLoading] = useState(true);
+  //const [gameList, setAllGames] = useState({});
+  //const [loading, setLoading] = useState(true);
 
-  async function retrieveGames() {
-    GetAllGames().then((gameData) => {
-      // Use the gameData to set the state of the gameList
-      setAllGames(gameData);
-      setLoading(false);
-    });
-  }
+  // async function retrieveGames() {
+  //   GetAllGames().then((gameData) => {
+  //     // Use the gameData to set the state of the gameList
+  //     setAllGames(gameData);
+  //     setLoading(false);
+  //   });
+  // }
 
 
-  // Retrieve all games when the page is loaded
-  useEffect(() => {
-    retrieveGames();
-  }, []);
+  // // Retrieve all games when the page is loaded
+  // useEffect(() => {
+  //   retrieveGames();
+  // }, []);
 
   //const [loading, setLoading] = useState(true);
 
@@ -60,8 +60,6 @@ export default function GameHistoryList() {
 
   return (
     <Container>
-      {loading ?
-      Loading() : (
         <div>
           <Stack
             direction="row"
@@ -77,10 +75,9 @@ export default function GameHistoryList() {
           </Stack>
 
           <Container>
-            <GameList games={GAMES} />
+            <GameList />
           </Container>
         </div>
-        )}
     </Container>
   );
 }

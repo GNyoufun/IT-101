@@ -76,7 +76,7 @@ export default function MostWon() {
 
   return (
     <React.Fragment>
-      <Title>Time Spent</Title>
+      <Title>7 Day Game Summary</Title>
       <ResponsiveContainer>
         <PieChart>
           <Pie

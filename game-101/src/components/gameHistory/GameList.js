@@ -3,24 +3,46 @@ import PropTypes from "prop-types";
 import { Grid, TableContainer } from "@mui/material";
 
 import { GameCard } from "./";
+import { useEffect, useState } from "react";
+import Loading, { GetAllGames } from "../apiRequest/DataStorage";
 
-GameList.propTypes = {
-  games: PropTypes.array.isRequired,
-};
+// GameList.propTypes = {
+//   games: PropTypes.array.isRequired,
+// };
 
-export default function GameList({ games }) {
+export default function GameList() {
+  const [games, setAllGames] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function retrieveGames() {
+    GetAllGames().then((gameData) => {
+      console.log(gameData);
+      // Use the gameData to set the state of the gameList
+      setAllGames(gameData);
+      setLoading(false);
+    });
+  }
+
+
+  // Retrieve all games when the page is loaded
+  useEffect(() => {
+    retrieveGames();
+  }, []);
+
   return (
     <TableContainer sx={{ height: 600 }}>
       {/* Go to "GameCard.js" in "components/gameHistory"
        *  A card contains Game's name and picture
        */}
-      <Grid container spacing={3}>
+      {loading ? (Loading()) : 
+      (<Grid container spacing={3}>
         {games.map((game) => (
-          <Grid key={game.id} item xs={12} sm={6} md={3}>
+          <Grid key={Math.random()} item xs={12} sm={6} md={3}>
             <GameCard game={game} />
           </Grid>
         ))}
       </Grid>
+      )}
     </TableContainer>
   );
 }

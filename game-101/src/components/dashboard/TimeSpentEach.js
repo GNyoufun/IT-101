@@ -53,7 +53,7 @@ export default function TimeSpentEach() {
 
   return (
     <React.Fragment>
-      <Title>Time Spent on Raids for past 7 days</Title>
+      <Title>7 Day Playtime Summary</Title>
       <ResponsiveContainer>
         <BarChart
           data={data}
