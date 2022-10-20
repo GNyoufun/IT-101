@@ -1,5 +1,7 @@
+const pathResolve = require('node:path');
+require('dotenv').config({ path: pathResolve.resolve(__dirname, '../../.env') });
 const SGDB = require('steamgriddb');
-const client = new SGDB('8a1575f2ffa4e3cfab8e57014bba8c3c');
+const client = new SGDB(GAMEGRIDDB_URI);
 
 async function fetchImageList(game) {
   let response;
@@ -17,28 +19,20 @@ async function fetchImageList(game) {
   }
 
 async function getImage(game, random = false){
-  let images = [];
+  let imageList = await fetchImageList(game);
+  let image = imageList[0];
 
-  for (let i = 0; i < game.length; i++) {
-    let imageList = await fetchImageList(game[i]);
-    let image = imageList[0];
-
-    if (random) {
-      let len = imageList.length - 1;
-      let rand = Math.floor(Math.random() * len) + 1;
-      image = imageList[rand];
-    }
-
-    let url = image["url"];
-    let thumb = image["thumb"];
-    images.push({Game: game[i], url: url, thumb: thumb});
+  if (random) {
+    let len = imageList.length - 1;
+    let rand = Math.floor(Math.random() * len) + 1;
+    image = imageList[rand];
   }
-  return images ;
+
+  let url = image["url"];
+  let thumb = image["thumb"];
+  let images = {Game: game, url: url, thumb: thumb};
+
+  return images;
 }
-  
-gameList = ["Grand Theft Auto V", "Overwatch", "Final Fantasy XIV"]
-getImage(gameList)
-  .then(data => console.log(data));
 
-
-
+module.exports = getImage;
