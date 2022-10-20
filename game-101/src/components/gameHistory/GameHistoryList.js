@@ -7,8 +7,6 @@ import { AddNewButton } from "../../style/buttonStyle";
 
 import { GetAllGames } from "../apiRequest/DataStorage";
 
-//import GAMES from "../../_mock/games";
-
 /* router: /history
  * Display all the games with Name and Picture
  */
