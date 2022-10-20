@@ -1,14 +1,9 @@
-import PropTypes from "prop-types";
 
 import { Grid, TableContainer } from "@mui/material";
 
 import { GameCard } from "./";
 import { useEffect, useState } from "react";
 import Loading, { GetAllGames } from "../apiRequest/DataStorage";
-
-// GameList.propTypes = {
-//   games: PropTypes.array.isRequired,
-// };
 
 export default function GameList() {
   const [games, setAllGames] = useState([]);
@@ -35,8 +30,8 @@ export default function GameList() {
        */}
       {loading ? (Loading()) : 
       (<Grid container spacing={3}>
-        {games.map((game) => (
-          <Grid key={Math.random()} item xs={12} sm={6} md={3}>
+        {games.map((game, index) => (
+          <Grid key={index} item xs={12} sm={6} md={3}>
             <GameCard game={game} />
           </Grid>
         ))}

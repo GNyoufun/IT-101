@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { Link } from "react-router-dom";
 import { Box, Card, CardActionArea, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
