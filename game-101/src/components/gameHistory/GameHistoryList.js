@@ -53,7 +53,7 @@ export default function GameHistoryList() {
   }, []);
 
   return (
-    <div>
+    <Container>
       {loading ? (
         Loading()
       ) : (
@@ -75,6 +75,6 @@ export default function GameHistoryList() {
           </Container>
         </Container>
       )}
-    </div>
+    </Container>
   );
 }
