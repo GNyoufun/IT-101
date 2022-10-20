@@ -4,13 +4,7 @@ import { Link } from "react-router-dom";
 import { Box, Card, CardActionArea, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const GameImgStyle = styled("img")({
-  top: 0,
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  position: "absolute",
-});
+import getImage from "../apiRequest/steamGriddb";
 
 GameCard.propTypes = {
   game: PropTypes.object,
@@ -18,9 +12,15 @@ GameCard.propTypes = {
 
 export default function GameCard({ game }) {
   const name = game.name;
-  console.log(name);
-  const cover = null; //game.Image;
-  //const { name, cover } = game;
+  const cover = getImage(name);
+
+  const GameImgStyle = styled("img")({
+    top: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    position: "absolute",
+  });
 
   return (
     <Card>
@@ -33,7 +33,7 @@ export default function GameCard({ game }) {
       >
         {/* Game's picture */}
         <Box sx={{ pt: "100%", position: "relative", height: "320px" }}>
-          {/*<GameImgStyle alt={name} src={cover} />*/}
+          <GameImgStyle alt={name} src={cover} />
         </Box>
 
         {/* Game's name */}

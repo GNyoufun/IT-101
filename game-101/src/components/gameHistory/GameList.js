@@ -23,7 +23,6 @@ export default function GameList() {
     });
   }
 
-
   // Retrieve all games when the page is loaded
   useEffect(() => {
     retrieveGames();

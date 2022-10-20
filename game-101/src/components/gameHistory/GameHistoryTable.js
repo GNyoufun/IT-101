@@ -1,14 +1,14 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { Menu, MenuItem, Container, Stack } from "@mui/material";
 
 import { SearchBar } from "./";
 import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
-
-const columns: GridColDef[] = [
+const columns = [
   {
     field: "date",
     headerName: "Date",
@@ -44,14 +44,11 @@ const columns: GridColDef[] = [
 export default function GameHistoryTable() {
   const [contextMenu, setContextMenu] = React.useState(null);
   const [data, setData] = React.useState(null);
+  // get game title from url
+  const GameTitle = useLocation().search;
 
-  const handleEvent: GridEventListener<"rowClick"> = (
-    params, // GridRowParams
-    event,
-    details // GridCallbackDetails
-  ) => {
+  const handleEvent = (params, event, details) => {
     setData(params.row);
-
     setContextMenu(
       contextMenu === null
         ? {
@@ -70,21 +67,21 @@ export default function GameHistoryTable() {
   return (
     <Container>
       <Stack
-        direction='row'
-        alignItems='center'
-        justifyContent='space-between'
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
         px={4}
         py={4}
       >
         <BackButton
-          variant='text'
+          variant="text"
           startIcon={<ArrowBackIcon />}
-          href='/history'
+          href="/history"
         >
           Back
         </BackButton>
         <SearchBar />
-        <AddNewButton variant='contained' href='/add-record' disableRipple>
+        <AddNewButton variant="contained" href="/add-record" disableRipple>
           + New Record
         </AddNewButton>
       </Stack>
@@ -102,28 +99,26 @@ export default function GameHistoryTable() {
       <Menu
         open={contextMenu !== null}
         onClose={handleClose}
-        anchorReference='anchorPosition'
+        anchorReference="anchorPosition"
         anchorPosition={
           contextMenu !== null
             ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
             : undefined
         }
       >
-        <MenuItem 
-          component = {Link}
+        <MenuItem
+          component={Link}
           onClick={handleClose}
-          to= "/edit-record"
+          to="/edit-record"
           state={data}
-          >
-            Edit
+        >
+          Edit
         </MenuItem>
         <MenuItem onClick={handleClose}>Delete</MenuItem>
       </Menu>
     </Container>
   );
 }
-
-
 
 /* dummy data */
 
@@ -139,21 +134,20 @@ function createData(
   comments
 ) {
   const data = {
-    "id": raid_id,
-    "date": date,
-    "GameTitle": GameTitle,
-    "durations": durations,
-    "difficulty": difficulty,
-    "rating": rating,
-    "result": result,
-    "team": team,
-    "comments": comments,
+    id: raid_id,
+    date: date,
+    GameTitle: GameTitle,
+    durations: durations,
+    difficulty: difficulty,
+    rating: rating,
+    result: result,
+    team: team,
+    comments: comments,
   };
   return data;
 }
 
-
-const rows: GridRowsProp = [
+const rows = [
   createData(
     1,
     "2022/09/11",
