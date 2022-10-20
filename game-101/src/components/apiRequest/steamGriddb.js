@@ -27,12 +27,13 @@ async function getImage(game, random = false){
     let rand = Math.floor(Math.random() * len) + 1;
     image = imageList[rand];
   }
+  
+  // let url = image["url"];
+  // let thumb = image["thumb"];
+  // let images = {Game: game, url: url, thumb: thumb};
 
-  let url = image["url"];
-  let thumb = image["thumb"];
-  let images = {Game: game, url: url, thumb: thumb};
-
-  return images;
+  // return images;
+  return image[thumb];
 }
 
 module.exports = getImage;
