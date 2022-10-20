@@ -3,16 +3,11 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Box, Card, CardActionArea, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import defaultImage from "../../style/defaultGame.png"
 
-import getImage from "../apiRequest/steamGriddb";
-
-GameCard.propTypes = {
-  game: PropTypes.object,
-};
-
-export default function GameCard({ game }) {
-  const name = game.name;
-  const cover = getImage(name);
+export default function GameCard(props) {
+  const name = props.game.name;
+  const cover = defaultImage; // need to change
 
   const GameImgStyle = styled("img")({
     top: 0,
