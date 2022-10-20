@@ -815,6 +815,9 @@ components:
         GameType:
           type: string
           example: Open World
+        GameImageUrl:
+          type: string
+          example: https://exampleimage.com/exampleimage.jpg
     Teammate:
       type: object
       properties:
