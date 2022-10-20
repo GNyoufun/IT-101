@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import { AddNewGame, AddNewRecord } from "./";
 
@@ -10,17 +10,22 @@ import { AddNewGame, AddNewRecord } from "./";
  */
 export default function AddNew() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        flexGrow: 2,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <AddNewGame />
-      <AddNewRecord />
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid
+        container
+        spacing={6}
+        columns={14}
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+      >
+        <Grid item xs={5}>
+          <AddNewGame />
+        </Grid>
+        <Grid item xs={5}>
+          <AddNewRecord />
+        </Grid>
+      </Grid>
     </Box>
   );
 }
