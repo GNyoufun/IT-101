@@ -72,11 +72,7 @@ export default function SideBar() {
           <Grid container wrap="nowrap">
             <Avatar sx={{ width: 54, height: 54, ml: "4px", mr: 1 }}>UN</Avatar>
             <Box>
-              <Typography
-                variant="h5"
-                component="h6"
-                sx={{ mt: "6px", lineHeight: 1.1 }}
-              >
+              <Typography variant="h5" sx={{ mt: "10px", ml: "7px" }}>
                 {sessionStorage.getItem("user_name")}{" "}
                 {/* TODO: Load this differently?*/}
               </Typography>
