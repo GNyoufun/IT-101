@@ -3,7 +3,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MuiDrawer from "@mui/material/Drawer";
+import { styled } from "@mui/material/styles";
 import {
   Avatar,
   Box,
@@ -13,9 +15,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 
-import { LogoutButton, SideBarListItems } from "./";
+import { SideBarListItems } from "./";
 
 const drawerWidth = 240;
 
@@ -70,7 +71,9 @@ export default function SideBar() {
       <Grid container flexDirection="column" justifyContent="space-between">
         <Grid item>
           <Grid container wrap="nowrap">
-            <Avatar sx={{ width: 54, height: 54, ml: "4px", mr: 1 }}>UN</Avatar>
+            <Avatar sx={{ width: 54, height: 54, ml: "4px", mr: 1 }}>
+              {sessionStorage.getItem("user_name").charAt(0)}
+            </Avatar>
             <Box>
               <Typography variant="h5" sx={{ mt: "10px", ml: "7px" }}>
                 {sessionStorage.getItem("user_name")}{" "}
@@ -105,9 +108,14 @@ export default function SideBar() {
           </Box> */}
 
           {/* Logout button, after clicking it, direct to "/login" */}
-          <Box>
+          <Box sx={{ mb: 1 }}>
             <IconButton component={Link} to="/login">
-              <LogoutButton />
+              <LogoutIcon
+                sx={{
+                  width: "32px",
+                  height: "32px",
+                }}
+              />
             </IconButton>
           </Box>
         </Grid>

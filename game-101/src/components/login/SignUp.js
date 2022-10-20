@@ -62,6 +62,7 @@ export default function SignUp() {
       component="form"
       sx={{
         bgcolor: "background.paper",
+        mb: 2,
       }}
     >
       <Box sx={{ my: 2 }}>
