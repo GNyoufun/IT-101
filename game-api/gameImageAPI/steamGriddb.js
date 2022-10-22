@@ -1,7 +1,7 @@
 const pathResolve = require('node:path');
 require('dotenv').config({path: pathResolve.resolve(__dirname, '../../.env')});
 const SGDB = require('steamgriddb');
-const client = new SGDB(GAMEGRIDDB_URI);
+const client = new SGDB(process.env.GAMEGRIDDB_URI);
 
 async function fetchImageList(game) {
   let response;
