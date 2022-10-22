@@ -184,7 +184,7 @@ const raid = [
 //     }
 //   );
 
-// extractTeam("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
+// extractTeam("Minecraft", "63478fd9fb0388e56c026258").then(data => console.log(data));
 // extractGames("63478fd9fb0388e56c026258").then(data => console.log(data));
 // TeamWinRate("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));
 // gameWinRate("Overwatch", "63478fd9fb0388e56c026258").then(data => console.log(data));

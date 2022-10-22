@@ -169,6 +169,7 @@ async function extractGames(id){
  */
 async function extractTeam(GameTitle, id) {
   const games = await review.find({Title: GameTitle, UserId: id}).lean();
+  const uniqueIds = new Set();
   let teammate = [];
   
   for (let i = 0; i < games.length; i++) {
@@ -176,14 +177,23 @@ async function extractTeam(GameTitle, id) {
     teammate.push(...team);
   }
 
-  const uniqueTeammate = teammate.filter((value, index) => {
-    const _value = JSON.stringify(value);
-    return index === teammate.findIndex(obj => {
-      return JSON.stringify(obj) === _value;
+  teammate.sort(function(a, b) {          
+       if (a.InGameID === b.InGameID) {
+          return b.Level - a.Level;
+       }
+       return a.InGameID > b.InGameID ? 1 : -1;
     });
+  
+  const unique = teammate.filter(element => {
+    const isDuplicate = uniqueIds.has(element.InGameID);
+    uniqueIds.add(element.InGameID);
+    if (!isDuplicate) {
+      return true;
+    }
+    return false;
   });
   
-  return uniqueTeammate;
+  return unique;
 }
 
 /**
