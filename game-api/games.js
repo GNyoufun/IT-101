@@ -6,7 +6,7 @@ const {
 const {
     userid
 } = require('./databaseSrc/mongooseSchema.js');
-const getImage = require('./gameImageAPI/steamGriddb.js');
+// const getImage = require('./gameImageAPI/steamGriddb.js');
 /**
  * Game requests
  */
@@ -86,7 +86,8 @@ module.exports = function (app) {
             return;
         }
 
-        game[GameImageUrl] = getImage(game.GameTitle);
+        // game[GameImageUrl] = getImage(game.GameTitle);
+        game.GameImageUrl = "";
 
         // Try to update the collection
         const result = await updateCollection(userid, { _id: id }, { $push: { Games: game } });
