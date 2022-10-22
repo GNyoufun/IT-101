@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   Box,
   Card,
@@ -17,18 +15,6 @@ import { DeleteButton, SubmitButton } from "../../style/buttonStyle";
 
 /* router: /setting */
 export const ChangeDetails = (props) => {
-  const [values, setValues] = useState({
-    email: "address@email.com",
-    username: "Username",
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   return (
     <form autoComplete="off" noValidate {...props}>
       <Box
@@ -38,7 +24,6 @@ export const ChangeDetails = (props) => {
           height: "100vh",
           overflow: "auto",
         }}
-        /* onSubmit={handleSubmit} */
         onKeyPress={(e) => {
           e.key === "Enter" && e.preventDefault();
         }}
@@ -70,9 +55,8 @@ export const ChangeDetails = (props) => {
                         fullWidth
                         label="Username"
                         name="username"
-                        onChange={handleChange}
                         required
-                        value={values.username}
+                        value={sessionStorage.getItem("user_name")}
                         variant="outlined"
                       />
                     </Grid>
@@ -103,7 +87,6 @@ export const ChangeDetails = (props) => {
                         fullWidth
                         label="Current Password"
                         name="curPassword"
-                        onChange={handleChange}
                         required
                         variant="outlined"
                         margin="normal"
@@ -113,7 +96,6 @@ export const ChangeDetails = (props) => {
                         fullWidth
                         label="New Password"
                         name="newPassword"
-                        onChange={handleChange}
                         required
                         variant="outlined"
                         margin="normal"
@@ -123,7 +105,6 @@ export const ChangeDetails = (props) => {
                         fullWidth
                         label="Confirm Password"
                         name="confirmPassword"
-                        onChange={handleChange}
                         required
                         variant="outlined"
                         margin="normal"
