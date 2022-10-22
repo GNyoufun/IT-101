@@ -75,7 +75,8 @@ module.exports = function (app) {
         // add the new game
         const game = {
             GameTitle: req.body.GameTitle,
-            GameType: req.body.GameType
+            GameType: req.body.GameType,
+            GameImageUrl: ""
         };
 
         // Double check data is good
@@ -86,7 +87,8 @@ module.exports = function (app) {
             return;
         }
 
-        game[GameImageUrl] = getImage(game.GameTitle);
+        game.GameImageUrl = await getImage(game.GameTitle);
+        console.log(game);
 
         // Try to update the collection
         const result = await updateCollection(userid, { _id: id }, { $push: { Games: game } });

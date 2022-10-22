@@ -7,16 +7,17 @@ async function fetchImageList(game) {
   let response;
   let gameId;
 
-  try{
+  try {
     response = await client.searchGame(game);
-  }catch(err){
-    console.log(err);
+  } catch(err) {
+    console.error(err);
   }
   gameId = response[0]["id"];
+  console.log("found game: %s", gameId);
 
   imageList = await client.getGrids({type: 'game', id: gameId});
   return imageList;
-  }
+}
 
 async function getImage(game, random = false){
   let imageList = await fetchImageList(game);
@@ -28,12 +29,13 @@ async function getImage(game, random = false){
     image = imageList[rand];
   }
   
-  // let url = image["url"];
-  // let thumb = image["thumb"];
-  // let images = {Game: game, url: url, thumb: thumb};
+  if (image === undefined || image.thumb === undefined) {
+    console.warn("image search failure");
+    return "";
+  }
 
-  // return images;
-  return image[thumb];
+  console.log(image);
+  return image.thumb;
 }
 
 module.exports = getImage;
