@@ -32,7 +32,7 @@ async function sendSignIn(formData) {
 
     // Login succeeded, redirect to the home page
     // TODO: Use a React Router redirect
-    window.location.href = "/";
+    window.location.href = "/dashboard";
     return true;
   } else {
     console.log("Error signing in.");

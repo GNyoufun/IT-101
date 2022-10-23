@@ -109,7 +109,7 @@ export default function SideBar() {
 
           {/* Logout button, after clicking it, direct to "/login" */}
           <Box sx={{ mb: 1 }}>
-            <IconButton component={Link} to="/login">
+            <IconButton component={Link} to="/">
               <LogoutIcon
                 sx={{
                   width: "32px",

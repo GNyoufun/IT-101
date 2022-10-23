@@ -30,3 +30,4 @@ yarn-error.log*
 # vsCode
 .vscode
 game-101/package-lock.json
+dotenv

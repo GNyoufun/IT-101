@@ -20,8 +20,10 @@ const App = () => {
     <ThemeProvider theme={dTheme}>
       <CssBaseline />
       <Routes>
-        <Route path="/login" element={<SignInUp />} />
-        <Route path="/" element={<MainPage page={<DashboardContent />} />} />
+        <Route path="/" element={<SignInUp />} />
+        <Route 
+          path="/dashboard" 
+          element={<MainPage page={<DashboardContent />} />} />
         <Route
           path="/history"
           element={<MainPage page={<GameHistoryList />} />}
@@ -48,5 +50,6 @@ const App = () => {
     </ThemeProvider>
   );
 };
+
 
 export default App;

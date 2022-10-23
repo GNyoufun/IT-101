@@ -54,9 +54,9 @@ export default function SideBarListItems() {
       <Divider sx={{ mt: 2 }} />
       <List component="nav" aria-label="main">
         <ListItemButton
-          to={"/"}
-          selected={selectedRoute === "/"}
-          onClick={(e) => handleListItemClick(e, "/")}
+          to={"/dashboard"}
+          selected={selectedRoute === "/dashboard"}
+          onClick={(e) => handleListItemClick(e, "/dashboard")}
         >
           <ListItemIcon>
             <DashboardIcon />

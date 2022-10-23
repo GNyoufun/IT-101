@@ -13,7 +13,7 @@ async function sendNewReview(sendData) {
     // Review successfully added, redirect to the home page
     // TODO: Use a React Router redirect
     // TODO: Decide on redirect location? Reviews or Home?
-    window.location.href = "/";
+    window.location.href = "/dashboard";
     return true;
   } else {
     console.log("Error adding new raid.");
