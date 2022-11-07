@@ -11,9 +11,10 @@ function preventDefault(event) {
 
 
 export default function MostWon() {
-  const [game, setMostWonGame] = React.useState({"mostWonGame": "Loading...", "mostWon": 0});
+  const [game, setMostWonGame] = React.useState({"mostWonGame": "Loading...", "mostWon": "Loading..."});
 
   const decimalPlaces = 1;
+  
   async function retrieveMostWon() {
     GetDashboardContent().then((dashboardContent) => {
       // All the data is available, set it
@@ -24,23 +25,43 @@ export default function MostWon() {
 
   // Only run once
   React.useEffect(() => {
-    setMostWonGame({mostWonGame: "Loading...", mostWon: 0});
+    setMostWonGame({mostWonGame: "Loading...", mostWon: "Loading..."});
     retrieveMostWon();
   }, []);
 
   return (
     <React.Fragment>
       <Title>Most Successful Game</Title>
-      <Typography component="p" variant="h4">
+      
+      {typeof game.mostWon === "string" ? // The most won will be a string if no games have been played
+      (
+      <Typography component="p" variant="h4"></Typography>
+      ) : (
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
         {game.mostWonGame}
       </Typography>
+      )}
+
+      {typeof game.mostWon === "string" ?
+      (
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Win rate: {game.mostWon.toFixed(decimalPlaces)}%
+        Record some gameplay to see your most successful game!
       </Typography>
+      ) : (
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        {"Win rate: " + game.mostWon.toFixed(decimalPlaces) + "%"}
+      </Typography>
+      )}
+
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View Detail
-        </Link>
+        {typeof game.mostWon === "string" ?
+        (
+          null
+        ) : (
+          <Link color="primary" href="#" onClick={preventDefault}>
+            View Detail
+          </Link>
+        )}
       </div>
     </React.Fragment>
   );

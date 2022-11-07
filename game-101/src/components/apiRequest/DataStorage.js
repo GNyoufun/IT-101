@@ -54,7 +54,7 @@ function convertDashboardData(summaryResponse) {
 
     if (mostWon === -1)
     {
-        mostWon = 0;
+        mostWon = "No Games";
     }
     
     // Set the most one game
@@ -117,6 +117,26 @@ async function retrieveDashboardData()
         
         // Convert the results to the format we want
         dashboardData = convertDashboardData(responseData);
+    }
+}
+
+
+export async function DeleteRaid(id)
+{
+    if (id === undefined || id === null || id === "")
+    {
+        return;
+    }
+
+    var url = "/users/{user_id}/reviews/" + id;
+
+    // Wait for the deletion to occur
+    var deleteProm = GetAuthorizedResponse(url, "DELETE");
+    var response = await deleteProm;
+
+    if (response.status === 200) {
+        var responseData = await response.json();
+        console.log(responseData);
     }
 }
 
