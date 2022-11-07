@@ -74,7 +74,8 @@ const reviewSchema = new Schema({
   Difficulty: Number, // 1 - 10
   Rating: Number, // 1 - 10
   comments: { type: String, default: 'No Comment' },
-  ImageURL: { type: String, default: ""}
+  // ImageURL: [{ type: String, default: ""}]
+  ImageURL: { type : Array , "default" : [] }
 });
 
 const review = new mongoose.model('review', reviewSchema, 'Review');

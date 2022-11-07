@@ -5,8 +5,35 @@ import { Box, Typography } from "@mui/material";
 import RecordForm from "./RecordForm";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
+// convert data into base64 encoded
+async function processImages(files) {
+  let convertedFiles = {};
+
+  for (let i = 0; i < files.length; i++) {
+    const convertedFile = await convertToBase64(files[i]);
+    convertedFiles[files[i].name] = convertedFile
+  }
+
+  return convertedFiles;
+}
+
+async function convertToBase64 (file) {
+  return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+          resolve(reader.result);
+      }
+  })
+}
+
 // Sends a new record to the server
-async function sendNewReview(sendData) {
+async function sendNewReview(sendData, imageFiles) {
+  let processed = await processImages(imageFiles);
+  sendData["imageFiles"] = processed;
+  console.log(processed);
+  console.log(sendData);
+
   var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
   
   if (response.status === 200) {
