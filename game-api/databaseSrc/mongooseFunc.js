@@ -256,19 +256,19 @@ async function TeamWinRate (GameTitle, id, Time = new Date()) {
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const players = [];
 
@@ -297,19 +297,19 @@ async function gameWinRate (GameTitle, id, Time = new Date()) {
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
 
   let rate = (win.length / (win.length + lost.length + draw.length)) * precent;
@@ -332,7 +332,7 @@ async function bestWinRate(id){
     UserId: id, 
     Date: { 
       $gte: svnDay,
-      $lt: today}
+      $lte: today}
   }).lean();
 
   for (let i = 0; i < document.length; i++) {
@@ -387,7 +387,7 @@ async function bestWinRate(id){
     UserId: id, 
     Date: { 
       $gte: svnDay,
-      $lt: today }
+      $lte: today }
   }).lean();
 
   for (let i = 0; i < document.length; i++) {
@@ -467,19 +467,19 @@ async function average(GameTitle, id, target, Time = new Date()) {
     Title: GameTitle,
     UserId: id, 
     Result: 'Win',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const lost = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Lost',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
   const draw = await review.find({
     Title: GameTitle,
     UserId: id, 
     Result: 'Draw',
-    Date: { $lt: Time }
+    Date: { $lte: Time }
   }).lean();
 
   const avrArr = [];
