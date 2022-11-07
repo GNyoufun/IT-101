@@ -3,13 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { DataGrid } from "@mui/x-data-grid";
-import { Menu, MenuItem, Container, Stack } from "@mui/material";
+import { Menu, MenuItem, Container, Stack, Typography } from "@mui/material";
 
 import { SearchBar } from "./";
 import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
 import Loading from "../apiRequest/DataStorage";
-import { GetReviewsForGame } from "../apiRequest/DataStorage";
+import { GetReviewsForGame, DeleteRaid } from "../apiRequest/DataStorage";
 
 const columns = [
   {
@@ -74,9 +74,12 @@ export default function GameHistoryTable() {
     );
   };
 
-  const handleClose = () => {
-    console.log(raids);
+  const handleClose = (type) => {
     setContextMenu(null);
+    
+    if (type === "delete") {
+      DeleteRaid(raidId);
+    }
   };
 
   
@@ -125,7 +128,7 @@ export default function GameHistoryTable() {
       </Stack>
 
       {loading ? (
-      Loading()) : (
+      Loading()) : (raids.length > 0 ? (
       <div style={{ height: 580, width: "100%" }}>
         <DataGrid
           rows={raids}
@@ -135,6 +138,9 @@ export default function GameHistoryTable() {
           onRowClick={handleEvent}
         />
       </div>
+      ) : (
+        <Typography>No records found</Typography>
+      )
       )}
 
       <Menu
@@ -149,13 +155,17 @@ export default function GameHistoryTable() {
       >
         <MenuItem
           component={Link}
-          onClick={handleClose}
+          onClick={() => handleClose("edit")}
           to={"/edit-record?record=" + raidId}
           state={raids}
         >
           Edit
         </MenuItem>
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        <MenuItem
+          onClick={() => handleClose("delete")}
+        >
+          Delete
+        </MenuItem>
       </Menu>
     </Container>
   );

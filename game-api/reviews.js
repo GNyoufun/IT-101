@@ -195,9 +195,12 @@ module.exports = function (app) {
 
             const result = await retrieveCollection(review, { UserId: id, Title: game }, {});
             if (result.length === 0) {
-                // not found user id
-                res.sendStatus(404);
-                console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+                // not found user id or game id
+                res.status(200);
+                res.json(result);
+                // res.sendStatus(404);
+                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+                // console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
             } else {
                 // success
                 res.status(200);
@@ -218,30 +221,30 @@ module.exports = function (app) {
      * @path game, title of the specified game
      * @header Authorization, should be user_id:token
      */
-    app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
-        console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-        try {
-            const id = ObjectId(req.params.user_id);
+    // app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
+    //     console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+    //     try {
+    //         const id = ObjectId(req.params.user_id);
 
-            // query and process result
-            const result = await deleteCollection(review, { UserId: id, Title: req.params.game });
-            if (result === 0) {
-                // not found user id
-                res.sendStatus(404);
-                console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-            } else {
-                // success
-                console.log('%d reviews deleted', result);
-                res.sendStatus(200);
-                console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-            }
-        } catch (err) {
-            // invalid (not found) user id
-            res.sendStatus(404);
-            console.error(err);
-            console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-        }
-    });
+    //         // query and process result
+    //         const result = await deleteCollection(review, { UserId: id, Title: req.params.game });
+    //         if (result === 0) {
+    //             // not found user id
+    //             res.sendStatus(404);
+    //             console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+    //         } else {
+    //             // success
+    //             console.log('%d reviews deleted', result);
+    //             res.sendStatus(200);
+    //             console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+    //         }
+    //     } catch (err) {
+    //         // invalid (not found) user id
+    //         res.sendStatus(404);
+    //         console.error(err);
+    //         console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+    //     }
+    // });
 
     /**
      * get all the reviews of a specific game of a user with a specific teammate/friend
@@ -394,6 +397,8 @@ module.exports = function (app) {
         try {
             const userId = ObjectId(req.params.user_id);
             const raidId = ObjectId(req.params.raid_id);
+
+            console.log('Deleting raid review %s for user %s', raidId, userId);
 
             // query and process result
             const result = await deleteCollection(review, { _id: raidId, UserId: userId });

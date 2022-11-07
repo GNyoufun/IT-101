@@ -95,7 +95,11 @@ async function deleteCollection (collect, docs) {
   let deleted;
   try {
     deleted = await collect.collection.deleteMany(docs);
-    console.log('Removed selected documents in the collection ');
+    if (deleted.deletedCount === 0) {
+      console.log('No documents found');
+    } else {
+      console.log('Removed selected documents in the collection ');
+    }
   } catch (err) {
     console.error(err);
   }
