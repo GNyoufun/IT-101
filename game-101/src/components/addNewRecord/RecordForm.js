@@ -13,23 +13,34 @@ import {
   SelectDifficulty,
 } from "./";
 
+
+
 /* router: /add-record */
 export default function RecordForm(props) {
   // TODO: Check that the game date isn't in the future
   const [inputs, setInputs] = React.useState(props.defaultInput);
+  let files = [];
 
   const handleSubmit = (event) => {
     // Prepare the data to send
     var sendData;
     sendData = { ...inputs, date: inputs.date.format("YYYY-MM-DD") };
+    
     // print for testing
     console.log(sendData);
-  
+
     // Send the data
-    props.sendReview(sendData);
+    props.sendReview(sendData, files);
 
     event.preventDefault();
     // TO DO: redirect or refresh
+  };
+
+  const getFiles = (e) => {
+    e.preventDefault();
+
+    files.push(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   return (
@@ -102,6 +113,7 @@ export default function RecordForm(props) {
                   accept="image/*"
                   hidden
                   multiple
+                  onChange={getFiles}
                 />
               </Button>
             </Grid>

@@ -8,6 +8,10 @@ const {
 const {
     review
 } = require('./databaseSrc/mongooseSchema.js');
+const {
+  uploadAWS,
+  deleteAWS
+} = require('./aws/awsStorage.js')
 
 /**
  * Review requests
@@ -90,7 +94,8 @@ module.exports = function (app) {
                 req.body.result === undefined ||
                 req.body.difficulty === undefined ||
                 req.body.rating === undefined ||
-                req.body.comments === undefined
+                req.body.comments === undefined || 
+                req.body.imageFile === undefined 
             );
             if (invalid) {
                 // bad request
@@ -98,6 +103,13 @@ module.exports = function (app) {
                 console.log('Failed POST request /users/%s/reviews, 400', req.params.user_id);
                 return;
             }
+
+
+            // TODO: Add upload function call 
+            files = req.body.imageFile
+            console.log(req.body.imageFile);
+            // urls = await uploadAWS(files);
+
         
             // add the new review
             const raidReview = {
@@ -109,7 +121,8 @@ module.exports = function (app) {
                 Result: req.body.result,
                 Difficulty: req.body.difficulty, // Parse the Difficulty
                 Rating: req.body.rating, // Parse the Rating
-                comments: req.body.comments
+                comments: req.body.comments,
+                // ImageURL: urls
             };
 
             // Insert the raid and get the documents inserted

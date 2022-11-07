@@ -8,6 +8,18 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, '../game-101/build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//TESTING FOR LARGE FILE 
+
+// app.use(bodyParser.json({limit: '50mb'}));
+// app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+// app.use(express.json({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb'}));
+app.use(bodyParser.json({limit: '200mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: "200mb", extended: true, parameterLimit:100000}));
+app.use(bodyParser.text({ limit: '2000mb' }));
+
 if (process.env.NODE_ENV === "development") {
   const cors = require('cors');
   app.use(cors());
