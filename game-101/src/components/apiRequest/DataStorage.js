@@ -154,17 +154,7 @@ export async function GetReviewsForGame(gameName)
     return null;
 }
 
-function getUserLanguage() {
-    if (navigator.languages !== undefined) {
-        console.log(navigator.languages);
-      return navigator.languages[0]; 
-    }
-    return navigator.language;
-}
-
 function convertGameReviewsData(gameReviewsResponse) {
-    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
-
     // Store the data for each component to send back in a an object
     var GameReviewsData = [];
     for(let i = 0; i < gameReviewsResponse.length; i++) {
@@ -182,7 +172,7 @@ function convertGameReviewsData(gameReviewsResponse) {
 
         // Construct the date string
         var date = new Date(gameReviewsResponse[i].Date);
-        var dateStr = date.toLocaleDateString(getUserLanguage(), dateOptions);
+        var dateStr = date.toLocaleDateString();
 
         // Construct the data row
         const data = {
@@ -195,12 +185,14 @@ function convertGameReviewsData(gameReviewsResponse) {
             result: gameReviewsResponse[i].Result,
             team: teammates,
             comments: gameReviewsResponse[i].comments,
+
+            dateRaw : gameReviewsResponse[i].Date,
+            teamRaw : gameReviewsResponse[i].Team,
           };
         
         // Add the data to the list
         GameReviewsData.push(data);
     }
-    console.log(GameReviewsData);
 
     return GameReviewsData;
 }
@@ -228,7 +220,7 @@ async function retrieveGameData()
 
     if (response.status === 200) {
         var responseData = await response.json();
-        console.log(responseData);
+        //console.log(responseData);
 
         // Take the game names and put them in a list
         var gameNames = [];

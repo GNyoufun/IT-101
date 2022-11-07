@@ -18,7 +18,7 @@ export default function SelectGameName(props) {
   async function retrieveGameNames() {
     GetGameNames().then((gameNames) => {
       // All the data is available, set it
-      console.log(gameNames);
+      //console.log(gameNames);
       setGameNames(gameNames);
     });
   }

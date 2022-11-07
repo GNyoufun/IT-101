@@ -3,6 +3,7 @@ import * as React from "react";
 import { Autocomplete, Chip, TextField } from "@mui/material";
 
 export default function SelectTeammates(props) {
+  
   const handleChange = (e, newValues) => {
     var formatValue = [];
     // loop for each teammate i

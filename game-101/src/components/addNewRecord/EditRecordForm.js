@@ -19,18 +19,43 @@ async function sendUpdateReview(sendData) {
   }
 }
 
+function getCorrectRow(data, id)
+{
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].id === id) {
+      return data[i];
+    }
+  }
+  if (data.length > 0) {
+    return data[0];
+  }
+  return {};
+}
+
 /* router: /add-record */
 export default function EditRecordForm() {
-  const data = useLocation().state;
+  const id = new URLSearchParams(useLocation().search).get("record");
 
+  const data = getCorrectRow(useLocation().state, id);
+
+  // Log the data
+  console.log(data);
+
+  if (data === undefined) {
+    window.location.href = "/";
+  }
+
+  //console.log(data.teamRaw);
+  
+  // TODO: Make this data correctly update the form
   const defaultInput = {
     GameTitle: data.GameTitle, 
-    date: dayjs(data.date, "YYYY/MM/DD"),
+    date: dayjs(data.dateRaw, "YYYY/MM/DD"),
     durations: data.durations,
     result: data.result,
     difficulty: data.difficulty,
     rating: data.rating,
-    team: [],//TODO
+    team: [],//TODO       data.teamRaw
     comments: data.comments,
   };
 
@@ -43,7 +68,7 @@ export default function EditRecordForm() {
   }
 
   //testing
-  console.log("default:"+JSON.stringify(defaultInput));
+  //console.log("default:"+JSON.stringify(defaultInput));
 
   return (
     <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />

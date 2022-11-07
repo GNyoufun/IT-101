@@ -48,12 +48,22 @@ export default function GameHistoryTable() {
   const [contextMenu, setContextMenu] = useState(null);
   const [data, setData] = useState(null);
   const [raids, setRaidData] = useState([]);
+  const [raidId, setRaidId] = useState(null);
 
   // get game title from url
   const GameTitle = useLocation().search;
 
   const handleEvent = (params, event, details) => {
     setData(params.row);
+
+    if (contextMenu) {
+      setRaidId(null);
+    }
+    else {
+      setRaidId(params.row.id);
+    }
+
+    // Toggle the context menu
     setContextMenu(
       contextMenu === null
         ? {
@@ -140,7 +150,7 @@ export default function GameHistoryTable() {
         <MenuItem
           component={Link}
           onClick={handleClose}
-          to="/edit-record"
+          to={"/edit-record?record=" + raidId}
           state={raids}
         >
           Edit
