@@ -8,9 +8,9 @@ const fs = require('fs');
 
 // window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const bucketName = process.env.AWS_BUCKET_NAME
+const BUCKET_NAME = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
-const accessKeyId = process.env.AWS_ACCESS_KEY
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_KEY
     
     
@@ -21,28 +21,66 @@ const s3 = new AWS.S3({
 });
 
 
-async function uploadAWS(file) {
+async function uploadAWS(files) {
     let urls = [];
-    // for(let i = 0; i < file.length; i++){
-        const fileStream = fs.createReadStream(file.path);
+
+    for(let imageName in files){
+        let base64Image = files[imageName][1];
+        let type = files[imageName][0];
+        // let type = "image/jpeg";
+
+        let uploaded = await upload(imageName, base64Image, type);
+        urls.push(uploaded);
+    }
     
-        const params = {
-            Bucket: bucketName,
-            Key: file.originalname,
-            Body: fileStream,
-        };
-    
-        s3.upload(params, function (err, data) {
-            console.log(data);
-            if (err) {
-                throw err;
-            }
-            console.log(`File uploaded successfully. ${data.Location}`);
-            urls.push(data.Location);
-        });
-    // }
     return urls;
 };
+
+/**
+ * @description Uploads an image to S3
+ * @param imageName Image name
+ * @param base64Image Image body converted to base 64
+ * @param type Image type
+ * @return string S3 image URL or error accordingly
+ */
+async function upload(imageName, base64Image, type){
+    const params = {
+        Bucket: `${BUCKET_NAME}/Images`,
+        Key: imageName,
+        Body: new Buffer.from(base64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
+        ContentType: type
+    };
+
+    let data;
+
+    try {
+        data = await promiseUpload(params);
+    } catch (err) {
+        console.error(err);
+
+        return "";
+    }
+
+    return data.Location;
+}
+/**
+ * @description Promise an upload to S3
+ * @param params S3 bucket params
+ * @return data/err S3 response object
+ */
+function promiseUpload(params) {
+    return new Promise(function (resolve, reject) {
+        s3.upload(params, function (err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+// module.exports = {upload};
 
 async function deleteAWS(file) {
     // deleteObjects
@@ -52,3 +90,4 @@ module.exports = {
     uploadAWS,
     deleteAWS
 };
+
