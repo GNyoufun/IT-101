@@ -18,7 +18,7 @@ import {
 
 import { SideBarListItems } from "./";
 
-const drawerWidth = 240;
+const drawerWidth =240;// Math.max((window.innerWidth)/5,240);
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
