@@ -192,3 +192,8 @@ const raid = [
 // median("Overwatch", "63478fd9fb0388e56c026258", "Rating").then(data => console.log(data));
 
 // retrieveLastN(10, "63478fd9fb0388e56c026258").then(data => console.log(data));
+
+
+// bestWinRate("63686622fdcfbebdd2a2c857").then(data => console.log(data));
+// bestWinRate("63478fd9fb0388e56c026258").then(data => console.log(data));
+
