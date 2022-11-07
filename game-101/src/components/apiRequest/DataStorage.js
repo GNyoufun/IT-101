@@ -44,12 +44,17 @@ function convertDashboardData(summaryResponse) {
 
     // Get the most won game
     var mostWon = -1;
-    var mostWonGame = "";
+    var mostWonGame = "No Game";
     for (let i = 0; i < summaryResponse.MostWon.length; i++) {
         if (summaryResponse.MostWon[i].winRate > mostWon) {
             mostWon = summaryResponse.MostWon[i].winRate;
             mostWonGame = summaryResponse.MostWon[i].Title;
         }
+    }
+
+    if (mostWon === -1)
+    {
+        mostWon = 0;
     }
     
     // Set the most one game
