@@ -22,6 +22,8 @@ module.exports = function (app) {
      * @responseBody list of reviews
      */
     app.get('/users/:user_id/reviews', async (req, res, next) => {
+        console.log(req.params);
+        console.log(req.query);
         console.log('Starting GET request /users/%s/reviews', req.params.user_id);
         try {
             const id = ObjectId(req.params.user_id);

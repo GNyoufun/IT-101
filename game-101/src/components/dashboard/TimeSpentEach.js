@@ -29,7 +29,7 @@ const data = [
   createData("03-17", 3.6),
 ];
 
-console.log(data);
+//console.log(data);
 
 export default function TimeSpentEach() {
   const theme = useTheme();

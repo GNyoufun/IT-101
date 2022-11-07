@@ -106,22 +106,32 @@ function convertDashboardData(summaryResponse) {
     };
 }
 
+async function retrieveDashboardData()
+{
+    var dp = GetAuthorizedResponse("/users/{user_id}/summary", "GET");
+    var response = await dp;
+
+    if (response.status === 200) {
+        var responseData = await response.json();
+        console.log(responseData);
+        
+        // Convert the results to the format we want
+        dashboardData = convertDashboardData(responseData);
+    }
+}
 
 export async function GetDashboardContent()
 {
     // TODO: Avoid double requesting with && dashboardPromise == null
-    if (dashboardData === undefined) {
+    if (dashboardData === undefined && dashboardPromise == null) {
         // Get the summary data
-        dashboardPromise = GetAuthorizedResponse("/users/{user_id}/summary", "GET");
-        var response = await dashboardPromise;
-        if (response.status === 200) {
-            var responseData = await response.json();
-            console.log(responseData);
-            
-            // Convert the results to the format we want
-            dashboardData = convertDashboardData(responseData);
-        }
+        dashboardPromise = retrieveDashboardData();
     }
+    if (dashboardPromise !== null) {
+        await dashboardPromise;
+        dashboardPromise = "Loaded!";
+    }
+
     return dashboardData;
 }
 
@@ -135,60 +145,131 @@ export async function GetReviewsForGame(gameName)
     if (response.status === 200) {
         var responseData = await response.json();
         console.log(responseData);
-        return responseData;
+
+        // Convert the data to the format we want
+        var gameReviews = convertGameReviewsData(responseData);
+
+        return gameReviews;
     }
+    return null;
 }
+
+function getUserLanguage() {
+    if (navigator.languages !== undefined) {
+        console.log(navigator.languages);
+      return navigator.languages[0]; 
+    }
+    return navigator.language;
+}
+
+function convertGameReviewsData(gameReviewsResponse) {
+    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+    // Store the data for each component to send back in a an object
+    var GameReviewsData = [];
+    for(let i = 0; i < gameReviewsResponse.length; i++) {
+
+        // Construct the teammates string
+        var teammates = "";
+        for (let j = 0; j < gameReviewsResponse[i].Team.length; j++) {
+            teammates += gameReviewsResponse[i].Team[j].InGameID;
+            teammates += " lv.";
+            teammates += gameReviewsResponse[i].Team[j].Level;
+            if (j < gameReviewsResponse[i].Team.length - 1) {
+                teammates += ", ";
+            }
+        }
+
+        // Construct the date string
+        var date = new Date(gameReviewsResponse[i].Date);
+        var dateStr = date.toLocaleDateString(getUserLanguage(), dateOptions);
+
+        // Construct the data row
+        const data = {
+            id: gameReviewsResponse[i]._id,
+            date: dateStr,
+            GameTitle: gameReviewsResponse[i].Title,
+            durations: gameReviewsResponse[i].Durations,
+            difficulty: gameReviewsResponse[i].Difficulty,
+            rating: gameReviewsResponse[i].Rating,
+            result: gameReviewsResponse[i].Result,
+            team: teammates,
+            comments: gameReviewsResponse[i].comments,
+          };
+        
+        // Add the data to the list
+        GameReviewsData.push(data);
+    }
+    console.log(GameReviewsData);
+
+    return GameReviewsData;
+}
+
 
 export async function GetGameNames()
 {
     // Get the data if it is not already loaded
-    if (gameNamesData === undefined) {
-        // Get the game names
-        gamePromise = GetAuthorizedResponse("/users/{user_id}/games", "GET");
-        var response = await gamePromise;
-        if (response.status === 200) {
-            var responseData = await response.json();
-            console.log(responseData);
-
-            // Take the game names and put them in a list
-            var gameNames = [];
-            for (var i = 0; i < responseData.length; i++) {
-                gameNames.push(responseData[i].GameTitle);
-            }
-
-            gameNamesData = gameNames;
-        }
+    if (gameNamesData === undefined && gamePromise == null) {
+        gamePromise = retrieveGameData();
+    }
+    if (gamePromise !== null) {
+        await gamePromise;
+        gamePromise = "Loaded!";
     }
     return gameNamesData;
 }
 
 
-function convertGameData(gameResponse) {
-    var g = [];
-    for (var i = 0; i < gameResponse.length; i++) {
-      g.push({
-        id: gameResponse[i].id || i,
-        name: gameResponse[i].GameTitle || "No Title",
-        type: gameResponse[i].GameType || "No Type",
-        cover: gameResponse[i].Image || "No Cover",
-      });
+async function retrieveGameData()
+{
+    // Get the game names
+    var gp = GetAuthorizedResponse("/users/{user_id}/games", "GET");
+    var response = await gp;
+
+    if (response.status === 200) {
+        var responseData = await response.json();
+        console.log(responseData);
+
+        // Take the game names and put them in a list
+        var gameNames = [];
+        for (var i = 0; i < responseData.length; i++) {
+            gameNames.push(responseData[i].GameTitle);
+        }
+
+        // Set the game names data
+        gameNamesData = gameNames;
+
+        // Set the game data
+        var g = [];
+        for (var i = 0; i < responseData.length; i++) {
+          g.push({
+            id: responseData[i].id || i,
+            name: responseData[i].GameTitle || "No Title",
+            type: responseData[i].GameType || "No Type",
+            cover: responseData[i].Image || "No Cover",
+          });
+        }
+
+        gameData = g;
     }
-    console.log(g);
-    return g;
 }
 
 export async function GetAllGames()
 {
     // Get the data if it is not already loaded
-    if (gameData === undefined) {
-        // Get all games
-        var promise =  GetAuthorizedResponse("/users/{user_id}/games", "GET");
-        var response = await promise;
-        if (response.status === 200) {
-            var responseData = await response.json();
-            console.log(responseData);
-            gameData = convertGameData(responseData);
-        }
+    if (gameData === undefined && gamePromise == null) {
+        gamePromise = retrieveGameData();
+        // // Get all games
+        // var promise =  GetAuthorizedResponse("/users/{user_id}/games", "GET");
+        // var response = await promise;
+        // if (response.status === 200) {
+        //     var responseData = await response.json();
+        //     console.log(responseData);
+        //     gameData = convertGameData(responseData);
+        // }
+    }
+    if (gamePromise !== null) {
+        await gamePromise;
     }
     
     return gameData;
