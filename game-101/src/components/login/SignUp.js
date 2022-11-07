@@ -17,7 +17,8 @@ async function sendSignUp(formData) {
   var response = await GetAuthorizedResponse(
     "/users",
     "POST",
-    JSON.stringify(sendData)
+    JSON.stringify(sendData),
+    true
   );
   if (response.status === 200) {
     // Get the response data

@@ -39,7 +39,6 @@ module.exports = function (app) {
             // TODO: Check data return validity
             promiseRecentRaids.then(function (value) {
                 result.RecentRaids = value;
-                console.log("RecentRaids: " + value);
             });
             promiseMostWon.then(function (value) {
                 result.MostWon = value;

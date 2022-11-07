@@ -25,10 +25,10 @@ export async function GetLoginResponse(username, password) {
   }
 }
 
-export async function GetAuthorizedResponse(location, httpMethod, sendData) {
+export async function GetAuthorizedResponse(location, httpMethod, sendData, isLogin=false) {
   //console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
   // Check that the user is logged in
-  if (!sessionStorage.getItem("user_token")) {
+  if (!sessionStorage.getItem("user_token") && !isLogin) {
     window.location.href = "/login";
   }
 
