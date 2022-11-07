@@ -97,7 +97,7 @@ module.exports = function (app) {
                 req.body.difficulty === undefined ||
                 req.body.rating === undefined ||
                 req.body.comments === undefined || 
-                req.body.imageFile === undefined 
+                req.body.imageFiles === undefined 
             );
             if (invalid) {
                 // bad request
@@ -108,10 +108,8 @@ module.exports = function (app) {
 
 
             // TODO: Add upload function call 
-            files = req.body.imageFile
-            console.log(req.body.imageFile);
-            // urls = await uploadAWS(files);
-
+            const files = req.body.imageFiles
+            urls = await uploadAWS(files);
         
             // add the new review
             const raidReview = {
@@ -124,7 +122,7 @@ module.exports = function (app) {
                 Difficulty: req.body.difficulty, // Parse the Difficulty
                 Rating: req.body.rating, // Parse the Rating
                 comments: req.body.comments,
-                // ImageURL: urls
+                ImageURL: urls
             };
 
             // Insert the raid and get the documents inserted

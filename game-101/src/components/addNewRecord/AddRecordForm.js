@@ -10,8 +10,10 @@ async function processImages(files) {
   let convertedFiles = {};
 
   for (let i = 0; i < files.length; i++) {
+    let imageName = files[i].name;
+    let dataType = files[i].type;
     const convertedFile = await convertToBase64(files[i]);
-    convertedFiles[files[i].name] = convertedFile
+    convertedFiles[imageName] = [dataType,convertedFile]
   }
 
   return convertedFiles;
