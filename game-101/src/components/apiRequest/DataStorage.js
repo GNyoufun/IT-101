@@ -36,6 +36,7 @@ let gameData = undefined;
 let gameNamesData = undefined;
 
 function convertDashboardData(summaryResponse) {
+    console.log(summaryResponse);
     // Store the data for each component to send back in a an object
     var MostWonData = {};
     var RecentRaidsData = [];

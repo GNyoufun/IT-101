@@ -37,7 +37,7 @@ export default function MostWon() {
       (
       <Typography component="p" variant="h4"></Typography>
       ) : (
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        <Typography component="p" variant="h4">
         {game.mostWonGame}
       </Typography>
       )}
