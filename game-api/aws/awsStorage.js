@@ -2,17 +2,11 @@ const pathResolve = require('node:path');
 require('dotenv').config({ path: pathResolve.resolve(__dirname, '../../.env') });
 const AWS = require('aws-sdk');
 const fs = require('fs');
-// import fileType from'file-type';
-// import multer  from'multer';
-// const upload = multer({ dest: 'uploads/' });
 
-// window.Buffer = window.Buffer || require("buffer").Buffer;
-
-const BUCKET_NAME = process.env.AWS_BUCKET_NAME
+const bucket_name = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_KEY
-  
   
 const s3 = new AWS.S3({
   accessKeyId: accessKeyId,
@@ -20,14 +14,17 @@ const s3 = new AWS.S3({
   region:region
 });
 
-
+/**
+ * Upload sets of image to S3
+ * @param {Object} files Collection of image files to upload
+ * @returns A list of urls of uploaded images
+ */
 async function uploadAWS(files) {
   let urls = [];
 
   for(let imageName in files){
     let base64Image = files[imageName][1];
     let type = files[imageName][0];
-    // let type = "image/jpeg";
 
     let uploaded = await upload(imageName, base64Image, type);
     urls.push(uploaded);
@@ -37,7 +34,7 @@ async function uploadAWS(files) {
 };
 
 /**
- * @description Uploads an image to S3
+ * Uploads an image to S3
  * @param imageName Image name
  * @param base64Image Image body converted to base 64
  * @param type Image type
@@ -45,7 +42,7 @@ async function uploadAWS(files) {
  */
 async function upload(imageName, base64Image, type){
   const params = {
-    Bucket: `${BUCKET_NAME}/Images`,
+    Bucket: `${bucket_name}/Images`,
     Key: imageName,
     Body: new Buffer.from(base64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
     ContentType: type
@@ -63,7 +60,7 @@ async function upload(imageName, base64Image, type){
   return data.Location;
 }
 /**
- * @description Promise an upload to S3
+ * Promise an upload to S3
  * @param params S3 bucket params
  * @return data/err S3 response object
  */
@@ -79,15 +76,19 @@ function promiseUpload(params) {
   });
 }
 
-async function deleteAWS(files) {
-  for(let i = 0; i < files.length; i++) {
-    let fileName = "Images/" + files[i].split('/').at(-1);
-    await s3.deleteObject({ 
-      Bucket: `${BUCKET_NAME}`, 
+/**
+ * Delete given url from S3
+ * @param {List} urls A list of urls to be deleted 
+ */
+async function deleteAWS(urls) {
+  for(let i = 0; i < urls.length; i++) {
+    let fileName = "Images/" + urls[i].split('/').at(-1);
+    s3.deleteObject({
+      Bucket: bucket_name,
       Key: fileName
-    }, (err, data) => {
+    }, (err) => {
       if (err) {
-          console.error(err);
+        console.error(err);
       }
     });
   }
