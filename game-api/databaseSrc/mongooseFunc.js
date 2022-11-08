@@ -99,11 +99,15 @@ async function deleteCollection (collect, docs) {
   try {
     try{
       let tobeDeleted = await retrieveCollection(collect, docs);
-      let images = tobeDeleted.ImageURL
-      await deleteAWS(images)
+      for(let i = 0; i < tobeDeleted.length; i++){
+        let images = tobeDeleted[i].ImageURL
+        await deleteAWS(images)
+      }
+      
     }catch(err){
       console.error(err);
     }
+
     deleted = await collect.collection.deleteMany(docs);
     if (deleted.deletedCount === 0) {
       console.log('No documents found');
