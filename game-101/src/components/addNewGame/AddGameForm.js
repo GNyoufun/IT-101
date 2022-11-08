@@ -26,7 +26,7 @@ async function sendNewGame(formData) {
   if (response.status === 200) {
     // Game successfully added, redirect to the home page
     // TODO: Use a React Router redirect
-    window.location.href = "/";
+    window.location.href = "/history";
     return true;
   } else {
     console.log("Error adding new game.");

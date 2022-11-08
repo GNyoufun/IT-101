@@ -21,7 +21,7 @@ export default function GameCard(props) {
         component={Link}
         to={{
           pathname: "/table",
-          search: name,
+          search: "game=" + name,
         }}
       >
         {/* Game's picture */}

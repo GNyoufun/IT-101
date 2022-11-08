@@ -9,7 +9,9 @@ import { SearchBar } from "./";
 import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
 import Loading from "../apiRequest/DataStorage";
-import { GetReviewsForGame, DeleteRaid } from "../apiRequest/DataStorage";
+import { GetReviewsForGame } from "../apiRequest/DataStorage";
+
+const { GetAuthorizedResponse } = require("../apiRequest/AuthorizedRequest");
 
 const columns = [
   {
@@ -44,6 +46,25 @@ const columns = [
   },
 ];
 
+
+
+async function deleteRaid(id)
+{
+    if (id === undefined || id === null || id === "")
+    {
+        return;
+    }
+
+    var url = "/users/{user_id}/reviews/" + id;
+
+    // Wait for the deletion to occur
+    var deleteProm = GetAuthorizedResponse(url, "DELETE");
+    await deleteProm;
+
+    // Refresh the page
+    window.location.reload();
+}
+
 export default function GameHistoryTable() {
   const [contextMenu, setContextMenu] = useState(null);
   const [data, setData] = useState(null);
@@ -51,7 +72,7 @@ export default function GameHistoryTable() {
   const [raidId, setRaidId] = useState(null);
 
   // get game title from url
-  const GameTitle = useLocation().search;
+  const GameTitle = new URLSearchParams(useLocation().search).get("game");
 
   const handleEvent = (params, event, details) => {
     setData(params.row);
@@ -78,13 +99,13 @@ export default function GameHistoryTable() {
     setContextMenu(null);
     
     if (type === "delete") {
-      DeleteRaid(raidId);
+      deleteRaid(raidId);
     }
   };
 
   
   async function retrieveRaids() {
-    GetReviewsForGame(GameTitle.replace("?","")).then((gameRaids) => {
+    GetReviewsForGame(GameTitle).then((gameRaids) => {
       // Use the gameData to set the state of the gameList
       setRaidData(gameRaids);
       setLoading(false);
