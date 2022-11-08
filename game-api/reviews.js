@@ -206,7 +206,7 @@ module.exports = function (app) {
             ObjectId(req.params.raid_id);
         } catch (err) {
             console.log('Ending GET request /users/%s/reviews/%s, not a raid_id', req.params.user_id, req.params.raid_id);
-            next();
+            return next();
         }
         try {
             const userId = ObjectId(req.params.user_id);
@@ -318,7 +318,7 @@ module.exports = function (app) {
             ObjectId(req.params.raid_id);
         } catch (err) {
             console.log('Ending DELETE request /users/%s/reviews/%s, not a raid_id', req.params.user_id, req.params.raid_id);
-            next();
+            return next();
         }
         try {
             const userId = ObjectId(req.params.user_id);
