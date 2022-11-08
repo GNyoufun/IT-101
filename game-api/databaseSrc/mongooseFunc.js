@@ -3,6 +3,9 @@ const {
   review,
   userid
 } = require('./mongooseSchema.js');
+const {
+  deleteAWS
+} = require('./aws/awsStorage.js')
 const precent = 100;
 
 /**
@@ -94,6 +97,13 @@ function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false)
 async function deleteCollection (collect, docs) {
   let deleted;
   try {
+    try{
+      let tobeDeleted = await retrieveCollection(collect, docs);
+      let images = tobeDeleted.ImageURL
+      await deleteAWS(images)
+    }catch(err){
+      console.error(err);
+    }
     deleted = await collect.collection.deleteMany(docs);
     if (deleted.deletedCount === 0) {
       console.log('No documents found');
