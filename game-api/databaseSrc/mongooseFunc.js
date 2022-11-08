@@ -5,7 +5,7 @@ const {
 } = require('./mongooseSchema.js');
 const {
   deleteAWS
-} = require('./aws/awsStorage.js')
+} = require('../aws/awsStorage.js')
 const precent = 100;
 
 /**
