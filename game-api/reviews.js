@@ -47,9 +47,12 @@ module.exports = function (app) {
             // query and process result
             const result = await retrieveCollection(review, query, {});
             if (result.length === 0) {
-                // not found user id
-                res.sendStatus(404);
-                console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
+                // not found reviews
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews', req.params.user_id);
+                // res.sendStatus(404);
+                // console.log('Failed GET request /users/%s/reviews, 404', req.params.user_id);
             } else {
                 // success
                 res.status(200);

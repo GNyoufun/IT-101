@@ -72,7 +72,8 @@ export default function GameHistoryTable() {
   const [raidId, setRaidId] = useState(null);
 
   // get game title from url
-  const GameTitle = new URLSearchParams(useLocation().search).get("game");
+  var gt = new URLSearchParams(useLocation().search).get("game")
+  const GameTitle = (gt == null) ? "" : gt;
 
   const handleEvent = (params, event, details) => {
     setData(params.row);
