@@ -10,7 +10,6 @@ const {
 } = require('./databaseSrc/mongooseSchema.js');
 const {
   uploadAWS,
-  deleteAWS
 } = require('./aws/awsStorage.js')
 
 /**
