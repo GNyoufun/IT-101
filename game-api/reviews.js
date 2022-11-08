@@ -194,105 +194,6 @@ module.exports = function (app) {
     });
 
     /**
-     * get all the reviews of a specific game of a user
-     * @path user_id, should be 24 character hexadecimal string
-     * @path game, title of the specified game
-     * @header Authorization, should be user_id:token
-     * @responseBody list of reviews
-     */
-    app.get('/users/:user_id/reviews/:game', async (req, res, next) => {
-        console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-        try {
-            const id = ObjectId(req.params.user_id);
-            const game = req.params.game;
-
-            const result = await retrieveCollection(review, { UserId: id, Title: game }, {});
-            if (result.length === 0) {
-                // not found user id or game id
-                res.status(200);
-                res.json(result);
-                // res.sendStatus(404);
-                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-                // console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-            } else {
-                // success
-                res.status(200);
-                res.json(result);
-                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-            }
-        } catch (err) {
-            // invalid (not found) user id
-            res.sendStatus(404);
-            console.error(err);
-            console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-        }
-    });
-
-    /**
-     * delete all the reviews of a game for a user
-     * @path user_id, should be 24 character hexadecimal string
-     * @path game, title of the specified game
-     * @header Authorization, should be user_id:token
-     */
-    // app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
-    //     console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-    //     try {
-    //         const id = ObjectId(req.params.user_id);
-
-    //         // query and process result
-    //         const result = await deleteCollection(review, { UserId: id, Title: req.params.game });
-    //         if (result === 0) {
-    //             // not found user id
-    //             res.sendStatus(404);
-    //             console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-    //         } else {
-    //             // success
-    //             console.log('%d reviews deleted', result);
-    //             res.sendStatus(200);
-    //             console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
-    //         }
-    //     } catch (err) {
-    //         // invalid (not found) user id
-    //         res.sendStatus(404);
-    //         console.error(err);
-    //         console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
-    //     }
-    // });
-
-    /**
-     * get all the reviews of a specific game of a user with a specific teammate/friend
-     * @path user_id, should be 24 character hexadecimal string
-     * @path game, title of the specified game
-     * @path friend, the friend/teammate who participated in the raid
-     * @header Authorization, should be user_id:token
-     * @responseBody list of reviews
-     */
-    app.get('/users/:user_id/reviews/:game/:friend', async (req, res, next) => {
-        console.log('Starting GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
-        try {
-            const id = ObjectId(req.params.user_id);
-            const game = req.params.game;
-
-            const result = await retrieveCollection(review, { UserId: id, Title: game, 'Team.InGameID': req.params.friend }, {});
-            if (result.length === 0) {
-                // not found user id
-                res.sendStatus(404);
-                console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
-            } else {
-                // success
-                res.status(200);
-                res.json(result);
-                console.log('Successful GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
-            }
-        } catch (err) {
-            // invalid (not found) user id
-            res.sendStatus(404);
-            console.error(err);
-            console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
-        }
-    });
-
-    /**
      * get a specific review of a specific user
      * @path user_id, should be 24 character hexadecimal string
      * @path raid_id, should be 24 character hexadecimal string
@@ -301,6 +202,12 @@ module.exports = function (app) {
      */
     app.get('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
         console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
+        try {
+            ObjectId(req.params.raid_id);
+        } catch (err) {
+            console.log('Ending GET request /users/%s/reviews/%s, not a raid_id', req.params.user_id, req.params.raid_id);
+            next();
+        }
         try {
             const userId = ObjectId(req.params.user_id);
             const raidId = ObjectId(req.params.raid_id);
@@ -408,6 +315,12 @@ module.exports = function (app) {
     app.delete('/users/:user_id/reviews/:raid_id', async (req, res, next) => {
         console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.raid_id);
         try {
+            ObjectId(req.params.raid_id);
+        } catch (err) {
+            console.log('Ending DELETE request /users/%s/reviews/%s, not a raid_id', req.params.user_id, req.params.raid_id);
+            next();
+        }
+        try {
             const userId = ObjectId(req.params.user_id);
             const raidId = ObjectId(req.params.raid_id);
 
@@ -432,6 +345,105 @@ module.exports = function (app) {
             res.sendStatus(404);
             console.error(err);
             console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.raid_id);
+        }
+    });
+
+    /**
+     * get all the reviews of a specific game of a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @header Authorization, should be user_id:token
+     * @responseBody list of reviews
+     */
+    app.get('/users/:user_id/reviews/:game', async (req, res, next) => {
+        console.log('Starting GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+        try {
+            const id = ObjectId(req.params.user_id);
+            const game = req.params.game;
+
+            const result = await retrieveCollection(review, { UserId: id, Title: game }, {});
+            if (result.length === 0) {
+                // not found user id or game id
+                res.status(200);
+                res.json(result);
+                // res.sendStatus(404);
+                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+                // console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+            } else {
+                // success
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+        }
+    });
+
+    /**
+     * delete all the reviews of a game for a user
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @header Authorization, should be user_id:token
+     */
+    app.delete('/users/:user_id/reviews/:game', async (req, res, next) => {
+        console.log('Starting DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+        try {
+            const id = ObjectId(req.params.user_id);
+
+            // query and process result
+            const result = await deleteCollection(review, { UserId: id, Title: req.params.game });
+            if (result === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+            } else {
+                // success
+                console.log('%d reviews deleted', result);
+                res.sendStatus(200);
+                console.log('Successful DELETE request /users/%s/reviews/%s', req.params.user_id, req.params.game);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed DELETE request /users/%s/reviews/%s, 404', req.params.user_id, req.params.game);
+        }
+    });
+
+    /**
+     * get all the reviews of a specific game of a user with a specific teammate/friend
+     * @path user_id, should be 24 character hexadecimal string
+     * @path game, title of the specified game
+     * @path friend, the friend/teammate who participated in the raid
+     * @header Authorization, should be user_id:token
+     * @responseBody list of reviews
+     */
+    app.get('/users/:user_id/reviews/:game/:friend', async (req, res, next) => {
+        console.log('Starting GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
+        try {
+            const id = ObjectId(req.params.user_id);
+            const game = req.params.game;
+
+            const result = await retrieveCollection(review, { UserId: id, Title: game, 'Team.InGameID': req.params.friend }, {});
+            if (result.length === 0) {
+                // not found user id
+                res.sendStatus(404);
+                console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
+            } else {
+                // success
+                res.status(200);
+                res.json(result);
+                console.log('Successful GET request /users/%s/reviews/%s/%s', req.params.user_id, req.params.game, req.params.friend);
+            }
+        } catch (err) {
+            // invalid (not found) user id
+            res.sendStatus(404);
+            console.error(err);
+            console.log('Failed GET request /users/%s/reviews/%s/%s, 404', req.params.user_id, req.params.game, req.params.friend);
         }
     });
 };
