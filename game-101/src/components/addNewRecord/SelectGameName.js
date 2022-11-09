@@ -2,30 +2,24 @@ import * as React from "react";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-import { GetAllGames, GetGameNames } from "../apiRequest/DataStorage";
+import { GetGameNames } from "../apiRequest/DataStorage";
 
 export default function SelectGameName(props) {
-  const savedGameTitles = [
-    // TO DO: change to GET request
-    { "GameTitle": "League of Legends",  "GameType": "MOBA" },
-    { "GameTitle": "Overwatch",  "GameType": "FPS"  },
-    { "GameTitle": "Final Fantasy XIV" ,  "GameType": "MMORPG" },
-  ];
+  const savedGameTitles = ["Loading..."];
 
-  const [gameNames, setGameNames] = React.useState([]);
+  const [gameNames, setGameNames] = React.useState(savedGameTitles);
   
 
   async function retrieveGameNames() {
     GetGameNames().then((gameNames) => {
       // All the data is available, set it
-      //console.log(gameNames);
+      console.log(gameNames);
       setGameNames(gameNames);
     });
   }
 
   // Only run once
   React.useEffect(() => {
-    setGameNames(savedGameTitles);
     retrieveGameNames();
   }, []);
 
@@ -33,12 +27,6 @@ export default function SelectGameName(props) {
   const handleChange = (e) => {
     props.setInputs({ ...props.inputs, GameTitle: e.target.value });
   };
-
-  /*
-  GetGameNames().then((response) => {
-    savedGameTitles = response;
-  });
-  */
 
   return (
     <FormControl fullWidth>
