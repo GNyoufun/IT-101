@@ -15,6 +15,11 @@ const { GetAuthorizedResponse } = require("../apiRequest/AuthorizedRequest");
 
 const columns = [
   {
+    field: "GameTitle",
+    headerName: "Game",
+    width: 150,
+  },
+  {
     field: "date",
     headerName: "Date",
     width: 100,
@@ -40,9 +45,14 @@ const columns = [
     width: 200,
   },
   {
+    field: "ImageURL",
+    headerName: "Images",
+    width: 200,
+  },
+  {
     field: "comments",
     headerName: "Comments",
-    width: 400,
+    width: 200,
   },
 ];
 
@@ -156,7 +166,7 @@ export default function GameHistoryTable() {
           rows={raids}
           columns={columns}
           pageSize={12}
-          rowsPerPageOptions={[10]}
+          rowsPerPageOptions={[12]}
           onRowClick={handleEvent}
         />
       </div>
