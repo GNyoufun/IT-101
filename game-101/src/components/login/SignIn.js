@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 async function sendSignIn(formData) {
   // Clear user_token, user_id, and user_name from sessionStorage
@@ -95,16 +95,20 @@ export default function SignIn() {
       />
 
       <Grid container sx={{ justifyContent: "center" }}>
-        <Grid item>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            sx={{ my: 4, px: 4, borderRadius: "16px" }}
-          >
-            Sign In
-          </Button>
-        </Grid>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          sx={{ my: 4, px: 4, borderRadius: "16px" }}
+        >
+          Sign In
+        </Button>
+      </Grid>
+
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="error">
+          Please check your username or password again.
+        </Alert>
       </Grid>
     </Box>
   );

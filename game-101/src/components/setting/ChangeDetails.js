@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -115,6 +116,16 @@ export const ChangeDetails = (props) => {
                       <SubmitButton variant="contained" type="submit">
                         Submit
                       </SubmitButton>
+                    </Grid>
+                    <Grid sx={{ mt: 2, mb: 1 }}>
+                      <Alert variant="filled" severity="error">
+                        Change password failed.
+                      </Alert>
+                    </Grid>
+                    <Grid sx={{ mt: 2, mb: 1 }}>
+                      <Alert variant="filled" severity="success">
+                        Change password succeeded.
+                      </Alert>
                     </Grid>
                   </Grid>
                 </CardContent>
