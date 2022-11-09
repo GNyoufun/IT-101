@@ -139,7 +139,7 @@ export default function GameHistoryTable() {
         <BackButton
           variant="text"
           startIcon={<ArrowBackIcon />}
-          href="/history"
+          href={GameTitle !== "" ? "/history" : "/dashboard"}
         >
           Back
         </BackButton>
