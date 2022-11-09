@@ -19,16 +19,13 @@ import {
 export default function RecordForm(props) {
   // TODO: Check that the game date isn't in the future
   const [inputs, setInputs] = React.useState(props.defaultInput);
+  console.log("form team:" + inputs.team);
   let files = [];
 
   const handleSubmit = (event) => {
     // Prepare the data to send
     var sendData;
     sendData = { ...inputs, date: inputs.date.format("YYYY-MM-DD") };
-    
-    // print for testing
-    console.log(sendData);
-
     // Send the data
     props.sendReview(sendData, files);
 
@@ -40,7 +37,7 @@ export default function RecordForm(props) {
     e.preventDefault();
 
     files.push(e.target.files[0]);
-    console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
   };
 
   return (

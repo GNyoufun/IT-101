@@ -14,7 +14,7 @@ export default function SelectTeammates(props) {
     props.setInputs({ ...props.inputs, team: formatValue});
   };
 
-
+  // need to change
   const teammates = [
     { InGameID: "Brendan", Level: 20 },
     { InGameID: "Ella", Level: 32 },
@@ -41,6 +41,10 @@ export default function SelectTeammates(props) {
       renderInput={(params) => (
         <TextField name="team" {...params} label="Teammates" placeholder="Enter 'lv.__ username'" />
       )}
+      value={
+        props.inputs.team.map(
+          (option) => "lv." + option.Level + " " + option.InGameID
+        )}
     />
   );
 }

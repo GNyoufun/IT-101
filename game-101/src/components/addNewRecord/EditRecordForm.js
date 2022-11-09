@@ -50,10 +50,7 @@ export default function EditRecordForm() {
   if (data === undefined) {
     window.location.href = "/";
   }
-
-  //console.log(data.teamRaw);
   
-  // TODO: Make this data correctly update the form
   const defaultInput = {
     id: data.id,
     GameTitle: data.GameTitle, 
@@ -62,7 +59,7 @@ export default function EditRecordForm() {
     result: data.result,
     difficulty: data.difficulty,
     rating: data.rating,
-    team: [],//TODO       data.teamRaw
+    team: data.teamRaw,
     comments: data.comments,
   };
 
@@ -74,10 +71,7 @@ export default function EditRecordForm() {
     )
   }
 
-  //testing
-  //console.log("default:"+JSON.stringify(defaultInput));
-
   return (
-    <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
+    <RecordForm defaultIcnput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );
 }
