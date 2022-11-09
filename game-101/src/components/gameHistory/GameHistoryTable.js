@@ -45,7 +45,7 @@ const columns = [
     width: 200,
   },
   {
-    field: "ImageURL",
+    field: "images",
     headerName: "Images",
     width: 200,
   },

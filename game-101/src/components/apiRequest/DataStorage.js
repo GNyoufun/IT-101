@@ -189,6 +189,7 @@ function convertGameReviewsData(gameReviewsResponse) {
             result: gameReviewsResponse[i].Result,
             team: teammates,
             comments: gameReviewsResponse[i].comments,
+            images: gameReviewsResponse[i].ImageURL,
 
             dateRaw : gameReviewsResponse[i].Date,
             teamRaw : gameReviewsResponse[i].Team,
