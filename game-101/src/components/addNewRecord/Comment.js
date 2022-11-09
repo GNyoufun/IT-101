@@ -10,11 +10,12 @@ export default function Comment(props) {
   return (
     <TextField
       fullWidth
-      id='outlined-textarea'
-      label='Comment'
-      placeholder='Add your comment here'
+      id="outlined-textarea"
+      label="Comment"
+      placeholder="Add your comment here"
       multiline
       value={props.inputs.comments}
+      helperText={`${props.inputs.comments.length}/${150}`}
       onChange={handleChange}
       inputProps={{ maxLength: 150 }}
     />
