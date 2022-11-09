@@ -16,6 +16,7 @@ export default function Comment(props) {
       multiline
       value={props.inputs.comments}
       onChange={handleChange}
+      inputProps={{ maxLength: 150 }}
     />
   );
 }

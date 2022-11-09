@@ -8,10 +8,12 @@ import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 // TO DO!!! UPDATE REVIEW
 async function sendUpdateReview(sendData) {
-  var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
+  console.log(sendData);
+  var sendUrl = "/users/{user_id}/reviews/" + sendData.id;
+  var response = await GetAuthorizedResponse(sendUrl, "PUT", JSON.stringify(sendData));
   
   if (response.status === 200) {
-    window.location.href = "/";
+    window.location.href = "/dashboard";
     return true;
   } else {
     console.log("Error adding new raid.");
@@ -21,6 +23,10 @@ async function sendUpdateReview(sendData) {
 
 function getCorrectRow(data, id)
 {
+  if (data === undefined || data === null || data.length === 0)
+  {
+    return {};
+  }
   for (var i = 0; i < data.length; i++) {
     if (data[i].id === id) {
       return data[i];
@@ -49,6 +55,7 @@ export default function EditRecordForm() {
   
   // TODO: Make this data correctly update the form
   const defaultInput = {
+    id: data.id,
     GameTitle: data.GameTitle, 
     date: dayjs(data.dateRaw, "YYYY/MM/DD"),
     durations: data.durations,

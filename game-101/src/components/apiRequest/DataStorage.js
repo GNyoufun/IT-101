@@ -161,6 +161,8 @@ function convertGameReviewsData(gameReviewsResponse) {
     var GameReviewsData = [];
     for(let i = 0; i < gameReviewsResponse.length; i++) {
 
+        console.log(gameReviewsResponse[i]);
+
         // Construct the teammates string
         var teammates = "";
         for (let j = 0; j < gameReviewsResponse[i].Team.length; j++) {
