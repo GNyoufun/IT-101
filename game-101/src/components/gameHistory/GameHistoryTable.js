@@ -56,23 +56,19 @@ const columns = [
   },
 ];
 
+async function deleteRaid(id) {
+  if (id === undefined || id === null || id === "") {
+    return;
+  }
 
+  var url = "/users/{user_id}/reviews/" + id;
 
-async function deleteRaid(id)
-{
-    if (id === undefined || id === null || id === "")
-    {
-        return;
-    }
+  // Wait for the deletion to occur
+  var deleteProm = GetAuthorizedResponse(url, "DELETE");
+  await deleteProm;
 
-    var url = "/users/{user_id}/reviews/" + id;
-
-    // Wait for the deletion to occur
-    var deleteProm = GetAuthorizedResponse(url, "DELETE");
-    await deleteProm;
-
-    // Refresh the page
-    window.location.reload();
+  // Refresh the page
+  window.location.reload();
 }
 
 export default function GameHistoryTable() {
@@ -82,16 +78,15 @@ export default function GameHistoryTable() {
   const [raidId, setRaidId] = useState(null);
 
   // get game title from url
-  var gt = new URLSearchParams(useLocation().search).get("game")
-  const GameTitle = (gt == null) ? "" : gt;
+  var gt = new URLSearchParams(useLocation().search).get("game");
+  const GameTitle = gt == null ? "" : gt;
 
   const handleEvent = (params, event, details) => {
     setData(params.row);
 
     if (contextMenu) {
       setRaidId(null);
-    }
-    else {
+    } else {
       setRaidId(params.row.id);
     }
 
@@ -108,13 +103,12 @@ export default function GameHistoryTable() {
 
   const handleClose = (type) => {
     setContextMenu(null);
-    
+
     if (type === "delete") {
       deleteRaid(raidId);
     }
   };
 
-  
   async function retrieveRaids() {
     GetReviewsForGame(GameTitle).then((gameRaids) => {
       // Use the gameData to set the state of the gameList
@@ -130,7 +124,7 @@ export default function GameHistoryTable() {
 
     // retrive data
     retrieveRaids();
-    
+
     // load for 2 sec
     setTimeout(() => {
       setLoading(false);
@@ -160,19 +154,19 @@ export default function GameHistoryTable() {
       </Stack>
 
       {loading ? (
-      Loading()) : (raids.length > 0 ? (
-      <div style={{ height: 580, width: "100%" }}>
-        <DataGrid
-          rows={raids}
-          columns={columns}
-          pageSize={12}
-          rowsPerPageOptions={[12]}
-          onRowClick={handleEvent}
-        />
-      </div>
+        Loading()
+      ) : raids.length > 0 ? (
+        <div style={{ height: 580, width: "100%" }}>
+          <DataGrid
+            rows={raids}
+            columns={columns}
+            pageSize={12}
+            rowsPerPageOptions={[12]}
+            onRowClick={handleEvent}
+          />
+        </div>
       ) : (
         <Typography>No records found</Typography>
-      )
       )}
 
       <Menu
@@ -193,141 +187,8 @@ export default function GameHistoryTable() {
         >
           Edit
         </MenuItem>
-        <MenuItem
-          onClick={() => handleClose("delete")}
-        >
-          Delete
-        </MenuItem>
+        <MenuItem onClick={() => handleClose("delete")}>Delete</MenuItem>
       </Menu>
     </Container>
   );
 }
-
-/* dummy data */
-
-// function createData(
-//   raid_id,
-//   date,
-//   GameTitle,
-//   durations,
-//   difficulty,
-//   rating,
-//   team,
-//   result,
-//   comments
-// ) {
-//   const data = {
-//     id: raid_id,
-//     date: date,
-//     GameTitle: GameTitle,
-//     durations: durations,
-//     difficulty: difficulty,
-//     rating: rating,
-//     result: result,
-//     team: team,
-//     comments: comments,
-//   };
-//   return data;
-// }
-
-// const rows = [
-//   createData(
-//     1,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     5,
-//     8,
-//     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-//     "Win",
-//     "Really nice teammates, Really nice teammates, "
-//   ),
-//   createData(
-//     2,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     5,
-//     8,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-//   createData(
-//     3,
-//     "2022/09/11",
-//     "Overwatch",
-//     30,
-//     5,
-//     8,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-//   createData(
-//     4,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     5,
-//     8,
-//     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-//     "Win",
-//     "Really nice teammates, Really nice teammates,"
-//   ),
-//   createData(
-//     5,
-//     "2022/09/11",
-//     "Final Fantasy XIV",
-//     30,
-//     9,
-//     8,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-//   createData(
-//     6,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     6,
-//     7,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-//   createData(
-//     7,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     5,
-//     9,
-//     "12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345, 12138, 12345",
-//     "Win",
-//     "Really nice teammates, Really nice teammates"
-//   ),
-//   createData(
-//     8,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     8,
-//     9,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-//   createData(
-//     9,
-//     "2022/09/11",
-//     "League of Legends",
-//     30,
-//     5,
-//     8,
-//     "12138, 12345",
-//     "Win",
-//     "Really nice teammates"
-//   ),
-// ];
