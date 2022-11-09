@@ -95,7 +95,7 @@ export default function MostWon() {
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
-                stroke={false}
+                stroke={0}
               />
             ))}
           </Pie>
