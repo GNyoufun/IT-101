@@ -5,13 +5,13 @@ import defaultImage from "../../style/defaultGame.png";
 
 export default function GameCard(props) {
   const name = props.game.name;
-  const cover = defaultImage; // need to change
+  const cover = (props.game.cover !== null ? props.game.cover : defaultImage); // need to change
 
   const GameImgStyle = styled("img")({
     top: 0,
     width: "100%",
     height: "100%",
-    objectFit: "cover",
+    objectFit: "scale-down",
     position: "absolute",
   });
 

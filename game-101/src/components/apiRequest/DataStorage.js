@@ -122,25 +122,6 @@ async function retrieveDashboardData()
 }
 
 
-export async function DeleteRaid(id)
-{
-    if (id === undefined || id === null || id === "")
-    {
-        return;
-    }
-
-    var url = "/users/{user_id}/reviews/" + id;
-
-    // Wait for the deletion to occur
-    var deleteProm = GetAuthorizedResponse(url, "DELETE");
-    var response = await deleteProm;
-
-    if (response.status === 200) {
-        var responseData = await response.json();
-        console.log(responseData);
-    }
-}
-
 export async function GetDashboardContent()
 {
     // TODO: Avoid double requesting with && dashboardPromise == null
@@ -245,7 +226,7 @@ async function retrieveGameData()
 
         // Take the game names and put them in a list
         var gameNames = [];
-        for (var i = 0; i < responseData.length; i++) {
+        for (let i = 0; i < responseData.length; i++) {
             gameNames.push(responseData[i].GameTitle);
         }
 
@@ -254,13 +235,14 @@ async function retrieveGameData()
 
         // Set the game data
         var g = [];
-        for (var i = 0; i < responseData.length; i++) {
+        for (let i = 0; i < responseData.length; i++) {
           g.push({
             id: responseData[i].id || i,
             name: responseData[i].GameTitle || "No Title",
             type: responseData[i].GameType || "No Type",
-            cover: responseData[i].Image || "No Cover",
+            cover: responseData[i].GameImageUrl || "No Cover",
           });
+          console.log(responseData[i]);
         }
 
         gameData = g;
