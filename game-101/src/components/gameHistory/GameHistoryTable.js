@@ -13,6 +13,9 @@ import { GetReviewsForGame } from "../apiRequest/DataStorage";
 
 const { GetAuthorizedResponse } = require("../apiRequest/AuthorizedRequest");
 
+
+const thumbnail = {height: '50px' };
+
 const columns = [
   {
     field: "GameTitle",
@@ -35,6 +38,11 @@ const columns = [
     width: 80,
   },
   {
+    field: "rating",
+    headerName: "Rating",
+    width: 80,
+  },
+  {
     field: "result",
     headerName: "Result",
     width: 80,
@@ -48,6 +56,7 @@ const columns = [
     field: "images",
     headerName: "Images",
     width: 200,
+    renderCell: (params) => <img style={thumbnail} src={params.value} />
   },
   {
     field: "comments",
@@ -71,11 +80,14 @@ async function deleteRaid(id) {
   window.location.reload();
 }
 
+
 export default function GameHistoryTable() {
   const [contextMenu, setContextMenu] = useState(null);
   const [data, setData] = useState(null);
   const [raids, setRaidData] = useState([]);
   const [raidId, setRaidId] = useState(null);
+
+  
 
   // get game title from url
   var gt = new URLSearchParams(useLocation().search).get("game");
@@ -113,6 +125,7 @@ export default function GameHistoryTable() {
     GetReviewsForGame(GameTitle).then((gameRaids) => {
       // Use the gameData to set the state of the gameList
       setRaidData(gameRaids);
+      console.log(gameRaids);
       setLoading(false);
     });
   }
