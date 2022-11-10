@@ -11,7 +11,7 @@ export default function GameList() {
 
   async function retrieveGames() {
     GetAllGames().then((gameData) => {
-      console.log(gameData);
+      //console.log(gameData);
       // Use the gameData to set the state of the gameList
       setAllGames(gameData);
       setLoading(false);
