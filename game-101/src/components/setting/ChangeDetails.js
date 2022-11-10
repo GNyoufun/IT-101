@@ -13,9 +13,30 @@ import {
 
 import security from "../../style/security.svg";
 import { DeleteButton, SubmitButton } from "../../style/buttonStyle";
+import { useState } from "react";
+import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 /* router: /setting */
 export const ChangeDetails = (props) => {
+  const [successfulChange, setSuccessfulChange] = useState(null);
+
+  // Sends a password change to the API
+  async function sendPasswordChange(newPassword) {
+    var response = GetAuthorizedResponse("/users/{user_id}", "PUT")
+    await response;
+    // Set successful change to true or false accordingly
+    setSuccessfulChange(response.status === 200);
+  }
+
+  // Handle Password Change
+  function handlePasswordChange(event) {
+    console.log(event);
+    event.preventDefault();
+    
+    // Call the API to change the password
+    sendPasswordChange("[NEW PASSWORD]"); // TODO: Get the new password from the form
+  }
+
   return (
     <form autoComplete="off" noValidate {...props}>
       <Box
@@ -92,6 +113,11 @@ export const ChangeDetails = (props) => {
                         variant="outlined"
                         margin="normal"
                         type="password"
+                        // Submit on enter
+                        onKeyPress={(e) => {
+                          e.key === "Enter" && handlePasswordChange(e);
+                        }}
+                        onSubmit={handlePasswordChange}
                       />
                       {/* Enter new password */}
                       <TextField
@@ -102,6 +128,10 @@ export const ChangeDetails = (props) => {
                         variant="outlined"
                         margin="normal"
                         type="password"
+                        onKeyPress={(e) => {
+                          e.key === "Enter" && handlePasswordChange(e);
+                        }}
+                        onSubmit={handlePasswordChange}
                       />
                       {/* Confirm new password */}
                       <TextField
@@ -112,24 +142,32 @@ export const ChangeDetails = (props) => {
                         variant="outlined"
                         margin="normal"
                         type="password"
+                        onKeyPress={(e) => {
+                          e.key === "Enter" && handlePasswordChange(e);
+                        }}
+                        onSubmit={handlePasswordChange}
                       />
                     </Grid>
 
                     <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
-                      <SubmitButton variant="contained" type="submit">
+                      <SubmitButton variant="contained" type="submit" onClick={handlePasswordChange}>
                         Submit
                       </SubmitButton>
                     </Grid>
+                    {successfulChange === false ? (
                     <Grid sx={{ mt: 2, mb: 1 }}>
                       <Alert variant="filled" severity="error">
                         Change password failed.
                       </Alert>
                     </Grid>
+                    ) : (null)}
+                    {successfulChange === true ? (
                     <Grid sx={{ mt: 2, mb: 1 }}>
                       <Alert variant="filled" severity="success">
                         Change password succeeded.
                       </Alert>
                     </Grid>
+                    ) : (null)}
                   </Grid>
                 </CardContent>
               </Card>
