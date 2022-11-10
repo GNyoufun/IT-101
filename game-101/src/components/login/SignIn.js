@@ -2,15 +2,7 @@ import * as React from "react";
 
 import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
-import {
-  Alert,
-  Box,
-  Button,
-  Grid,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 async function sendSignIn(formData) {
   // Clear user_token, user_id, and user_name from sessionStorage
@@ -54,7 +46,7 @@ export default function SignIn() {
     sessionStorage.clear();
   }, []);
 
-  const [fail, setFail] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const handleSubmit = (event) => {
     // Prevent default behaviour
@@ -65,8 +57,10 @@ export default function SignIn() {
     // TODO: Check validity of form data for username, password, and email before running sendSignUp()
 
     // Send the data to the server
-    if (!sendSignIn(data)) {
-      setFail(true);
+    if (sendSignIn(data)) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
     }
   };
 
@@ -115,14 +109,19 @@ export default function SignIn() {
         </Button>
       </Grid>
 
-      {fail ? (
+      {success ? (
         <Grid container sx={{ justifyContent: "center" }}>
-          <Alert variant="filled" severity="error">
-            Please check your username or password again.
+          <Alert variant="filled" severity="success">
+            Login successful
           </Alert>
         </Grid>
       ) : (
-        <Typography>Good</Typography>
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="error">
+            Please enter correct username or password to continue using your
+            account.
+          </Alert>
+        </Grid>
       )}
     </Box>
   );
