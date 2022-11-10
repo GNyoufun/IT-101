@@ -21,7 +21,10 @@ export default function GameCard(props) {
   });
 
   return (
-    <Card>
+    <Card  sx={{
+      maxWidth: "220px",
+      my: 1
+    }}>
       <CardActionArea
         component={Link}
         to={{
@@ -33,15 +36,16 @@ export default function GameCard(props) {
         <Box
           sx={{
             pt: "100%",
+            width: "220px",
+            height: "330px",
             position: "relative",
-            height: "300px",
           }}
         >
-          <GameImgStyle alt={name} src={cover} />
+          <GameImgStyle alt={name} sx= {{objectFit: "contain"}} src={cover} />
         </Box>
 
         {/* Game's name */}
-        <Stack spacing={2} sx={{ p: 1.5 }}>
+        <Stack spacing={2} sx={{ p: 1}}>
           <Typography variant="subtitle2" noWrap>
             {name}
           </Typography>
