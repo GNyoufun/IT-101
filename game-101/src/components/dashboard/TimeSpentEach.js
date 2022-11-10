@@ -54,6 +54,7 @@ export default function TimeSpentEach() {
   return (
     <React.Fragment>
       <Title>7 Day Playtime Summary</Title>
+      {data.length !== 0 ? (
       <ResponsiveContainer>
         <BarChart
           data={data}
@@ -88,6 +89,9 @@ export default function TimeSpentEach() {
           </YAxis>
         </BarChart>
       </ResponsiveContainer>
+      ) : (
+        <div>No available data.</div>
+      )}
     </React.Fragment>
   );
 }
