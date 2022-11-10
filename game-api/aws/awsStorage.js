@@ -18,6 +18,7 @@ const s3 = new AWS.S3({
 /**
  * Upload sets of image to S3
  * @param {Object} files Collection of image files to upload
+ * @param {String} user_id The current user id
  * @returns A list of urls of uploaded images
  */
 async function uploadAWS(files, user_id) {
@@ -36,9 +37,10 @@ async function uploadAWS(files, user_id) {
 
 /**
  * Uploads an image to S3
- * @param imageName Image name
- * @param base64Image Image body converted to base 64
- * @param type Image type
+ * @param {String} user_id The current user id
+ * @param {String} imageName Image name
+ * @param {String} base64Image Image body converted to base 64
+ * @param {String} type Image type
  * @return string S3 image URL or error accordingly
  */
 async function upload(user_id, imageName, base64Image, type){
@@ -63,7 +65,7 @@ async function upload(user_id, imageName, base64Image, type){
 }
 /**
  * Promise an upload to S3
- * @param params S3 bucket params
+ * @param {String} params S3 bucket params
  * @return data/err S3 response object
  */
 function promiseUpload(params) {
