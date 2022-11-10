@@ -5,7 +5,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { DataGrid } from "@mui/x-data-grid";
 import { Menu, MenuItem, Container, Stack, Typography } from "@mui/material";
 
-import { SearchBar } from "./";
 import { AddNewButton, BackButton } from "../../style/buttonStyle";
 
 import Loading from "../apiRequest/DataStorage";
@@ -13,8 +12,7 @@ import { GetReviewsForGame } from "../apiRequest/DataStorage";
 
 const { GetAuthorizedResponse } = require("../apiRequest/AuthorizedRequest");
 
-
-const thumbnail = {height: '50px' };
+const thumbnail = { height: "50px" };
 
 const columns = [
   {
@@ -56,7 +54,7 @@ const columns = [
     field: "images",
     headerName: "Images",
     width: 200,
-    renderCell: (params) => <img style={thumbnail} src={params.value} />
+    renderCell: (params) => <img style={thumbnail} src={params.value} />,
   },
   {
     field: "comments",
@@ -80,14 +78,11 @@ async function deleteRaid(id) {
   window.location.reload();
 }
 
-
 export default function GameHistoryTable() {
   const [contextMenu, setContextMenu] = useState(null);
   const [data, setData] = useState(null);
   const [raids, setRaidData] = useState([]);
   const [raidId, setRaidId] = useState(null);
-
-  
 
   // get game title from url
   var gt = new URLSearchParams(useLocation().search).get("game");
@@ -160,7 +155,6 @@ export default function GameHistoryTable() {
         >
           Back
         </BackButton>
-        <SearchBar />
         <AddNewButton variant="contained" href="/add-record" disableRipple>
           + New Record
         </AddNewButton>

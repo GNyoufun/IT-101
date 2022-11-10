@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Alert,
   Box,
@@ -13,7 +15,6 @@ import {
 
 import security from "../../style/security.svg";
 import { DeleteButton, SubmitButton } from "../../style/buttonStyle";
-import { useState } from "react";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 /* router: /setting */
@@ -22,7 +23,7 @@ export const ChangeDetails = (props) => {
 
   // Sends a password change to the API
   async function sendPasswordChange(newPassword) {
-    var response = GetAuthorizedResponse("/users/{user_id}", "PUT")
+    var response = GetAuthorizedResponse("/users/{user_id}", "PUT");
     await response;
     // Set successful change to true or false accordingly
     setSuccessfulChange(response.status === 200);
@@ -32,7 +33,7 @@ export const ChangeDetails = (props) => {
   function handlePasswordChange(event) {
     console.log(event);
     event.preventDefault();
-    
+
     // Call the API to change the password
     sendPasswordChange("[NEW PASSWORD]"); // TODO: Get the new password from the form
   }
@@ -60,7 +61,6 @@ export const ChangeDetails = (props) => {
             md={7}
             spacing={3}
             alignItems="center"
-            
           >
             {/* Display username */}
             <Grid item xs={12}>
@@ -150,24 +150,28 @@ export const ChangeDetails = (props) => {
                     </Grid>
 
                     <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
-                      <SubmitButton variant="contained" type="submit" onClick={handlePasswordChange}>
+                      <SubmitButton
+                        variant="contained"
+                        type="submit"
+                        onClick={handlePasswordChange}
+                      >
                         Submit
                       </SubmitButton>
                     </Grid>
                     {successfulChange === false ? (
-                    <Grid sx={{ mt: 2, mb: 1 }}>
-                      <Alert variant="filled" severity="error">
-                        Change password failed.
-                      </Alert>
-                    </Grid>
-                    ) : (null)}
+                      <Grid sx={{ mt: 2, mb: 1 }}>
+                        <Alert variant="filled" severity="error">
+                          Change password failed.
+                        </Alert>
+                      </Grid>
+                    ) : null}
                     {successfulChange === true ? (
-                    <Grid sx={{ mt: 2, mb: 1 }}>
-                      <Alert variant="filled" severity="success">
-                        Change password succeeded.
-                      </Alert>
-                    </Grid>
-                    ) : (null)}
+                      <Grid sx={{ mt: 2, mb: 1 }}>
+                        <Alert variant="filled" severity="success">
+                          Change password succeeded.
+                        </Alert>
+                      </Grid>
+                    ) : null}
                   </Grid>
                 </CardContent>
               </Card>

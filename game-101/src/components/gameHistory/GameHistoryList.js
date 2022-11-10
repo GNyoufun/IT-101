@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Stack } from "@mui/material";
 import Loading from "../apiRequest/DataStorage";
 
-import { GameList, SearchBar } from "./";
+import { GameList } from "./";
 import { AddNewButton } from "../../style/buttonStyle";
 
 import { GetAllGames } from "../apiRequest/DataStorage";
@@ -58,14 +58,7 @@ export default function GameHistoryList() {
         Loading()
       ) : (
         <Container>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            px={4}
-            py={4}
-          >
-            <SearchBar />
+          <Stack direction="row" justifyContent="end" px={4} py={4}>
             <AddNewButton variant="contained" href="/add-game" disableRipple>
               + New Game
             </AddNewButton>

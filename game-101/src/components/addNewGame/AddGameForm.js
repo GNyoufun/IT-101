@@ -17,15 +17,18 @@ async function sendNewGame(formData) {
   // Make the send data into a json object
   var sendData = {
     GameTitle: formData.get("GameTitle"),
-    GameType: formData.get("GameType")
+    GameType: formData.get("GameType"),
   };
 
   // Get the response from the server
-  var response = await GetAuthorizedResponse("/users/{user_id}/games", "POST", JSON.stringify(sendData));
+  var response = await GetAuthorizedResponse(
+    "/users/{user_id}/games",
+    "POST",
+    JSON.stringify(sendData)
+  );
 
   if (response.status === 200) {
     // Game successfully added, redirect to the home page
-    // TODO: Use a React Router redirect
     window.location.href = "/history";
     return true;
   } else {
@@ -41,8 +44,6 @@ export default function AddGameForm() {
     event.preventDefault();
     // Get the form data
     const data = new FormData(event.currentTarget);
-
-    // TODO: Check that this game hasn't already been recently sent
 
     // Send the data to the server
     sendNewGame(data);

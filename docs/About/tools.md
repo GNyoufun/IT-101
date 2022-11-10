@@ -8,7 +8,7 @@ nav_order: 4
 
 ## Front End
 
-The front end will use [React](https://reactjs.org/) due to it's maturity and avilability of resources.
+The front end will use [React](https://reactjs.org/) due to it's maturity and availability of resources.
 
 #### Coding Style
 
@@ -40,4 +40,4 @@ For example, [Postman](https://www.postman.com/) is used to test the backend api
 ## Deployment
 
 The application will be deployed to [Heroku](https://www.heroku.com/) through a GitHub Actions pipeline.
-The current deployment can be found [here](https://game-101-heroku.herokuapp.com/). 
+The current deployment can be found [here](https://game-101-heroku.herokuapp.com/).
