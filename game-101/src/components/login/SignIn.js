@@ -46,22 +46,22 @@ export default function SignIn() {
     sessionStorage.clear();
   }, []);
 
-  const [success, setSuccess] = React.useState(false);
+  //const [success, setSuccess] = React.useState(false);
 
   const handleSubmit = (event) => {
     // Prevent default behaviour
     event.preventDefault();
+
     // Get the form data
     const data = new FormData(event.currentTarget);
 
-    // TODO: Check validity of form data for username, password, and email before running sendSignUp()
-
     // Send the data to the server
-    if (sendSignIn(data)) {
+    sendSignIn(data);
+    /* if (sendSignIn(data)) {
       setSuccess(true);
     } else {
       setSuccess(false);
-    }
+    } */
   };
 
   return (
@@ -109,7 +109,7 @@ export default function SignIn() {
         </Button>
       </Grid>
 
-      {success ? (
+      {/* {success ? (
         <Grid container sx={{ justifyContent: "center" }}>
           <Alert variant="filled" severity="success">
             Login successful
@@ -117,12 +117,27 @@ export default function SignIn() {
         </Grid>
       ) : (
         <Grid container sx={{ justifyContent: "center" }}>
-          <Alert variant="filled" severity="error">
-            Please enter correct username or password to continue using your
-            account.
+          <Alert variant="filled" severity="info">
+            Please enter your username or password.
           </Alert>
         </Grid>
-      )}
+      )} */}
+
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="success">
+          Login successful
+        </Alert>
+      </Grid>
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="info">
+          Please enter your username or password.
+        </Alert>
+      </Grid>
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="error">
+          Please enter correct username or password.
+        </Alert>
+      </Grid>
     </Box>
   );
 }
