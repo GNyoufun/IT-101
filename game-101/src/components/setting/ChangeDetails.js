@@ -17,6 +17,7 @@ import security from "../../style/security.svg";
 import { DeleteButton, SubmitButton } from "../../style/buttonStyle";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
+
 /* router: /setting */
 export const ChangeDetails = (props) => {
   const [successfulChange, setSuccessfulChange] = useState(null);
@@ -33,6 +34,16 @@ export const ChangeDetails = (props) => {
         setSuccessfulChange(true);
       } else {
         setSuccessfulChange(false);
+      }
+    });
+  }
+
+  // Sends a delete account request to the API
+  async function sendDeleteAccount() {
+    var response = GetAuthorizedResponse("/users/{user_id}", "DELETE");
+    await response.then((response) => {
+      if (response.status === 200) {
+        window.location.href = "/";
       }
     });
   }
@@ -72,21 +83,23 @@ export const ChangeDetails = (props) => {
   const handleDeleteAccount = (event) => {
     event.preventDefault();
 
-    console.log(event);
+    // Get the form data
+    const data = new FormData(event.currentTarget);
 
-    // Call the API to delete the account
-    //sendDeleteAccount(); // TODO: Send the delete account request
+    console.log(data.get("delete-account"));
+
+    if (data.get("delete-account") === "delete-account") {
+      sendDeleteAccount();
+    }
   };
 
   return (
     <Box
-      component="form"
       display="flex"
       sx={{
         height: "100vh",
         overflow: "auto",
       }}
-      onSubmit={handlePasswordChange}
     >
       <Grid container sx={{ m: 4 }}>
         <Grid
@@ -127,7 +140,9 @@ export const ChangeDetails = (props) => {
           </Grid>
 
           {/* Change Password */}
-          <Grid item xs={12}>
+          <Grid item xs={12}
+            component="form"
+            onSubmit={handlePasswordChange}>
             <Card sx={{ p: 2 }}>
               <CardHeader subheader="Update Password" title="Password" />
               <Divider />
@@ -208,18 +223,22 @@ export const ChangeDetails = (props) => {
           </Grid>
 
           {/* Delete User */}
-          <Grid item xs={12}>
+          <Grid item xs={12}
+            component="form"
+            onSubmit={handleDeleteAccount}>
             <Card sx={{ p: 2 }}>
               <CardHeader title="Delete My Account" />
               <Divider />
               <CardContent>
                 <FormControlLabel
                   value="delete-account"
+                  id="delete-account"
+                  name="delete-account"
                   control={<Radio />}
                   label="By clicking this, I understand I my account will be permanently deleted."
                 />
                 <Grid mt={2}>
-                  <DeleteButton variant="contained">
+                  <DeleteButton variant="contained" type="submit">
                     Delete My Account
                   </DeleteButton>
                 </Grid>
