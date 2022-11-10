@@ -2,7 +2,15 @@ import * as React from "react";
 
 import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
-import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 async function sendSignIn(formData) {
   // Clear user_token, user_id, and user_name from sessionStorage
@@ -46,6 +54,8 @@ export default function SignIn() {
     sessionStorage.clear();
   }, []);
 
+  const [fail, setFail] = React.useState(false);
+
   const handleSubmit = (event) => {
     // Prevent default behaviour
     event.preventDefault();
@@ -55,7 +65,9 @@ export default function SignIn() {
     // TODO: Check validity of form data for username, password, and email before running sendSignUp()
 
     // Send the data to the server
-    sendSignIn(data);
+    if (!sendSignIn(data)) {
+      setFail(true);
+    }
   };
 
   return (
@@ -72,7 +84,6 @@ export default function SignIn() {
         <Typography variant="h4">Welcome</Typography>
         <Typography variant="h6">Sign in to continue!</Typography>
       </Box>
-
       <TextField
         margin="normal"
         required
@@ -93,7 +104,6 @@ export default function SignIn() {
         id="password"
         autoComplete="current-password"
       />
-
       <Grid container sx={{ justifyContent: "center" }}>
         <Button
           type="submit"
@@ -105,11 +115,15 @@ export default function SignIn() {
         </Button>
       </Grid>
 
-      <Grid container sx={{ justifyContent: "center" }}>
-        <Alert variant="filled" severity="error">
-          Please check your username or password again.
-        </Alert>
-      </Grid>
+      {fail ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="error">
+            Please check your username or password again.
+          </Alert>
+        </Grid>
+      ) : (
+        <Typography>Good</Typography>
+      )}
     </Box>
   );
 }
