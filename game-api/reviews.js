@@ -111,7 +111,7 @@ module.exports = function (app) {
 
             // TODO: Add upload function call 
             const files = req.body.imageFiles
-            urls = await uploadAWS(files);
+            urls = await uploadAWS(files, req.params.user_id);
         
             // add the new review
             const raidReview = {

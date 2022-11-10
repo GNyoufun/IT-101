@@ -2,11 +2,12 @@ const pathResolve = require('node:path');
 require('dotenv').config({ path: pathResolve.resolve(__dirname, '../../.env') });
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const crypto = require('crypto')
 
-const bucket_name = process.env.AWS_BUCKET_NAME
-const region = process.env.AWS_BUCKET_REGION
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID
-const secretAccessKey = process.env.AWS_SECRET_KEY
+const bucket_name = process.env.AWS_BUCKET_NAME;
+const region = process.env.AWS_BUCKET_REGION;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_KEY;
   
 const s3 = new AWS.S3({
   accessKeyId: accessKeyId,
@@ -19,14 +20,14 @@ const s3 = new AWS.S3({
  * @param {Object} files Collection of image files to upload
  * @returns A list of urls of uploaded images
  */
-async function uploadAWS(files) {
+async function uploadAWS(files, user_id) {
   let urls = [];
 
   for(let imageName in files){
     let base64Image = files[imageName][1];
     let type = files[imageName][0];
 
-    let uploaded = await upload(imageName, base64Image, type);
+    let uploaded = await upload(user_id, imageName, base64Image, type);
     urls.push(uploaded);
   }
   
@@ -40,13 +41,14 @@ async function uploadAWS(files) {
  * @param type Image type
  * @return string S3 image URL or error accordingly
  */
-async function upload(imageName, base64Image, type){
+async function upload(user_id, imageName, base64Image, type){
   const params = {
-    Bucket: `${bucket_name}/Images`,
-    Key: imageName,
+    Bucket: `${bucket_name}/Images/${user_id}`,
+    Key: `${crypto.randomBytes(32).toString('hex')}${imageName}`,
     Body: new Buffer.from(base64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
     ContentType: type
   };
+  console.log(params);
 
   let data;
 
@@ -82,7 +84,8 @@ function promiseUpload(params) {
  */
 async function deleteAWS(urls) {
   for(let i = 0; i < urls.length; i++) {
-    let fileName = "Images/" + urls[i].split('/').at(-1);
+    let pathName = urls[i].split("/").slice(-2);
+    let fileName = `Images/${pathName[0]}/${pathName[1]}`;
     s3.deleteObject({
       Bucket: bucket_name,
       Key: fileName

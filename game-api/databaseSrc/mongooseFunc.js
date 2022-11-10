@@ -97,16 +97,19 @@ function FindReplaceCollection (collect, finddocs, changes, returnedDoc = false)
 async function deleteCollection (collect, docs) {
   let deleted;
   try {
-    try{
-      let tobeDeleted = await retrieveCollection(collect, docs);
-      for(let i = 0; i < tobeDeleted.length; i++){
-        let images = tobeDeleted[i].ImageURL
-        await deleteAWS(images)
+    if (collect === review){
+      try{
+        let tobeDeleted = await retrieveCollection(collect, docs);
+        for(let i = 0; i < tobeDeleted.length; i++){
+          let images = tobeDeleted[i].ImageURL;
+          await deleteAWS(images);
+        }
+        
+      }catch(err){
+        console.error(err);
       }
-      
-    }catch(err){
-      console.error(err);
     }
+    
 
     deleted = await collect.collection.deleteMany(docs);
     if (deleted.deletedCount === 0) {
