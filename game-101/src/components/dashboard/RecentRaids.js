@@ -12,26 +12,10 @@ import {
 import Title from "./Title";
 import { GetDashboardContent } from "../apiRequest/DataStorage";
 
-// Generate Order Data
-// function createData(id, date, name, game, outcome) {
-//   return { id, date, name, game, outcome };
-// }
-
-// const rows = [
-//   createData(0, "17 Mar, 2022", "C", "LOL", "Draw"),
-//   createData(1, "16 Mar, 2022", "B", "LOL", "Win"),
-//   createData(2, "16 Mar, 2022", "C", "Overwatch", "Win"),
-// ];
-
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 export default function Orders() {
   // Update the state to have new data
   const [rows, setData] = React.useState([]);
-  
+
   async function retrieveRaids() {
     GetDashboardContent().then((dashboardContent) => {
       // All the data is available, set it
@@ -67,7 +51,7 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="/table"  sx={{ mt: 3 }} to="">
+      <Link color="primary" href="/table" sx={{ mt: 3 }} to="">
         See more
       </Link>
     </React.Fragment>
