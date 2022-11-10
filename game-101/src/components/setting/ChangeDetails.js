@@ -52,8 +52,6 @@ export const ChangeDetails = (props) => {
   const handlePasswordChange = (event) => {
     event.preventDefault();
 
-    console.log(event);
-
     // Get the form data
     const data = new FormData(event.currentTarget);
 
@@ -69,8 +67,6 @@ export const ChangeDetails = (props) => {
       newPassword: data.get("newPassword"),
       username: sessionStorage.getItem("user_name"),
     };
-
-    console.log(passwordChange);
 
     // Send the data to the server
     sendPasswordChange(passwordChange);

@@ -15,7 +15,7 @@ export default function DashboardContent() {
     GetDashboardContent().then((dashboardContent) => {
       // All the data is available, set it
       //setData(dashboardContent.RecentRaids);
-      console.log(dashboardContent);
+      //console.log(dashboardContent);
       setLoading(false);
     });
   }
