@@ -4,7 +4,6 @@ import { Autocomplete, Chip, TextField } from "@mui/material";
 import { GetTeammatesForGame } from "../apiRequest/DataStorage";
 
 export default function SelectTeammates(props) {
-  
   const handleChange = (e, newValues) => {
     var formatValue = [];
     // loop for each teammate i
@@ -12,11 +11,13 @@ export default function SelectTeammates(props) {
       var id_n_level = newValues[i].replace("lv.", "").split(" ");
       formatValue[i] = { InGameID: id_n_level[1], Level: id_n_level[0] };
     }
-    props.setInputs({ ...props.inputs, team: formatValue});
+    props.setInputs({ ...props.inputs, team: formatValue });
   };
 
   // need to change
-  const [teammates, setTeammates] = React.useState([{InGameID: "Loading...", Level: 1}]);
+  const [teammates, setTeammates] = React.useState([
+    { InGameID: "Loading...", Level: 1 },
+  ]);
 
   // On load, update the teammates
   React.useEffect(() => {
@@ -45,12 +46,16 @@ export default function SelectTeammates(props) {
         ))
       }
       renderInput={(params) => (
-        <TextField name="team" {...params} label="Teammates" placeholder="Enter 'lv.__ username'" />
+        <TextField
+          name="team"
+          {...params}
+          label="Teammates"
+          placeholder="Please enter 'lv.__ username' and press Enter"
+        />
       )}
-      value={
-        props.inputs.team.map(
-          (option) => "lv." + option.Level + " " + option.InGameID
-        )}
+      value={props.inputs.team.map(
+        (option) => "lv." + option.Level + " " + option.InGameID
+      )}
     />
   );
 }
