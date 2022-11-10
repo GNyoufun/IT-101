@@ -50,7 +50,6 @@ async function upload(user_id, imageName, base64Image, type){
     Body: new Buffer.from(base64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
     ContentType: type
   };
-  console.log(params);
 
   let data;
 
