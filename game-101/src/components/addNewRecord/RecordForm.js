@@ -1,6 +1,16 @@
 import * as React from "react";
 
-import { Box, Button, Container, Grid, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Grid,
+  Paper,
+} from "@mui/material";
 import { SubmitButton } from "../../style/buttonStyle";
 import {
   Comment,
@@ -18,6 +28,9 @@ export default function RecordForm(props) {
   // TODO: Check that the game date isn't in the future
   const [inputs, setInputs] = React.useState(props.defaultInput);
   const [files, setFiles] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const MAX_FILE_SIZE = 2048;
+  const MAX_FILES = 5;
 
   const handleSubmit = (event) => {
     // Prepare the data to send
@@ -32,15 +45,22 @@ export default function RecordForm(props) {
 
   const getFiles = (e) => {
     e.preventDefault();
-    setFiles([...files, e.target.files[0]]);
+    if (files.length == MAX_FILES) {
+      handleClickOpen();
+    } else if (e.target.files[0].size / 1024 > MAX_FILE_SIZE){
+      handleClickOpen();
+    }else {
+      setFiles([...files, e.target.files[0]]);
+    }
   };
 
-  function onSelect(e) {
-    if (e.files.length > 5) {
-      alert("Only 5 files accepted.");
-      e.preventDefault();
-    }
-  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box
@@ -130,13 +150,13 @@ export default function RecordForm(props) {
               >
                 {files.map((img, index) => (
                   <img
-                    border={2}
+                    border={1}
                     style={{
                       maxHeight: "40px",
-                      maxWidth: "60px",
+                      maxWidth: "55px",
                       margin: 2,
                       borderRadius: 2,
-                      borderColor: '#3071E8'
+                      borderColor: "#3071E8",
                     }}
                     src={URL.createObjectURL(img)}
                     key={index}
@@ -154,6 +174,21 @@ export default function RecordForm(props) {
           </Grid>
         </Paper>
       </Container>
+
+       {/* image upload warning */}
+      <Dialog open={open} onClose={handleClose} aria-labelledby="maxfile">
+        <DialogContent>
+          <DialogContentText>
+            The maximum number of image files, {MAX_FILES}, has been exceeded,
+            or the file you have uploaded exceeded the maximum size of {MAX_FILE_SIZE} KB.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
