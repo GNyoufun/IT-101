@@ -1,7 +1,8 @@
 import * as React from "react";
-
 import dayjs from "dayjs";
+
 import { Box, Typography } from "@mui/material";
+
 import RecordForm from "./RecordForm";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
@@ -13,20 +14,20 @@ async function processImages(files) {
     let imageName = files[i].name;
     let dataType = files[i].type;
     const convertedFile = await convertToBase64(files[i]);
-    convertedFiles[imageName] = [dataType,convertedFile]
+    convertedFiles[imageName] = [dataType, convertedFile];
   }
 
   return convertedFiles;
 }
 
-async function convertToBase64 (file) {
-  return new Promise(resolve => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-          resolve(reader.result);
-      }
-  })
+async function convertToBase64(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+  });
 }
 
 // Sends a new record to the server
@@ -36,8 +37,12 @@ async function sendNewReview(sendData, imageFiles) {
   console.log(processed);
   console.log(sendData);
 
-  var response = await GetAuthorizedResponse("/users/{user_id}/reviews", "POST", JSON.stringify(sendData));
-  
+  var response = await GetAuthorizedResponse(
+    "/users/{user_id}/reviews",
+    "POST",
+    JSON.stringify(sendData)
+  );
+
   if (response.status === 200) {
     // Review successfully added, redirect to the home page
     // TODO: Use a React Router redirect
@@ -66,14 +71,18 @@ export default function AddRecordForm() {
   };
 
   function title() {
-    return(
+    return (
       <Box sx={{ my: 3 }}>
         <Typography variant="h4">Add New Raid Record</Typography>
       </Box>
-    )
+    );
   }
 
   return (
-    <RecordForm defaultInput={defaultInput} sendReview={sendNewReview} title={title} />
+    <RecordForm
+      defaultInput={defaultInput}
+      sendReview={sendNewReview}
+      title={title}
+    />
   );
 }
