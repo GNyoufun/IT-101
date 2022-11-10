@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Autocomplete, Chip, TextField } from "@mui/material";
+import { GetTeammatesForGame } from "../apiRequest/DataStorage";
 
 export default function SelectTeammates(props) {
   
@@ -15,13 +16,18 @@ export default function SelectTeammates(props) {
   };
 
   // need to change
-  const teammates = [
-    { InGameID: "Brendan", Level: 20 },
-    { InGameID: "Ella", Level: 32 },
-    { InGameID: "Ishaann", Level: 34 },
-    { InGameID: "Jessica", Level: 48 },
-    { InGameID: "Patrick", Level: 59 },
-  ];
+  const [teammates, setTeammates] = React.useState([{InGameID: "Loading...", Level: 1}]);
+
+  // On load, update the teammates
+  React.useEffect(() => {
+    console.log("Updating teammates");
+    console.log(props.inputs.GameTitle);
+    // Get the teammates
+    GetTeammatesForGame(props.inputs.GameTitle).then((teammates) => {
+      console.log(teammates);
+      setTeammates(teammates);
+    });
+  }, [props.inputs.GameTitle]);
 
   return (
     <Autocomplete

@@ -156,6 +156,25 @@ export async function GetReviewsForGame(gameName)
     return null;
 }
 
+export async function GetTeammatesForGame(gameName)
+{
+    // Set the location to the game name
+    const location = "/users/{user_id}/teammates/{game}".replace("{game}", gameName);
+
+    // Get the raid reviews for the given game
+    var response = await GetAuthorizedResponse(location, "GET");
+    if (response.status === 200) {
+        var responseData = await response.json();
+        console.log(responseData);
+
+        // Convert the data to the format we want
+        //var gameReviews = convertGameReviewsData(responseData);
+
+        return responseData;
+    }
+    return [];
+}
+
 function convertGameReviewsData(gameReviewsResponse) {
     // Store the data for each component to send back in a an object
     var GameReviewsData = [];
