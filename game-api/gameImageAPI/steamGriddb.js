@@ -34,7 +34,6 @@ async function getImage(game, random = false){
     return "";
   }
 
-  console.log(image);
   return image.thumb;
 }
 
