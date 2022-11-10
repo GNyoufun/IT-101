@@ -171,7 +171,7 @@ export async function GetTeammatesForGame(gameName) {
   var response = await GetAuthorizedResponse(location, "GET");
   if (response.status === 200) {
     var responseData = await response.json();
-    console.log(responseData);
+    //console.log(responseData);
 
     // Convert the data to the format we want
     //var gameReviews = convertGameReviewsData(responseData);

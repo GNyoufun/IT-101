@@ -20,7 +20,7 @@ export async function GetLoginResponse(username, password) {
     return response;
   }
   catch (error) {
-    console.log(error);
+    //console.log(error);
     return error;
   }
 }
@@ -39,7 +39,7 @@ export async function GetAuthorizedResponse(location, httpMethod, sendData, isLo
   // String replace the User ID
   location = location.replace("{user_id}", user_id);
 
-  console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
+  //console.log("Requesting " + location + " with " + httpMethod + " method and data " + sendData);
 
   try {
     // Fetch the result and only attach the body if the data is not null
@@ -66,7 +66,7 @@ export async function GetAuthorizedResponse(location, httpMethod, sendData, isLo
     if (error.message.includes("401")) {
       window.location.href = "/";
     }
-    console.log(error);
+    //console.log(error);
     return error;
   }
 }

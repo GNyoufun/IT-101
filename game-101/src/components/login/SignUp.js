@@ -24,19 +24,19 @@ async function sendSignUp(formData) {
     // Get the response data
     var responseData = await response.json();
     // The id and token for the user
-    console.log(responseData);
+    //console.log(responseData);
 
     sessionStorage.setItem("user_id", responseData._id);
     sessionStorage.setItem("user_token", responseData.Token);
     sessionStorage.setItem("user_name", responseData.UserName);
 
-    console.log("User signed up.");
+    //console.log("User signed up.");
 
     // Signup succeeded, redirect to the home page
     window.location.href = "/";
     return true;
   } else {
-    console.log("Error signing up. Response status: " + response.status);
+    //console.log("Error signing up. Response status: " + response.status);
     return false;
   }
 }

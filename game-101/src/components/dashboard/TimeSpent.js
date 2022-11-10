@@ -49,8 +49,8 @@ export default function MostWon() {
       // All the data is available, set it
       //setData(dashboardContent.RecentRaids);
       setData(dashboardContent.TimeSpentData);
-      console.log(dashboardContent.TimeSpentData);
-      console.log("Set data");
+      //console.log(dashboardContent.TimeSpentData);
+      //console.log("Set data");
     });
   }
   // Only run once
