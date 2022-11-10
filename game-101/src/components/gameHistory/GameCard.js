@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+
 import { Box, Card, CardActionArea, Typography, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
 import defaultImage from "../../style/defaultGame.png";
 
 export default function GameCard(props) {
   const name = props.game.name;
-  const cover = (props.game.cover !== null && props.game.cover !== "No Cover" ? props.game.cover : defaultImage); // need to change
+  const cover =
+    props.game.cover !== null && props.game.cover !== "No Cover"
+      ? props.game.cover
+      : defaultImage;
 
   const GameImgStyle = styled("img")({
     top: 0,
