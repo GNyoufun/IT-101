@@ -44,7 +44,7 @@ async function uploadAWS(files, user_id) {
 async function upload(user_id, imageName, base64Image, type){
   const params = {
     Bucket: `${bucket_name}/Images/${user_id}`,
-    Key: `${crypto.randomBytes(32).toString('hex')}${imageName}`,
+    Key: `${crypto.randomBytes(32).toString('hex')}.${imageName.split('.').at(-1)}`,
     Body: new Buffer.from(base64Image.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
     ContentType: type
   };
