@@ -19,6 +19,7 @@ async function sendSignUp(formData) {
     JSON.stringify(sendData),
     true
   );
+  
   if (response.status === 200) {
     // Get the response data
     var responseData = await response.json();
@@ -52,11 +53,13 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
 
     // Send the data to the server
-    if (sendSignUp(data)) {
-      setSuccess(true);
-    } else {
-      setSuccess(false);
-    }
+    sendSignUp(data).then((response) => {
+      if (response) {
+        setSuccess(true);
+      } else {
+        setSuccess(false);
+      }
+    });
   };
 
   return (
@@ -104,14 +107,24 @@ export default function SignUp() {
         </Grid>
       </Grid>
 
-      {success ? (
+      {success === true ? (
         <Grid container sx={{ justifyContent: "center" }}>
           <Alert variant="filled" severity="success">
-            Sign Up successful
+            Sign Up successful.
           </Alert>
         </Grid>
       ) : (
-        <Typography></Typography>
+        null
+      )}
+      
+      {success === false ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="error">
+            Signup failed: Username unavailable.
+          </Alert>
+        </Grid>
+      ) : (
+        null
       )}
     </Box>
   );

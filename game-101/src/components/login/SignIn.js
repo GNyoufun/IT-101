@@ -46,7 +46,7 @@ export default function SignIn() {
     sessionStorage.clear();
   }, []);
 
-  //const [success, setSuccess] = React.useState(false);
+  const [success, setSuccess] = React.useState(null);
 
   const handleSubmit = (event) => {
     // Prevent default behaviour
@@ -56,12 +56,14 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
 
     // Send the data to the server
-    sendSignIn(data);
-    /* if (sendSignIn(data)) {
-      setSuccess(true);
-    } else {
-      setSuccess(false);
-    } */
+
+    sendSignIn(data).then((response) => {
+      if (response) {
+        setSuccess(true);
+      } else {
+        setSuccess(false);
+      }
+    });
   };
 
   return (
@@ -123,21 +125,29 @@ export default function SignIn() {
         </Grid>
       )} */}
 
+      { success === true ? (
       <Grid container sx={{ justifyContent: "center" }}>
         <Alert variant="filled" severity="success">
-          Login successful
+          Login success.
         </Alert>
       </Grid>
+      ) : (null)}
+      
+      { success === null ? (
       <Grid container sx={{ justifyContent: "center" }}>
         <Alert variant="filled" severity="info">
           Please enter your username or password.
         </Alert>
       </Grid>
+      ) : (null)}
+
+      { success === false ? (
       <Grid container sx={{ justifyContent: "center" }}>
         <Alert variant="filled" severity="error">
-          Please enter correct username or password.
+          Error logging in: username or password incorrect.
         </Alert>
       </Grid>
+      ) : (null)}
     </Box>
   );
 }
