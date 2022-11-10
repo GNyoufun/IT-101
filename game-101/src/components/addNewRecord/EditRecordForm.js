@@ -72,6 +72,6 @@ export default function EditRecordForm() {
   }
 
   return (
-    <RecordForm defaultIcnput={defaultInput} sendReview={sendUpdateReview} title={title} />
+    <RecordForm defaultInput={defaultInput} sendReview={sendUpdateReview} title={title} />
   );
 }
