@@ -213,15 +213,35 @@ module.exports = function (app) {
         // Check that the username and password were provided
         if (req.body.username === undefined || req.body.password === undefined)
         {
-            res.sendStatus(400);
+            res.sendStatus(403);
             console.log('Failed PUT request /users/%s. Not all data is present', req.params.user_id);
             return;
         }
+
+        // Check that the user's password is correct
+        const checkQuery = {
+            _id: id
+        };
+
+        const checkResult = await retrieveCollection(userid, checkQuery);
+        if (checkResult.length === 0) {
+            res.sendStatus(404);
+            console.log('Failed PUT request /users/%s. User does not exist', req.params.user_id);
+            return;
+        }
+
+        const checkUser = checkResult[0];
+        
+        if (!await crypto.checkPassword(req.body.password, checkUser.UserPassword)) {
+            res.sendStatus(400);
+            console.log('Failed PUT request /users/%s. Password does not match', req.params.user_id);
+            return;
+        }
     
-        // Create new user and hash the password
+        // Update the user's username and password
         const user = {
             UserName: req.body.username,
-            UserPassword: await crypto.hashPassword(req.body.password)
+            UserPassword: await crypto.hashPassword(req.body.newPassword)
         };
     
         const result = await updateCollection(userid, { _id: id }, { $set: user });
@@ -235,6 +255,7 @@ module.exports = function (app) {
             console.warn('Matched more than modified. %d matched, %d modified', result.matchedCount, result.modifiedCount);
             }
             res.sendStatus(200);
+            console.log(result.modifiedCount + " document(s) updated");
             console.log('Successful PUT request /users/%s', req.params.user_id);
         }
         } catch (err) {

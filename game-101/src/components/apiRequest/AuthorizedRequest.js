@@ -54,11 +54,12 @@ export async function GetAuthorizedResponse(location, httpMethod, sendData, isLo
       body: sendData
     });
     
-    if (!response.ok) {
-      console.log(response.status);
-      const message = `An error has occured: ${response.status}`;
-      throw new Error(message);
-    }
+    // if (!response.ok) {
+    //   console.log(response.status);
+    //   const message = `An error has occured: ${response.status}`;
+    //   throw new Error(message);
+    // }
+
     return response;
   }
   catch (error) {

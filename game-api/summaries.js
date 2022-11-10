@@ -53,7 +53,7 @@ module.exports = function (app) {
             // Wait for all the results before sending the response
             await Promise.all([promiseRecentRaids, promiseMostWon, promiseTimeSpent, promiseTimeSpentEach]);
 
-            console.log(result);
+            //console.log(result);
 
             if(result.length === 0) {
                 // not found user id

@@ -21,24 +21,63 @@ export const ChangeDetails = (props) => {
   const [successfulChange, setSuccessfulChange] = useState(null);
 
   // Sends a password change to the API
-  async function sendPasswordChange(newPassword) {
-    var response = GetAuthorizedResponse("/users/{user_id}", "PUT")
-    await response;
-    // Set successful change to true or false accordingly
-    setSuccessfulChange(response.status === 200);
+  async function sendPasswordChange(passwordChange) {
+    var response = GetAuthorizedResponse("/users/{user_id}", "PUT", JSON.stringify(passwordChange));
+    await response.then((response) => {
+
+      if (response.status === 200) {
+        setSuccessfulChange(true);
+      } else {
+        setSuccessfulChange(false);
+      }
+    });
   }
 
   // Handle Password Change
-  function handlePasswordChange(event) {
-    console.log(event);
+  const handlePasswordChange = (event) => {
     event.preventDefault();
+
+    console.log(event);
+
+    // Get the form data
+    const data = new FormData(event.currentTarget);
+
+    // Check that the new password is confirmed
+    if (data.get("newPassword") !== data.get("confirmPassword")) {
+      setSuccessfulChange("MATCH_ERROR");
+      return;
+    }
+
+    // Create an object with the old and new passwords
+    var passwordChange = {
+      password: data.get("currentPassword"),
+      newPassword: data.get("newPassword"),
+      username: sessionStorage.getItem("user_name"),
+    };
+
+    console.log(passwordChange);
+
+    // Send the data to the server
+    sendPasswordChange(passwordChange);
+    
     
     // Call the API to change the password
-    sendPasswordChange("[NEW PASSWORD]"); // TODO: Get the new password from the form
+    //sendPasswordChange("[NEW PASSWORD]"); // TODO: Get the new password from the form
+  }
+
+  // Handle Delete Account
+  const handleDeleteAccount = (event) => {
+    event.preventDefault();
+
+    console.log(event);
+
+
+
+    // Call the API to delete the account
+    //sendDeleteAccount(); // TODO: Send the delete account request
   }
 
   return (
-    <form autoComplete="off" noValidate {...props}>
       <Box
         component="form"
         display="flex"
@@ -46,11 +85,7 @@ export const ChangeDetails = (props) => {
           height: "100vh",
           overflow: "auto",
         }}
-        onKeyPress={(e) => {
-          e.key === "Enter" && e.preventDefault();
-        }}
-        noValidate
-        autoComplete="off"
+        onSubmit={handlePasswordChange}
       >
         <Grid container sx={{ m: 4 }}>
           <Grid
@@ -78,6 +113,7 @@ export const ChangeDetails = (props) => {
                         fullWidth
                         label="Username"
                         id="username"
+                        name="username"
                         value={sessionStorage.getItem("user_name")}
                         variant="outlined"
                       />
@@ -108,63 +144,63 @@ export const ChangeDetails = (props) => {
                       <TextField
                         fullWidth
                         label="Current Password"
-                        id="curPassword"
+                        id="currentPassword"
+                        name="currentPassword"
                         required
                         variant="outlined"
                         margin="normal"
                         type="password"
-                        // Submit on enter
-                        onKeyPress={(e) => {
-                          e.key === "Enter" && handlePasswordChange(e);
-                        }}
-                        onSubmit={handlePasswordChange}
+                        autoComplete="off"
                       />
                       {/* Enter new password */}
                       <TextField
                         fullWidth
                         label="New Password"
                         id="newPassword"
+                        name="newPassword"
                         required
                         variant="outlined"
                         margin="normal"
                         type="password"
-                        onKeyPress={(e) => {
-                          e.key === "Enter" && handlePasswordChange(e);
-                        }}
-                        onSubmit={handlePasswordChange}
+                        autoComplete="off"
                       />
                       {/* Confirm new password */}
                       <TextField
                         fullWidth
-                        label="Confirm Password"
+                        label="Confirm New Password"
                         id="confirmPassword"
+                        name="confirmPassword"
                         required
                         variant="outlined"
                         margin="normal"
                         type="password"
-                        onKeyPress={(e) => {
-                          e.key === "Enter" && handlePasswordChange(e);
-                        }}
-                        onSubmit={handlePasswordChange}
+                        autoComplete="off"
                       />
                     </Grid>
 
                     <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
-                      <SubmitButton variant="contained" type="submit" onClick={handlePasswordChange}>
+                      <SubmitButton variant="contained" type="submit">
                         Submit
                       </SubmitButton>
                     </Grid>
                     {successfulChange === false ? (
                     <Grid sx={{ mt: 2, mb: 1 }}>
                       <Alert variant="filled" severity="error">
-                        Change password failed.
+                        Password change failed: Incorrect password.
+                      </Alert>
+                    </Grid>
+                    ) : (null)}
+                    {successfulChange === "MATCH_ERROR" ? (
+                    <Grid sx={{ mt: 2, mb: 1 }}>
+                      <Alert variant="filled" severity="error">
+                        New password does not match confirmation.
                       </Alert>
                     </Grid>
                     ) : (null)}
                     {successfulChange === true ? (
                     <Grid sx={{ mt: 2, mb: 1 }}>
                       <Alert variant="filled" severity="success">
-                        Change password succeeded.
+                        Password change succeeded.
                       </Alert>
                     </Grid>
                     ) : (null)}
@@ -208,6 +244,5 @@ export const ChangeDetails = (props) => {
           </Grid>
         </Grid>
       </Box>
-    </form>
   );
 };
