@@ -19,7 +19,7 @@ async function sendSignUp(formData) {
     JSON.stringify(sendData),
     true
   );
-  
+
   if (response.status === 200) {
     // Get the response data
     var responseData = await response.json();
@@ -42,7 +42,7 @@ async function sendSignUp(formData) {
 }
 
 export default function SignUp() {
-  const [success, setSuccess] = React.useState(false);
+  const [success, setSuccess] = React.useState(null);
 
   // Define function to occur on click on submit button
   const handleSubmit = (event) => {
@@ -113,19 +113,23 @@ export default function SignUp() {
             Sign Up successful.
           </Alert>
         </Grid>
-      ) : (
-        null
-      )}
-      
+      ) : null}
+
+      {success === null ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="info">
+            Please enter your username and password.
+          </Alert>
+        </Grid>
+      ) : null}
+
       {success === false ? (
         <Grid container sx={{ justifyContent: "center" }}>
           <Alert variant="filled" severity="error">
             Signup failed: Username unavailable.
           </Alert>
         </Grid>
-      ) : (
-        null
-      )}
+      ) : null}
     </Box>
   );
 }

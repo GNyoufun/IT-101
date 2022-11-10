@@ -125,29 +125,29 @@ export default function SignIn() {
         </Grid>
       )} */}
 
-      { success === true ? (
-      <Grid container sx={{ justifyContent: "center" }}>
-        <Alert variant="filled" severity="success">
-          Login success.
-        </Alert>
-      </Grid>
-      ) : (null)}
-      
-      { success === null ? (
-      <Grid container sx={{ justifyContent: "center" }}>
-        <Alert variant="filled" severity="info">
-          Please enter your username or password.
-        </Alert>
-      </Grid>
-      ) : (null)}
+      {success === true ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="success">
+            Login success.
+          </Alert>
+        </Grid>
+      ) : null}
 
-      { success === false ? (
-      <Grid container sx={{ justifyContent: "center" }}>
-        <Alert variant="filled" severity="error">
-          Error logging in: username or password incorrect.
-        </Alert>
-      </Grid>
-      ) : (null)}
+      {success === null ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="info">
+            Please enter your username and password.
+          </Alert>
+        </Grid>
+      ) : null}
+
+      {success === false ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="error">
+            Error logging in: username or password incorrect.
+          </Alert>
+        </Grid>
+      ) : null}
     </Box>
   );
 }
