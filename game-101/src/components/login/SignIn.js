@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { GetLoginResponse } from "../apiRequest/AuthorizedRequest";
 
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 async function sendSignIn(formData) {
   // Clear user_token, user_id, and user_name from sessionStorage
@@ -46,16 +46,22 @@ export default function SignIn() {
     sessionStorage.clear();
   }, []);
 
+  //const [success, setSuccess] = React.useState(false);
+
   const handleSubmit = (event) => {
     // Prevent default behaviour
     event.preventDefault();
+
     // Get the form data
     const data = new FormData(event.currentTarget);
 
-    // TODO: Check validity of form data for username, password, and email before running sendSignUp()
-
     // Send the data to the server
     sendSignIn(data);
+    /* if (sendSignIn(data)) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    } */
   };
 
   return (
@@ -72,7 +78,6 @@ export default function SignIn() {
         <Typography variant="h4">Welcome</Typography>
         <Typography variant="h6">Sign in to continue!</Typography>
       </Box>
-
       <TextField
         margin="normal"
         required
@@ -93,18 +98,45 @@ export default function SignIn() {
         id="password"
         autoComplete="current-password"
       />
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          sx={{ my: 4, px: 4, borderRadius: "16px" }}
+        >
+          Sign In
+        </Button>
+      </Grid>
+
+      {/* {success ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="success">
+            Login successful
+          </Alert>
+        </Grid>
+      ) : (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="info">
+            Please enter your username or password.
+          </Alert>
+        </Grid>
+      )} */}
 
       <Grid container sx={{ justifyContent: "center" }}>
-        <Grid item>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            sx={{ my: 4, px: 4, borderRadius: "16px" }}
-          >
-            Sign In
-          </Button>
-        </Grid>
+        <Alert variant="filled" severity="success">
+          Login successful
+        </Alert>
+      </Grid>
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="info">
+          Please enter your username or password.
+        </Alert>
+      </Grid>
+      <Grid container sx={{ justifyContent: "center" }}>
+        <Alert variant="filled" severity="error">
+          Please enter correct username or password.
+        </Alert>
       </Grid>
     </Box>
   );
