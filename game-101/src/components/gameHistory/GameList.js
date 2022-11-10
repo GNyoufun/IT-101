@@ -24,7 +24,7 @@ export default function GameList() {
   }, []);
 
   return (
-    <TableContainer sx={{ height: 580 }}>
+    <TableContainer sx={{ maxHeight: window.innerHeight - 120 }}>
       {/* Go to "GameCard.js" in "components/gameHistory"
        *  A card contains Game's name and picture
        */}
