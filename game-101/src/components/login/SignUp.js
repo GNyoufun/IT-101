@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import { useLocation } from "react-router-dom";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 async function sendSignUp(formData) {
@@ -33,7 +32,6 @@ async function sendSignUp(formData) {
     console.log("User signed up.");
 
     // Signup succeeded, redirect to the home page
-    // TODO: Use a React Router redirect
     window.location.href = "/";
     return true;
   } else {
@@ -43,17 +41,22 @@ async function sendSignUp(formData) {
 }
 
 export default function SignUp() {
+  const [success, setSuccess] = React.useState(false);
+
   // Define function to occur on click on submit button
   const handleSubmit = (event) => {
     // Prevent default behaviour
     event.preventDefault();
+
     // Get the form data
     const data = new FormData(event.currentTarget);
 
-    // TODO: Check validity of form data for username, password, and email before running sendSignUp()
-
     // Send the data to the server
-    sendSignUp(data);
+    if (sendSignUp(data)) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    }
   };
 
   return (
@@ -100,6 +103,16 @@ export default function SignUp() {
           </Button>
         </Grid>
       </Grid>
+
+      {success ? (
+        <Grid container sx={{ justifyContent: "center" }}>
+          <Alert variant="filled" severity="success">
+            Sign Up successful
+          </Alert>
+        </Grid>
+      ) : (
+        <Typography></Typography>
+      )}
     </Box>
   );
 }
