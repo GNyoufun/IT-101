@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router";
+
 import { CssBaseline } from "@mui/material";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
@@ -21,9 +22,10 @@ const App = () => {
       <CssBaseline />
       <Routes>
         <Route path="/" element={<SignInUp />} />
-        <Route 
-          path="/dashboard" 
-          element={<MainPage page={<DashboardContent />} />} />
+        <Route
+          path="/dashboard"
+          element={<MainPage page={<DashboardContent />} />}
+        />
         <Route
           path="/history"
           element={<MainPage page={<GameHistoryList />} />}
@@ -37,8 +39,8 @@ const App = () => {
           element={<MainPage page={<AddRecordForm />} />}
         />
         <Route
-          path="/edit-record" 
-          element={<MainPage page={<EditRecordForm/>} />}
+          path="/edit-record"
+          element={<MainPage page={<EditRecordForm />} />}
         />
         <Route path="/add-game" element={<MainPage page={<AddGameForm />} />} />
         <Route path="/add-new" element={<MainPage page={<AddNew />} />} />
@@ -50,6 +52,5 @@ const App = () => {
     </ThemeProvider>
   );
 };
-
 
 export default App;

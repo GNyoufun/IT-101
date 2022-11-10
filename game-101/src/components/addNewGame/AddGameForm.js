@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 
 import { SubmitButton } from "../../style/buttonStyle";
-
 import { GetAuthorizedResponse } from "../apiRequest/AuthorizedRequest";
 
 async function sendNewGame(formData) {
