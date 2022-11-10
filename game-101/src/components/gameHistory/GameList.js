@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 
 import { Grid, TableContainer } from "@mui/material";
 
 import { GameCard } from "./";
-import { useEffect, useState } from "react";
 import Loading, { GetAllGames } from "../apiRequest/DataStorage";
 
 export default function GameList() {
@@ -28,14 +28,16 @@ export default function GameList() {
       {/* Go to "GameCard.js" in "components/gameHistory"
        *  A card contains Game's name and picture
        */}
-      {loading ? (Loading()) : 
-      (<Grid container spacing={3}>
-        {games.map((game, index) => (
-          <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-            <GameCard game={game} />
-          </Grid>
-        ))}
-      </Grid>
+      {loading ? (
+        Loading()
+      ) : (
+        <Grid container spacing={3}>
+          {games.map((game, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+              <GameCard game={game} />
+            </Grid>
+          ))}
+        </Grid>
       )}
     </TableContainer>
   );
