@@ -24,15 +24,17 @@ module.exports = function (app) {
             const id = ObjectId(req.params.user_id);
             const game = req.params.game;
 
-            const result = await retrieveCollection(review, { UserId: id, Title: game }, { });
-            if (result.length === 0) {
+            var team = await extractTeam(game, id);
+
+            if (team == null) {
                 // not found user id
                 res.sendStatus(404);
                 console.log('Failed GET request /users/%s/teammates/%s, 404', req.params.user_id, req.params.game);
-            } else {
+            } else  {
                 // success
                 res.status(200);
-                res.json(extractTeam(result));
+
+                res.json(team);
                 console.log('Successful GET request /users/%s/teammates/%s', req.params.user_id, req.params.game);
             }
         } catch (err) {
