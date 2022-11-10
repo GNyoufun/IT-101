@@ -61,6 +61,7 @@ export default function EditRecordForm() {
     rating: data.rating,
     team: data.teamRaw,
     comments: data.comments,
+    images: data.images,
   };
 
   function title() {

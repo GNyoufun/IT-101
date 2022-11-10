@@ -155,6 +155,14 @@ export default function RecordForm(props) {
                   padding: "4px",
                 }}
               >
+                {(inputs.images||[]).map((img, index) => (
+                  <img
+                    border={1}
+                    style={thumbnail}
+                    src={img.url}
+                    key={index}
+                  />
+                ))}
                 {files.map((img, index) => (
                   <img
                     border={1}
