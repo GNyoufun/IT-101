@@ -12,7 +12,13 @@ import { GetReviewsForGame } from "../apiRequest/DataStorage";
 
 const { GetAuthorizedResponse } = require("../apiRequest/AuthorizedRequest");
 
-const thumbnail = { height: "50px" };
+const thumbnail = {
+  maxHeight: "40px",
+  maxWidth: "55px",
+  margin: 2,
+  borderRadius: 2,
+  borderColor: "#3071E8",
+};
 
 const columns = [
   {
@@ -54,7 +60,12 @@ const columns = [
     field: "images",
     headerName: "Images",
     width: 200,
-    renderCell: (params) => <img style={thumbnail} src={params.value} />,
+    renderCell: (params) => (
+      (params.value).map((image, index) => (
+        <img style={thumbnail} src={image.url} key={index}/>
+      ))
+    ),
+    type: 'string',
   },
   {
     field: "comments",
@@ -120,7 +131,6 @@ export default function GameHistoryTable() {
     GetReviewsForGame(GameTitle).then((gameRaids) => {
       // Use the gameData to set the state of the gameList
       setRaidData(gameRaids);
-      console.log(gameRaids);
       setLoading(false);
     });
   }

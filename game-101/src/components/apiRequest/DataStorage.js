@@ -36,7 +36,7 @@ let gameData = undefined;
 let gameNamesData = undefined;
 
 function convertDashboardData(summaryResponse) {
-    console.log(summaryResponse);
+    //console.log(summaryResponse);
     // Store the data for each component to send back in a an object
     var MostWonData = {};
     var RecentRaidsData = [];
@@ -114,7 +114,7 @@ async function retrieveDashboardData()
 
     if (response.status === 200) {
         var responseData = await response.json();
-        console.log(responseData);
+        //console.log(responseData);
         
         // Convert the results to the format we want
         dashboardData = convertDashboardData(responseData);
@@ -146,7 +146,7 @@ export async function GetReviewsForGame(gameName)
     var response = await GetAuthorizedResponse(location, "GET");
     if (response.status === 200) {
         var responseData = await response.json();
-        console.log(responseData);
+        //console.log(responseData);
 
         // Convert the data to the format we want
         var gameReviews = convertGameReviewsData(responseData);
@@ -161,7 +161,7 @@ function convertGameReviewsData(gameReviewsResponse) {
     var GameReviewsData = [];
     for(let i = 0; i < gameReviewsResponse.length; i++) {
 
-        console.log(gameReviewsResponse[i]);
+        //console.log(gameReviewsResponse[i]);
 
         // Construct the teammates string
         var teammates = "";
@@ -189,7 +189,7 @@ function convertGameReviewsData(gameReviewsResponse) {
             result: gameReviewsResponse[i].Result,
             team: teammates,
             comments: gameReviewsResponse[i].comments,
-            images: gameReviewsResponse[i].ImageURL,
+            images: (gameReviewsResponse[i].ImageURL||[]).map((url) => {return {url: url}}),
 
             dateRaw : gameReviewsResponse[i].Date,
             teamRaw : gameReviewsResponse[i].Team,
@@ -245,7 +245,7 @@ async function retrieveGameData()
             type: responseData[i].GameType || "No Type",
             cover: responseData[i].GameImageUrl || "No Cover",
           });
-          console.log(responseData[i]);
+          //console.log(responseData[i]);
         }
 
         gameData = g;

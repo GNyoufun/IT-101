@@ -31,6 +31,13 @@ export default function RecordForm(props) {
   const [open, setOpen] = React.useState(false);
   const MAX_FILE_SIZE = 2048;
   const MAX_FILES = 5;
+  const thumbnail = {
+    maxHeight: "40px",
+    maxWidth: "55px",
+    margin: 2,
+    borderRadius: 2,
+    borderColor: "#3071E8",
+  };
 
   const handleSubmit = (event) => {
     // Prepare the data to send
@@ -151,13 +158,7 @@ export default function RecordForm(props) {
                 {files.map((img, index) => (
                   <img
                     border={1}
-                    style={{
-                      maxHeight: "40px",
-                      maxWidth: "55px",
-                      margin: 2,
-                      borderRadius: 2,
-                      borderColor: "#3071E8",
-                    }}
+                    style={thumbnail}
                     src={URL.createObjectURL(img)}
                     key={index}
                   />
