@@ -28,8 +28,14 @@ module.exports = function (app) {
 
             if (team == null) {
                 // not found user id
-                res.sendStatus(404);
-                console.log('Failed GET request /users/%s/teammates/%s, 404', req.params.user_id, req.params.game);
+                // res.sendStatus(404);
+                // console.log('Failed GET request /users/%s/teammates/%s, 404', req.params.user_id, req.params.game);
+
+                // success on empty
+                res.status(200);
+
+                res.json([]);
+                console.log('Successful GET request /users/%s/teammates/%s', req.params.user_id, req.params.game);
             } else  {
                 // success
                 res.status(200);
