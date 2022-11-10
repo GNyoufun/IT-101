@@ -13,14 +13,11 @@ import {
   SelectDifficulty,
 } from "./";
 
-
-
 /* router: /add-record */
 export default function RecordForm(props) {
   // TODO: Check that the game date isn't in the future
   const [inputs, setInputs] = React.useState(props.defaultInput);
-  console.log("form team:" + inputs.team);
-  let files = [];
+  const [files, setFiles] = React.useState([]);
 
   const handleSubmit = (event) => {
     // Prepare the data to send
@@ -35,10 +32,15 @@ export default function RecordForm(props) {
 
   const getFiles = (e) => {
     e.preventDefault();
-
-    files.push(e.target.files[0]);
-    //console.log(e.target.files[0]);
+    setFiles([...files, e.target.files[0]]);
   };
+
+  function onSelect(e) {
+    if (e.files.length > 5) {
+      alert("Only 5 files accepted.");
+      e.preventDefault();
+    }
+  }
 
   return (
     <Box
@@ -61,9 +63,9 @@ export default function RecordForm(props) {
             p: 4,
           }}
         >
-          <props.title/>
+          <props.title />
 
-          <Grid container spacing={3} alignItems="center">
+          <Grid container spacing={3} sx={{ alignItems: "center" }}>
             {/* Select Game */}
             <Grid item xs={12}>
               <SelectGameName inputs={inputs} setInputs={setInputs} />
@@ -101,7 +103,7 @@ export default function RecordForm(props) {
             </Grid>
 
             {/* Upload Image */}
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={4.5} md={4}>
               <Button variant="contained" component="label">
                 Upload Image
                 <input
@@ -113,6 +115,34 @@ export default function RecordForm(props) {
                   onChange={getFiles}
                 />
               </Button>
+            </Grid>
+
+            {/* image preview */}
+            <Grid item xs={12} sm={7.5} md={8}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: "background.default",
+                  borderRadius: 1,
+                  padding: "4px",
+                }}
+              >
+                {files.map((img, index) => (
+                  <img
+                    border={2}
+                    style={{
+                      maxHeight: "40px",
+                      maxWidth: "60px",
+                      margin: 2,
+                      borderRadius: 2,
+                      borderColor: '#3071E8'
+                    }}
+                    src={URL.createObjectURL(img)}
+                    key={index}
+                  />
+                ))}
+              </Box>
             </Grid>
 
             {/* Submit Button */}
