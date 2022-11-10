@@ -38,6 +38,7 @@ export const ChangeDetails = (props) => {
             md={7}
             spacing={3}
             alignItems="center"
+            
           >
             {/* Display username */}
             <Grid item xs={12}>
@@ -54,16 +55,15 @@ export const ChangeDetails = (props) => {
                       <TextField
                         fullWidth
                         label="Username"
-                        name="username"
-                        required
+                        id="username"
                         value={sessionStorage.getItem("user_name")}
                         variant="outlined"
                       />
                     </Grid>
                     <Grid item md={3.2} sm={2.4} sx={{ mt: 2, mb: 1 }}>
-                      <SubmitButton variant="contained" type="submit">
+                      {/* <SubmitButton variant="contained" type="submit">
                         Submit
-                      </SubmitButton>
+                      </SubmitButton> */}
                     </Grid>
                   </Grid>
                 </CardContent>
@@ -86,28 +86,31 @@ export const ChangeDetails = (props) => {
                       <TextField
                         fullWidth
                         label="Current Password"
-                        name="curPassword"
+                        id="curPassword"
                         required
                         variant="outlined"
                         margin="normal"
+                        type="password"
                       />
                       {/* Enter new password */}
                       <TextField
                         fullWidth
                         label="New Password"
-                        name="newPassword"
+                        id="newPassword"
                         required
                         variant="outlined"
                         margin="normal"
+                        type="password"
                       />
                       {/* Confirm new password */}
                       <TextField
                         fullWidth
                         label="Confirm Password"
-                        name="confirmPassword"
+                        id="confirmPassword"
                         required
                         variant="outlined"
                         margin="normal"
+                        type="password"
                       />
                     </Grid>
 
@@ -130,8 +133,7 @@ export const ChangeDetails = (props) => {
                   <FormControlLabel
                     value="delete-account"
                     control={<Radio />}
-                    label="By clicking this, I understand I will delete my
-                    account permanently."
+                    label="By clicking this, I understand I my account will be permanently deleted."
                   />
                   <Grid mt={2}>
                     <DeleteButton variant="contained">
